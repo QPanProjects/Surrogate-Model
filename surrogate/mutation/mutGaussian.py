@@ -20,7 +20,7 @@ functions from the python base :mod:`random` module.
 """
 
 
-def mutGaussian(individual, mu, sigma, prob):
+def mutGaussian(individual, mu=100, sigma=0.5, prob=0.5):
     size = len(individual)
     if not isinstance(mu, Sequence):
         mu = repeat(mu, size)
