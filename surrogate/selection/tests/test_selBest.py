@@ -2,9 +2,9 @@ from surrogate.selection.tests.test_individuals import Individuals
 
 individuals = Individuals()
 
-from surrogate.selection.selRandom import selRandom
+from surrogate.selection.selBest import selBest
 
-print '\nTest.selection: selRandom'
+print '\nTest.selection: selBest'
 print '\tInput:  ind=\t' + '\t'.join(map(str, individuals)) + ''
-out = selRandom(individuals=list(individuals), k=2)
+out = selBest(individuals=list(individuals), k=2)
 print '\tOutput: out=\t' + '\t'.join(map(str, out)) + ''
