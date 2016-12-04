@@ -24,7 +24,7 @@ functions from the python base :mod:`random` module.
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
 
-def cxUniformPartialMatch(ind1, ind2, prob_cross=0.5):
+def cxUniformPartialMatch(ind1, ind2, prob=0.5):
     size = min(len(ind1), len(ind2))
     p1, p2 = [0] * size, [0] * size
 
@@ -34,7 +34,7 @@ def cxUniformPartialMatch(ind1, ind2, prob_cross=0.5):
         p2[ind2[i]] = i
 
     for i in xrange(size):
-        if random.random() < prob_cross:
+        if random.random() < prob:
             # Keep track of the selected values
             temp1 = ind1[i]
             temp2 = ind2[i]

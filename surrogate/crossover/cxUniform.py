@@ -16,10 +16,10 @@ This function uses the :func:`~random.random` function from the python base
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
 
-def cxUniform(ind1, ind2, prob_cross=0.5):
+def cxUniform(ind1, ind2, prob=0.5):
     size = min(len(ind1), len(ind2))
     for i in xrange(size):
-        if random.random() < prob_cross:
+        if random.random() < prob:
             ind1[i], ind2[i] = ind2[i], ind1[i]
 
     return ind1, ind2
