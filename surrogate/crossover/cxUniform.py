@@ -14,6 +14,8 @@ This function uses the :func:`~random.random` function from the python base
 """
 
 
+# Authors: Quan Pan <quanpan302@hotmail.com>
+
 def cxUniform(ind1, ind2, prob_cross=0.5):
     size = min(len(ind1), len(ind2))
     for i in xrange(size):
