@@ -17,6 +17,8 @@ C by Deb.
 """
 
 
+# Authors: Quan Pan <quanpan302@hotmail.com>
+
 def mutPolynomialBounded(individual, eta=20, low=0.0, up=1.0, prob=0.5):
     size = len(individual)
     if not isinstance(low, Sequence):

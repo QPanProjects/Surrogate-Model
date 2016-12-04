@@ -20,6 +20,8 @@ functions from the python base :mod:`random` module.
 """
 
 
+# Authors: Quan Pan <quanpan302@hotmail.com>
+
 def mutGaussian(individual, mu=100, sigma=0.5, prob=0.5):
     size = len(individual)
     if not isinstance(mu, Sequence):
