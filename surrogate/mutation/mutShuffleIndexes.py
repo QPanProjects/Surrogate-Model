@@ -17,7 +17,7 @@ functions from the python base :mod:`random` module.
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
 
-def mutShuffleIndexes(individual, prob):
+def mutShuffleIndexes(individual, prob=0.5):
     size = len(individual)
     for i in xrange(size):
         if random.random() < prob:
