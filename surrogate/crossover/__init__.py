@@ -1,4 +1,5 @@
 from .cxBlend import cxBlend
+from .cxMessyOnePoint import cxMessyOnePoint
 from .cxOnePoint import cxOnePoint
 from .cxOrdered import cxOrdered
 from .cxPartialMatch import cxPartialyMatch
@@ -12,5 +13,6 @@ __all__ = [
     'cxOnePoint', 'cxTwoPoint', 'cxUniform',
     'cxPartialyMatch', 'cxUniformPartialMatch',
     'cxOrdered', 'cxBlend',
-    'cxSimulatedBinary', 'cxSimulatedBinaryBounded'
+    'cxSimulatedBinary', 'cxSimulatedBinaryBounded',
+    'cxMessyOnePoint'
 ]
