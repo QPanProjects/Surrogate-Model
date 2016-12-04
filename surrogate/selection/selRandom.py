@@ -15,5 +15,5 @@ python base :mod:`random` module.
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
 
-def selRandom(individuals, k):
+def selRandom(individuals, k=1):
     return [random.choice(individuals) for i in xrange(k)]
