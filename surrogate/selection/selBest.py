@@ -11,5 +11,5 @@ list returned contains references to the input *individuals*.
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
 
-def selBest(individuals, k):
+def selBest(individuals, k=1):
     return sorted(individuals, key=attrgetter("fitness"), reverse=True)[:k]
