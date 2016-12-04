@@ -1,9 +1,11 @@
 from .cxOnePoint import cxOnePoint
-from .cxPartialMatch import cxPartialyMatched
+from .cxPartialMatch import cxPartialyMatch
 from .cxTwoPoint import cxTwoPoint
 from .cxUniform import cxUniform
+from .cxUniformPartialyMatch import cxUniformPartialyMatch
+
 
 __all__ = [
     'cxOnePoint', 'cxTwoPoint', 'cxUniform',
-    'cxPartialyMatched'
+    'cxPartialyMatch', 'cxUniformPartialyMatch'
 ]

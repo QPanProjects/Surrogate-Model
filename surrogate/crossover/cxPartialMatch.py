@@ -20,10 +20,9 @@ This function uses the :func:`~random.randint` function from the python base
    salesman problem", 1985.
 """
 
-
 # Authors: Quan Pan <quanpan302@hotmail.com>
 
-def cxPartialyMatched(ind1, ind2):
+def cxPartialyMatch(ind1, ind2):
     size = min(len(ind1), len(ind2))
     p1, p2 = [0] * size, [0] * size
 

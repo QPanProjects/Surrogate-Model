@@ -21,10 +21,9 @@ functions from the python base :mod:`random` module.
    control parameter optimization", 2000.
 """
 
-
 # Authors: Quan Pan <quanpan302@hotmail.com>
 
-def cxUniformPartialyMatched(ind1, ind2, prob_cross=0.5):
+def cxUniformPartialyMatch(ind1, ind2, prob_cross=0.5):
     size = min(len(ind1), len(ind2))
     p1, p2 = [0] * size, [0] * size
 
