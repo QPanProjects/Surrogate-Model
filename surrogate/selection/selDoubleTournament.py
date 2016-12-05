@@ -56,6 +56,7 @@ def selDoubleTournament(individuals, k=2, fitness_size=1, parsimony_size=1, fitn
             # Select two individuals from the population
             # The first individual has to be the shortest
             prob = parsimony_size / 2.
+            # TODO 20161205 check the return value
             # ind1, ind2 = select(individuals, k=2)
             ind1 = select(individuals, k=2)
             ind2 = select(individuals, k=2)
