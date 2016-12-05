@@ -11,3 +11,6 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.svm import LinearSVC
 
 grid = GridSearchCV(LinearSVC(), param_grid={'C': [1, 10]}, scoring=ftwo_scorer)
+
+y_pred = [0, 2, 1, 3]
+y_true = [0, 1, 2, 3]
