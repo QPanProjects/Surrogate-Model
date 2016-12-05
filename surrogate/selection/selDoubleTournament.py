@@ -47,7 +47,7 @@ shown that this parameter does not have a significant effect in most cases\
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
 
-def selDoubleTournament(individuals, k=1, fitness_size=1, parsimony_size=1, fitness_first=True):
+def selDoubleTournament(individuals, k=2, fitness_size=1, parsimony_size=1, fitness_first=True):
     assert (1 <= parsimony_size <= 2), "Parsimony tournament size has to be in the range [1, 2]."
 
     def _sizeTournament(individuals, k, select):
@@ -56,7 +56,9 @@ def selDoubleTournament(individuals, k=1, fitness_size=1, parsimony_size=1, fitn
             # Select two individuals from the population
             # The first individual has to be the shortest
             prob = parsimony_size / 2.
-            ind1, ind2 = select(individuals, k=2)
+            # ind1, ind2 = select(individuals, k=2)
+            ind1 = select(individuals, k=2)
+            ind2 = select(individuals, k=2)
 
             if len(ind1) > len(ind2):
                 ind1, ind2 = ind2, ind1
