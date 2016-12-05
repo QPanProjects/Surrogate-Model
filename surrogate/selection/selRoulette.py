@@ -23,6 +23,7 @@ This function uses the :func:`~random.random` function from the python base
 
 def selRoulette(individuals, k=1):
     s_inds = sorted(individuals, key=attrgetter("fitness"), reverse=True)
+    # TODO 20161204 individual property fitness.values[]
     # sum_fits = sum(ind.fitness.values[0] for ind in individuals)
     sum_fits = sum(ind.fitness for ind in individuals)
 
