@@ -15,7 +15,6 @@ Implementation:
         Retraining Method: When the ANNs need to be retrained, the training algorithm can either load the previ- ously trained weights and continue the training episodes on the new training set, or it can re-initialize the ANN weights to random values and completely retrain the ANNs.
         Retraining Frequency: Retraining frequency deter- mines when the ANNs should be updated during an ANGA run. Retraining frequency should decrease in later gener- ations as the search progresses into relatively smoother local regions.
 """
-from numpy import array, pi, cos
 
 from surrogate.base import SurrogateModel
 
@@ -34,17 +33,21 @@ class ANGA(SurrogateModel):
 
 
 if __name__ == "__main__":
-    def branin(x):
-        y = (x[1] - (5.1 / (4. * pi ** 2.)) * x[0] ** 2. + 5. * x[0] / pi - 6.) ** 2. + 10. * (
-        1. - 1. / (8. * pi)) * cos(
-            x[0]) + 10.
-        return y
-    def branin_1d(x):
-        return branin(array([x[0], 2.275]))
+    from sklearn import datasets
 
+    iris = datasets.load_iris()
+    X, y = iris.data, iris.target
 
-    X = array([[0.0], [2.0], [3.0], [4.0], [6.0]])
-    y = array([[branin_1d(case)] for case in X])
+    # def branin(x):
+    #     y = (x[1] - (5.1 / (4. * pi ** 2.)) * x[0] ** 2. + 5. * x[0] / pi - 6.) ** 2. + 10. * (
+    #     1. - 1. / (8. * pi)) * cos(
+    #         x[0]) + 10.
+    #     return y
+    # def branin_1d(x):
+    #     return branin(array([x[0], 2.275]))
+    # X = array([[0.0], [2.0], [3.0], [4.0], [6.0]])
+    # y = array([[branin_1d(case)] for case in X])
+
     anga = ANGA(X, y)
     anga.fit(X, y)
     anga.predict_proba(X)
