@@ -39,8 +39,6 @@ if __name__ == "__main__":
         1. - 1. / (8. * pi)) * cos(
             x[0]) + 10.
         return y
-
-
     def branin_1d(x):
         return branin(array([x[0], 2.275]))
 
