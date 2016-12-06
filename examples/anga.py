@@ -1,4 +1,4 @@
-"""Adaptive Neural Network Genetic Algorithm (ANGA)
+""" Adaptive Neural Network Genetic Algorithm (ANGA)
 Components:
     Genetic Algorithm
     Artificial Neural Networks
