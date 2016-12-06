@@ -16,6 +16,15 @@ class Individual:
         self.fitness = fitness
         self.constrain = constrain
 
+        self.rank = None
+        self.distance = None
+        self.strategy = set()
+        self.solution = set()
+        self.feature = None
+        self.objective = None
+        self.dominate = None
+
+
     # def __len__(self):
     #     return len(self.variable)
 
