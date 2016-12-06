@@ -18,3 +18,4 @@ class Individual:
 
     def __repr__(self):
         return repr((self.variable, self.fitness, self.constrain))
+
