@@ -1,3 +1,7 @@
+# import sys
+# sys.path.append("..")
+# from cxBlend import cxBlend
+
 from surrogate.crossover.cxBlend import cxBlend
 
 print '\nTest.crossover: cxBlend'
