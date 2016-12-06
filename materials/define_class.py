@@ -1,16 +1,14 @@
 """
 http://www.diveintopython.net/toc/index.html
-
-Defining Classes
-http://www.diveintopython.net/object_oriented_framework/defining_classes.html
-
-Advanced Special Class Methods
-http://www.diveintopython.net/object_oriented_framework/special_class_methods2.html
-
-Introducing Class Attributes
-http://www.diveintopython.net/object_oriented_framework/class_attributes.html
+    Defining Classes
+    http://www.diveintopython.net/object_oriented_framework/defining_classes.html
+    Advanced Special Class Methods
+    http://www.diveintopython.net/object_oriented_framework/special_class_methods2.html
+    Introducing Class Attributes
+    http://www.diveintopython.net/object_oriented_framework/class_attributes.html
 
 
+https://docs.python.org/2.7/reference/datamodel.html
 """
 
 """Framework for getting filetype-specific metadata.
