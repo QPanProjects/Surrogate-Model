@@ -18,6 +18,7 @@ class Individual:
 
         self.rank = None
         self.distance = None
+
         self.strategy = set()
         self.solution = set()
         self.feature = None
