@@ -10,7 +10,9 @@
 Class definition for Individual, the base class for all surrogate models.
 """
 
-class Individual:
+
+# class Individual:
+class Individual(object):
     def __init__(self, variable, fitness, constrain):
         self.variable = variable
         self.fitness = fitness
