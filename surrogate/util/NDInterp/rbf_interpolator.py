@@ -276,7 +276,7 @@ class RBFInterpolator(NNBase):
         Tt = tdist[:, :-1] / tdist[:, -1:]
         # Next determine weight matrix
         Rt = self._find_R(self._ntpts, Tt, tloc)
-        weights = (spsolve(csc_matrix(Rt), self._tv))[..., np.newaxis]
+        weights = (spsolve(A=csc_matrix(Rt), b=self._tv))[..., np.newaxis]
 
         self.N = n
         self.weights = weights
