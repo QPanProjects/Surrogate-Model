@@ -7,9 +7,6 @@ from surrogate.base import SurrogateModel
 from surrogate.util.NDInterp import LinearInterpolator, WeightedInterpolator, RBFInterpolator
 
 _interpolators = OrderedDict([
-    ('l', LinearInterpolator),
-    ('w', WeightedInterpolator),
-    ('r', RBFInterpolator),
     ('linear', LinearInterpolator),
     ('weighted', WeightedInterpolator),
     ('rbf', RBFInterpolator),
