@@ -2,7 +2,7 @@ import numpy as np
 from scipy.sparse import csc_matrix
 from scipy.sparse.linalg import spsolve
 
-from surrogate.util.nn_interpolators.nn_base import NNBase
+from surrogate.util.NDInterp.nn_base import NNBase
 
 
 class RBFInterpolator(NNBase):
