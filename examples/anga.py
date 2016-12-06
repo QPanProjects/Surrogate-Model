@@ -20,6 +20,7 @@ from numpy import array, pi, cos
 from surrogate.base import SurrogateModel
 
 
+# class ANGA(object):
 class ANGA(SurrogateModel):
     def __init__(self, x, y):
         super(ANGA, self).__init__()
@@ -28,7 +29,8 @@ class ANGA(SurrogateModel):
         self.y = y
 
     def predict_proba(self, x):
-        # super(ANGA, self).predict_proba(x)
+        super(ANGA, self).predict_proba(x)
+
         pass
 
 
@@ -47,4 +49,5 @@ if __name__ == "__main__":
     X = array([[0.0], [2.0], [3.0], [4.0], [6.0]])
     y = array([[branin_1d(case)] for case in X])
     anga = ANGA(X, y)
+    anga.fit(X, y)
     anga.predict_proba(X)
