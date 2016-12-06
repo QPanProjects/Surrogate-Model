@@ -30,7 +30,6 @@ class ANGA(SurrogateModel):
 
     def predict_proba(self, x):
         super(ANGA, self).predict_proba(x)
-
         pass
 
 
