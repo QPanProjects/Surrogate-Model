@@ -56,13 +56,9 @@ class SurrogateModel(object):
             raise RuntimeError(msg)
 
     def predict_proba(self, x):
-        if not self.trained:
-            msg = "{0} has not been trained, so no prediction can be made." \
-                .format(type(self).__name__)
-            raise RuntimeError(msg)
+        raise NotImplementedError()
 
     def linearize(self, x):
-
         msg = "{0} has not defined a jacobian method." \
             .format(type(self).__name__)
         raise RuntimeError(msg)
