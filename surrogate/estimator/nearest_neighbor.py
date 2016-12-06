@@ -45,7 +45,7 @@ class NearestNeighbor(SurrogateModel):
         self.interpolant_type = interpolant_type
         self.interpolant = None
 
-    def train(self, x, y):
+    def fit(self, x, y):
         """
         Train the surrogate model with the given set of inputs and outputs.
 
@@ -57,7 +57,7 @@ class NearestNeighbor(SurrogateModel):
         y : array-like
             Model responses at given inputs.
         """
-        super(NearestNeighbor, self).train(x, y)
+        super(NearestNeighbor, self).fit(x, y)
         self.interpolant = _interpolators[self.interpolant_type](x, y, **self.interpolant_init_args)
 
     def predict(self, x, **kwargs):
