@@ -1,7 +1,7 @@
 from surrogate.sampling.samOptimalLHC import samOptimalLHC
 
 print '\nTest.sampling: samOptimalLHC'
-n = 2
+n = 1
 k = 4
 print '\tInput:  n=\t' + '\t' + str(n) + ''
 print '\tInput:  k=\t' + '\t' + str(k) + ''

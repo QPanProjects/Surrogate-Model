@@ -32,16 +32,16 @@ Output:
 # Authors: Quan Pan <quanpan302@hotmail.com>
 
 def samOptimalLHC(n=2, k=2, population=30, iterations=30, generation=False):
-    path = os.path.dirname(os.path.abspath(__file__)) + '/sampling_plans/'
-    # print path
+    PATH = os.path.dirname(os.path.abspath(__file__)) + '/sampling_plans/'
+    # print PATH
 
     if not generation:
         # Check for existing LHC sampling plans
-        if os.path.isfile('{0}lhc_{1}_{2}.pkl'.format(path, k, n)):
-            X = pickle.load(open('{0}lhc_{1}_{2}.pkl'.format(path, k, n), 'r'))
+        if os.path.isfile('{0}lhc_{1}_{2}.pkl'.format(PATH, k, n)):
+            X = pickle.load(open('{0}lhc_{1}_{2}.pkl'.format(PATH, k, n), 'r'))
             return X
         else:
-            print path + '\nSampling Plans not found on disk, generating it now.'
+            print PATH + '\nSampling Plans not found on disk, generating it now.'
 
     # list of qs to optimise Phi_q for
     q = [1, 2, 5, 10, 20, 50, 100]
@@ -67,6 +67,6 @@ def samOptimalLHC(n=2, k=2, population=30, iterations=30, generation=False):
     # and the Latin hypercube with the best space-filling properties is
 
     X = X3D[:, :, Index[1]]
-    pickle.dump(X, open('{0}lhc_{1}_{2}.pkl'.format(path, k, n), 'wb'))
+    pickle.dump(X, open('{0}lhc_{1}_{2}.pkl'.format(PATH, k, n), 'wb'))
 
     return X
