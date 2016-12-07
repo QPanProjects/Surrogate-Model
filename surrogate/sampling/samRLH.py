@@ -3,6 +3,9 @@ import numpy as np
 """
 Generates a random latin hypercube within the [0,1]^k hypercube
 
+Links:
+    https://en.wikipedia.org/wiki/Latin_hypercube_sampling
+
 Inputs:
     n-desired number of points
     k-number of design variables (dimensions)

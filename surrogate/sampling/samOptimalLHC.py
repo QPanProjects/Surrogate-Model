@@ -12,6 +12,9 @@ Generates an optimized Latin hypercube by optimizing the Morris-Mitchell
 criterion for a range of exponents and plots the first two dimensions of
 the current hypercube throughout the optimization process.
 
+Links:
+    https://en.wikipedia.org/wiki/Latin_hypercube_sampling
+
 Inputs:
     n - number of points required
     Population - number of individuals in the evolutionary operation
@@ -41,8 +44,7 @@ def samOptimalLHC(n=2, k=2, population=30, iterations=30, generation=False):
             X = pickle.load(open('{0}lhc_{1}_{2}.pkl'.format(path, k, n), 'r'))
             return X
         else:
-            print path
-            print 'SP not found on disk, generating it now.'
+            print path + '\nSampling Plans not found on disk, generating it now.'
 
     # list of qs to optimise Phi_q for
     q = [1, 2, 5, 10, 20, 50, 100]
