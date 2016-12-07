@@ -1,6 +1,3 @@
-import random
-from operator import attrgetter
-
 """Select *k* individuals from the input *individuals* using *k*
 spins of a roulette. The selection is made by looking only at the first
 objective of each individual. The list returned contains references to
@@ -20,6 +17,9 @@ This function uses the :func:`~random.random` function from the python base
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import random
+from operator import attrgetter
 
 def selRoulette(individuals, k=1):
     s_inds = sorted(individuals, key=attrgetter("fitness"), reverse=True)

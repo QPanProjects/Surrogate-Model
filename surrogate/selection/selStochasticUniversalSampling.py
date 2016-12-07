@@ -1,6 +1,3 @@
-import random
-from operator import attrgetter
-
 """Select the *k* individuals among the input *individuals*.
 The selection is made by using a single random value to sample all of the
 individuals by choosing them at evenly spaced intervals. The list returned
@@ -16,6 +13,9 @@ This function uses the :func:`~random.uniform` function from the python base
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import random
+from operator import attrgetter
 
 def selStochasticUniversalSampling(individuals, k=1):
     s_inds = sorted(individuals, key=attrgetter("fitness"), reverse=True)

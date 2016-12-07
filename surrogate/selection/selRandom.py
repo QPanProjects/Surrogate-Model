@@ -1,5 +1,3 @@
-import random
-
 """Select *k* individuals at random from the input *individuals* with
 replacement. The list returned contains references to the input
 *individuals*.
@@ -14,6 +12,8 @@ python base :mod:`random` module.
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import random
 
 def selRandom(individuals, k=1):
     return [random.choice(individuals) for i in xrange(k)]

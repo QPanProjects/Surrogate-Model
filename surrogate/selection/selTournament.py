@@ -1,7 +1,3 @@
-from operator import attrgetter
-
-from .selRandom import selRandom
-
 """Select *k* individuals from the input *individuals* using *k*
 tournaments of *tournsize* individuals. The list returned contains
 references to the input *individuals*.
@@ -17,6 +13,10 @@ This function uses the :func:`~random.choice` function from the python base
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+from operator import attrgetter
+
+from .selRandom import selRandom
 
 def selTournament(individuals, k=1, tournsize=1):
     chosen = []

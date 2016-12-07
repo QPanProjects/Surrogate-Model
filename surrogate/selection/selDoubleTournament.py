@@ -1,9 +1,3 @@
-import random
-from functools import partial
-from operator import attrgetter
-
-from .selRandom import selRandom
-
 """Tournament selection which use the size of the individuals in order
 to discriminate good solutions. This kind of tournament is obviously
 useless with fixed-length representation, but has been shown to
@@ -46,6 +40,13 @@ shown that this parameter does not have a significant effect in most cases\
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import random
+from functools import partial
+from operator import attrgetter
+
+from .selRandom import selRandom
+
 
 def selDoubleTournament(individuals, k=2, fitness_size=1, parsimony_size=1, fitness_first=True):
     assert (1 <= parsimony_size <= 2), "Parsimony tournament size has to be in the range [1, 2]."
