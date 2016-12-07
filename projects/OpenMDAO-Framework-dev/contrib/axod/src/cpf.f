@@ -1,0 +1,29 @@
+CCPF
+C     CALCULATE SPECIFIC HEAT RATIO FOR FUEL
+      SUBROUTINE CPF(P,T,F,W,CPFX)
+      DIMENSION XT(7)
+C     IF(T-400.)1,2,2
+      IF(T.LT.400.) THEN
+        TX = 400.0
+      ELSE
+        IF (T.GT.3000.) THEN
+           TX = 3000.0
+        ELSE
+           TX = T
+        ENDIF
+      ENDIF
+C1     TX=400.
+C     GO TO 5
+C2     IF(3000.-T)3,4,4
+C3     TX=3000.
+C      GO TO 5
+C4     TX=T
+C5     XT(1)=TX/1000.
+      XT(1)=TX/1000.
+      DO 6 I=2,7
+6     XT(I)=XT(I-1)*XT(1)
+      CPFX=1.0625243E-01+9.5291284E-01*XT(1)-7.2605169E-01*XT(2)
+     1+2.4481406E-01*XT(3)+5.3332162E-02*XT(4)-6.4699814E-02*XT(5)
+     2+1.7495567E-02*XT(6)-1.6029820E-03*XT(7)
+      RETURN
+      END

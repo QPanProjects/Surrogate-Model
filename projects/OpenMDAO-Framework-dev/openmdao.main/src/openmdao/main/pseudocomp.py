@@ -1,0 +1,339 @@
+import ast
+import weakref
+
+from numpy import zeros
+from openmdao.main.array_helpers import flattened_size
+from openmdao.main.expreval import ConnectedExprEvaluator, _expr_dict
+from openmdao.main.interfaces import implements, IComponent, IAssembly
+from openmdao.main.mp_support import has_interface
+from openmdao.main.printexpr import transform_expression, print_node
+from openmdao.units.units import PhysicalQuantity, UnitsOnlyPQ
+
+
+def _remove_spaces(s):
+    return s.translate(None, ' \n\t\r')
+
+
+def _get_new_name(parent):
+    while not has_interface(parent, IAssembly):
+        parent = parent.parent
+
+    return parent.new_pseudo_name()
+
+
+def _get_varname(name):
+    return name.split('[', 1)[0]
+
+
+def do_nothing_xform(node):
+    return node
+
+
+def scaler_adder_xform(node, scaler, adder):
+    """Returns an ast for the form (node+adder)*scaler"""
+    if adder != 0.0:
+        newnode = ast.BinOp(node, ast.Add(), ast.Num(adder))
+    else:
+        newnode = node
+    if scaler != 1.0:  # do the add and the mult
+        newnode = ast.BinOp(newnode, ast.Mult(), ast.Num(scaler))
+    return ast.copy_location(newnode, node)
+
+
+def unit_xform(node, in_units, out_units):
+    """Transforms an ast into expr*scaler+adder where scaler
+    and adder are from units conversion.
+    """
+    inpq = PhysicalQuantity(1.0, in_units)
+    outpq = PhysicalQuantity(1.0, out_units)
+    try:
+        scaler, adder = inpq.unit.conversion_tuple_to(outpq.unit)
+    except TypeError:
+        raise TypeError("units '%s' are incompatible with assigning units of"
+                        " '%s'" % (inpq.get_unit_name(), outpq.get_unit_name()))
+    return scaler_adder_xform(node, scaler, adder)
+
+
+class DummyExpr(object):
+    def __init__(self):
+        self.text = ''
+
+    def refs(self):
+        return ['']
+
+    def get_metadata(self):
+        return [('', {})]
+
+
+def _invert_dict(dct):
+    out = {}
+    for k, v in dct.items():
+        out[v] = k
+    return out
+
+
+class PseudoComponent(object):
+    """A 'fake' component that is constructed from an ExprEvaluator.
+    This fake component can be added to a dependency graph and executed
+    along with 'real' components.
+    """
+    implements(IComponent)
+
+    def __init__(self, parent, srcexpr, destexpr=None, translate=True,
+                 pseudo_type=None):
+        if destexpr is None:
+            destexpr = DummyExpr()
+        self._parent = None
+        self.parent = parent
+        self.name = _get_new_name(parent)
+        self._inmap = {}  # mapping of component vars to our inputs
+        self._meta = {}
+        self._inputs = []
+
+        # Flags and caching used by the derivatives calculation
+        self.force_fd = False
+        self._provideJ_bounds = None
+
+        self._pseudo_type = pseudo_type  # a string indicating the type of pseudocomp
+        # this is, e.g., 'units', 'constraint', 'objective',
+        # or 'multi_var_expr'
+        self._orig_src = srcexpr.text
+        self._orig_dest = destexpr.text
+        self.Jsize = None
+
+        varmap = {}
+        rvarmap = {}
+        for i, ref in enumerate(srcexpr.refs()):
+            in_name = 'in%d' % i
+            self._inputs.append(in_name)
+            self._inmap[ref] = in_name
+            varmap[ref] = in_name
+            rvarmap.setdefault(_get_varname(ref), set()).add(ref)
+            setattr(self, in_name, None)
+
+        refs = list(destexpr.refs())
+        if refs:
+            if len(refs) == 1:
+                setattr(self, 'out0', None)
+            else:
+                raise RuntimeError("output of PseudoComponent must reference"
+                                   " only one variable")
+        varmap[refs[0]] = 'out0'
+        rvarmap.setdefault(_get_varname(refs[0]), set()).add(refs[0])
+
+        for name, meta in srcexpr.get_metadata():
+            for rname in rvarmap[name]:
+                self._meta[varmap[rname]] = meta
+
+        for name, meta in destexpr.get_metadata():
+            for rname in rvarmap[name]:
+                self._meta[varmap[rname]] = meta
+
+        if translate:
+            xformed_src = transform_expression(srcexpr.text, self._inmap)
+        else:
+            xformed_src = srcexpr.text
+
+        out_units = self._meta['out0'].get('units')
+        pq = None
+        if out_units is not None:
+            # evaluate the src expression using UnitsOnlyPQ objects
+
+            tmpdict = {}
+
+            # First, replace values with UnitsOnlyPQ objects
+            for inp in self._inputs:
+                units = self._meta[inp].get('units')
+                if units:
+                    tmpdict[inp] = UnitsOnlyPQ(0., units)
+                else:
+                    tmpdict[inp] = 0.
+
+            pq = eval(xformed_src, _expr_dict, tmpdict)
+            self._srcunits = pq.unit
+
+            unitnode = ast.parse(xformed_src)
+            try:
+                unitxform = unit_xform(unitnode, self._srcunits, out_units)
+            except Exception as err:
+                raise TypeError("Incompatible units for '%s' and '%s': %s"
+                                % (srcexpr.text, destexpr.text, err))
+            unit_src = print_node(unitxform)
+            xformed_src = unit_src
+        else:
+            self._srcunits = None
+
+        self._srcexpr = ConnectedExprEvaluator(xformed_src, scope=self)
+
+        # this is just the equation string (for debugging)
+        if self._orig_dest:
+            self._outdests = [self._orig_dest]
+            if pq is None:
+                sunit = dunit = ''
+            else:
+                sunit = "'%s'" % pq.get_unit_name()
+                dunit = "'%s'" % out_units
+            self._orig_expr = "%s %s -> %s %s" % (self._orig_src, sunit,
+                                                  self._orig_dest, dunit)
+        else:
+            self._outdests = []
+            self._orig_expr = self._orig_src
+
+        self.missing_deriv_policy = 'error'
+
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        state['_parent'] = self.parent
+        return state
+
+    def __setstate__(self, state):
+        self.__dict__.update(state)
+        self.parent = state['_parent']
+
+    @property
+    def parent(self):
+        """ Our parent assembly. """
+        return None if self._parent is None else self._parent()
+
+    @parent.setter
+    def parent(self, parent):
+        self._parent = None if parent is None else weakref.ref(parent)
+
+    def check_config(self, strict=False):
+        pass
+
+    def cpath_updated(self):
+        pass
+
+    def get_pathname(self, rel_to_scope=None):
+        """ Return full pathname to this object, relative to scope
+        *rel_to_scope*. If *rel_to_scope* is *None*, return the full pathname.
+        """
+        return '.'.join((self.parent.get_pathname(rel_to_scope), self.name))
+
+    def list_connections(self, is_hidden=False, show_expressions=False):
+        """list all of the inputs and output connections of this PseudoComponent.
+        If is_hidden is True, list the connections that a user would see
+        if this PseudoComponent is hidden. If show_expressions is True (and
+        only if is_hidden is also True) then list the connection expression
+        that resulted in the creation of this PseudoComponent.
+        """
+        if is_hidden:
+            if self._outdests:
+                if show_expressions:
+                    return [(self._orig_src, self._orig_dest)]
+                else:
+                    return [(src, self._outdests[0])
+                            for src in self._inmap.keys() if src]
+            else:
+                return []
+        else:
+            conns = [(src, '.'.join((self.name, dest)))
+                     for src, dest in self._inmap.items()]
+            if self._outdests:
+                conns.extend([('.'.join((self.name, 'out0')), dest)
+                              for dest in self._outdests])
+        return conns
+
+    def list_inputs(self):
+        return self._inputs[:]
+
+    def list_outputs(self):
+        return ['out0']
+
+    def config_changed(self, update_parent=True):
+        pass
+
+    def list_comp_connections(self):
+        """Return a list of connections between our pseudocomp and
+        parent components of our sources/destinations.
+        """
+        conns = [(src.split('.', 1)[0], self.name)
+                 for src, dest in self._inmap.items()]
+        if self._outdests:
+            conns.extend([(self.name, dest.split('.', 1)[0])
+                          for dest in self._outdests])
+        return conns
+
+    def contains(self, name):
+        return name == 'out0' or name in self._inputs
+
+    def make_connections(self, scope):
+        """Connect all of the inputs and outputs of this comp to
+        the appropriate nodes in the dependency graph.
+        """
+        for src, dest in self.list_connections():
+            scope.connect(src, dest)
+
+    def remove_connections(self, scope):
+        """Disconnect all of the inputs and outputs of this comp
+        from other nodes in the dependency graph.
+        """
+        for src, dest in self.list_connections():
+            scope.disconnect(src, dest)
+
+    def run(self, ffd_order=0):
+        setattr(self, 'out0', self._srcexpr.evaluate())
+
+    def get(self, name, index=None):
+        if index is not None:
+            raise RuntimeError("index not supported in PseudoComponent.get")
+        return getattr(self, name)
+
+    def set(self, path, value, index=None, force=False):
+        if index is not None:
+            raise ValueError("index not supported in PseudoComponent.set")
+        setattr(self, path, value)
+
+    def get_metadata(self, traitpath, metaname=None):
+        if metaname is None:
+            return self._meta[traitpath]
+        return self._meta[traitpath].get(metaname)
+
+    def set_itername(self, itername):
+        self._itername = itername
+
+    def calc_derivatives(self, first=False, second=False, savebase=False,
+                         required_inputs=None, required_outputs=None):
+        if first:
+            return self.provideJ()
+        if second:
+            msg = "2nd derivatives not supported in pseudocomponent %s"
+            raise RuntimeError(msg % self.name)
+
+    def provideJ(self):
+        """Calculate analytical first derivatives."""
+
+        if self.Jsize is None:
+            n_in = 0
+            n_out = 0
+            for varname in self.list_inputs():
+                val = self.get(varname)
+                width = flattened_size(varname, val, self)
+                n_in += width
+            for varname in self.list_outputs():
+                val = self.get(varname)
+                width = flattened_size(varname, val, self)
+                n_out += width
+            self.Jsize = (n_out, n_in)
+
+        J = zeros(self.Jsize)
+        grad = self._srcexpr.evaluate_gradient()
+
+        i = 0
+        for varname in self._inputs:
+            val = self.get(varname)
+            width = flattened_size(varname, val, self)
+            J[:, i:i + width] = grad[varname]
+            i += width
+
+        return J
+
+    def list_deriv_vars(self):
+        return tuple(self._inputs), ('out0',)
+
+    def get_req_default(self, self_reqired=None):
+        return []
+
+    def _input_updated(self, name, fullpath=None):
+        pass
