@@ -12,9 +12,6 @@ Generates an optimized Latin hypercube by optimizing the Morris-Mitchell
 criterion for a range of exponents and plots the first two dimensions of
 the current hypercube throughout the optimization process.
 
-Links:
-    https://en.wikipedia.org/wiki/Latin_hypercube_sampling
-
 Inputs:
     n - number of points required
     Population - number of individuals in the evolutionary operation
