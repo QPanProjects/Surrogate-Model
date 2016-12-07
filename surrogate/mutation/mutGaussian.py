@@ -1,7 +1,3 @@
-import random
-from collections import Sequence
-from itertools import repeat
-
 """This function applies a gaussian mutation of mean *mu* and standard
 deviation *sigma* on the input individual. This mutation expects a
 :term:`sequence` individual composed of real valued attributes.
@@ -21,6 +17,10 @@ functions from the python base :mod:`random` module.
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import random
+from collections import Sequence
+from itertools import repeat
 
 def mutGaussian(individual, mu=100, sigma=0.5, prob=0.5):
     size = len(individual)

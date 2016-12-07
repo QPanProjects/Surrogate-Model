@@ -1,7 +1,3 @@
-import random
-from collections import Sequence
-from itertools import repeat
-
 """Polynomial mutation as implemented in original NSGA-II algorithm in
 C by Deb.
 
@@ -18,6 +14,10 @@ C by Deb.
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import random
+from collections import Sequence
+from itertools import repeat
 
 def mutPolynomialBounded(individual, eta=20, low=0.0, up=1.0, prob=0.5):
     size = len(individual)

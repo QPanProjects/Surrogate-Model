@@ -1,5 +1,3 @@
-import random
-
 """Shuffle the attributes of the input individual and return the mutant.
 The *individual* is expected to be a :term:`sequence`. The *prob* argument is the
 probability of each attribute to be moved. Usually this mutation is applied on
@@ -16,6 +14,8 @@ functions from the python base :mod:`random` module.
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import random
 
 def mutShuffleIndexes(individual, prob=0.5):
     size = len(individual)

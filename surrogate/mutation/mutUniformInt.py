@@ -1,7 +1,3 @@
-import random
-from collections import Sequence
-from itertools import repeat
-
 """Mutate an individual by replacing attributes, with probability *prob*,
 by a integer uniformly drawn between *low* and *up* inclusively.
 
@@ -18,6 +14,10 @@ by a integer uniformly drawn between *low* and *up* inclusively.
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import random
+from collections import Sequence
+from itertools import repeat
 
 def mutUniformInt(individual, low=0.0, up=1.0, prob=0.5):
     size = len(individual)

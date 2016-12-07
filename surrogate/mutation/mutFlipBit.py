@@ -1,5 +1,3 @@
-import random
-
 """Flip the value of the attributes of the input individual and return the
 mutant. The *individual* is expected to be a :term:`sequence` and the values of the
 attributes shall stay valid after the ``not`` operator is called on them.
@@ -16,6 +14,8 @@ This function uses the :func:`~random.random` function from the python base
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import random
 
 def mutFlipBit(individual, prob=0.5):
     for i in xrange(len(individual)):
