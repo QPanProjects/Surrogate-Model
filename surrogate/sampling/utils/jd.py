@@ -1,7 +1,3 @@
-import numpy as np
-
-from .ismember import ismember
-
 """
 Computes the distances between all pairs of points in a sampling plan
 X using the p-norm, sorts them in ascending order and removes multiple occurences.
@@ -12,11 +8,14 @@ Inputs:
 Output:
     J-multiplicity array (that is, the number of pairs separated by each distance value)
     distinct_d-list of distinct distance values
-
 """
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import numpy as np
+
+from .ismember import ismember
 
 def jd(X, p=1):
     # number of points in the sampling plan

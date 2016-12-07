@@ -1,7 +1,3 @@
-import math
-
-import numpy as np
-
 """
 Interchanges pairs of randomly chosen elements within randomly
 chosen columns of a sampling plan a number of times. If the plan is
@@ -13,11 +9,14 @@ Inputs:
     PertNum - the number of changes (perturbations) to be made to X.
 Output:
     X - perturbed sampling plan
-
 """
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import math
+
+import numpy as np
 
 def perturb(X, PertNum):
     X_pert = X.copy()

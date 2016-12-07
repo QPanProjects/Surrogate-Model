@@ -1,7 +1,3 @@
-import numpy as np
-
-from .jd import jd
-
 """
 Given two sampling plans chooses the one with the better space-filling properties
 (as per the Morris-Mitchell criterion)
@@ -17,6 +13,10 @@ Outputs:
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import numpy as np
+
+from .jd import jd
 
 def mm(X1, X2, p=1):
     # thats how two arrays are compared in their sorted form

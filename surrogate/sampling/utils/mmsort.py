@@ -1,7 +1,3 @@
-import numpy as np
-
-from .mm import mm
-
 """
 Ranks sampling plans according to the Morris-Mitchell criterion definition.
 Note: similar to phisort, which uses the numerical quality criterion Phiq
@@ -13,11 +9,14 @@ Inputs:
 
 Output:
     Index - index array containing the ranking
-
 """
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import numpy as np
+
+from .mm import mm
 
 def mmsort(X3D, p=1):
     # Pre-allocate memory

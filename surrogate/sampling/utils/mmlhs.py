@@ -1,19 +1,18 @@
+"""
+Evolutionary operation search for the most space filling Latin hypercube
+of a certain size and dimensionality. There is no need to call this
+directly - use bestlh.m
+"""
+
+
+# Authors: Quan Pan <quanpan302@hotmail.com>
+
 import math
 
 import numpy as np
 
 from .mmphi import mmphi
 from .perturb import perturb
-
-"""
-Evolutionary operation search for the most space filling Latin hypercube
-of a certain size and dimensionality. There is no need to call this
-directly - use bestlh.m
-
-"""
-
-
-# Authors: Quan Pan <quanpan302@hotmail.com>
 
 def mmlhs(X_start, population, iterations, q):
     X_s = X_start.copy()
