@@ -1,5 +1,3 @@
-import numpy as np
-
 """
 Generates a random latin hypercube within the [0,1]^k hypercube
 
@@ -14,6 +12,8 @@ Outputs:
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import numpy as np
 
 def samRLH(n=2, k=2, Edges=0):
     # pre-allocate memory

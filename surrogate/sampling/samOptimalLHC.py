@@ -1,12 +1,3 @@
-import os
-import pickle
-
-import numpy as np
-# from .samRLH import samRLH
-# from .utils import mmlhs, mmsort
-from surrogate.sampling.samRLH import samRLH
-from surrogate.sampling.utils import mmlhs, mmsort
-
 """
 Generates an optimized Latin hypercube by optimizing the Morris-Mitchell
 criterion for a range of exponents and plots the first two dimensions of
@@ -24,12 +15,22 @@ Inputs:
 
 Output:
     X - optimized Latin hypercube
-
-
 """
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import os
+import pickle
+
+import numpy as np
+
+from .samRLH import samRLH
+from .utils import mmlhs, mmsort
+
+
+# from surrogate.sampling.samRLH import samRLH
+# from surrogate.sampling.utils import mmlhs, mmsort
 
 def samOptimalLHC(n=2, k=2, population=30, iterations=30, generation=False):
     PATH = os.path.dirname(os.path.abspath(__file__)) + '/sampling_plans/'
