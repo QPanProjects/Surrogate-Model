@@ -1,5 +1,3 @@
-import random
-
 """Executes a uniform partially matched crossover (UPMX) on the input
 individuals. The two individuals are modified in place. This crossover
 expects :term:`sequence` individuals of indices, the result for any other
@@ -23,6 +21,8 @@ functions from the python base :mod:`random` module.
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import random
 
 def cxUniformPartialMatch(ind1, ind2, prob=0.5):
     size = min(len(ind1), len(ind2))

@@ -1,5 +1,3 @@
-import random
-
 """Executes an ordered crossover (OX) on the input
 individuals. The two individuals are modified in place. This crossover
 expects :term:`sequence` individuals of indices, the result for any other
@@ -25,6 +23,8 @@ This function uses the :func:`~random.sample` function from the python base
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import random
 
 def cxOrdered(ind1, ind2):
     size = min(len(ind1), len(ind2))

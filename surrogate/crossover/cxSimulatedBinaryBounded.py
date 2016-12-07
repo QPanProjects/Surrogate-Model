@@ -1,7 +1,3 @@
-import random
-from collections import Sequence
-from itertools import repeat
-
 """Executes a simulated binary crossover that modify in-place the input
 individuals. The simulated binary crossover expects :term:`sequence`
 individuals of floating point numbers.
@@ -27,6 +23,10 @@ This function uses the :func:`~random.random` function from the python base
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import random
+from collections import Sequence
+from itertools import repeat
 
 def cxSimulatedBinaryBounded(ind1, ind2, eta=15, low=0.0, up=1.0):
     size = min(len(ind1), len(ind2))

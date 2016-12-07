@@ -1,5 +1,3 @@
-import random
-
 """Executes a two-point crossover on the input :term:`sequence`
 individuals. The two individuals are modified in place and both keep
 their original length.
@@ -14,6 +12,8 @@ base :mod:`random` module.
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import random
 
 def cxTwoPoint(ind1, ind2):
     size = min(len(ind1), len(ind2))

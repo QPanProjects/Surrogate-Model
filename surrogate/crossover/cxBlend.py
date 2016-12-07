@@ -1,5 +1,3 @@
-import random
-
 """Executes a blend crossover that modify in-place the input individuals.
 The blend crossover expects :term:`sequence` individuals of floating point
 numbers.
@@ -16,6 +14,8 @@ This function uses the :func:`~random.random` function from the python base
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import random
 
 def cxBlend(ind1, ind2, alpha=0.5):
     for i, (x1, x2) in enumerate(zip(ind1, ind2)):

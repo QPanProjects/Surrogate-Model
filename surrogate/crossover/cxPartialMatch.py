@@ -1,5 +1,3 @@
-import random
-
 """Executes a partially matched crossover (PMX) on the input individuals.
 The two individuals are modified in place. This crossover expects
 :term:`sequence` individuals of indices, the result for any other type of
@@ -22,6 +20,8 @@ This function uses the :func:`~random.randint` function from the python base
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import random
 
 def cxPartialyMatch(ind1, ind2):
     size = min(len(ind1), len(ind2))

@@ -1,5 +1,3 @@
-import random
-
 """Executes a simulated binary crossover that modify in-place the input
 individuals. The simulated binary crossover expects :term:`sequence`
 individuals of floating point numbers.
@@ -17,6 +15,8 @@ This function uses the :func:`~random.random` function from the python base
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import random
 
 def cxSimulatedBinary(ind1, ind2, eta=15):
     for i, (x1, x2) in enumerate(zip(ind1, ind2)):

@@ -1,5 +1,3 @@
-import random
-
 """Executes a one point crossover on the input :term:`sequence` individuals.
 The two individuals are modified in place. The resulting individuals will
 respectively have the length of the other.
@@ -14,6 +12,8 @@ python base :mod:`random` module.
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+
+import random
 
 def cxOnePoint(ind1, ind2):
     size = min(len(ind1), len(ind2))
