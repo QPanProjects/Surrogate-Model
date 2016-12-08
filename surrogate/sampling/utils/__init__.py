@@ -1,13 +1,14 @@
-from .ismember import ismember
-from .jd import jd
-from .mm import mm
-from .mmlhs import mmlhs
-from .mmphi import mmphi
-from .mmsort import mmsort
-from .perturb import perturb
-from .repeatCenter import repeatCenter
-from .star import star
-from .union import union
+from .doe_repeatCenter import repeatCenter
+from .doe_star import star
+from .doe_union import union
+from .kg_ismember import ismember
+from .kg_jd import jd
+from .kg_mm import mm
+from .kg_mmlhs import mmlhs
+from .kg_mmphi import mmphi
+from .kg_mmsort import mmsort
+from .kg_perturb import perturb
+
 __all__ = [
     'ismember', 'jd', 'perturb',
     'mmlhs', 'mm', 'mmsort', 'mmphi',

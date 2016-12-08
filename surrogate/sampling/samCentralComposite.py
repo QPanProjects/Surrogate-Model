@@ -14,9 +14,9 @@ Abraham Lee.
 """
 
 from .samFullFact import samFF2n
-from .utils.repeatCenter import repeatCenter
-from .utils.star import star
-from .utils.union import union
+from .utils.doe_repeatCenter import repeatCenter
+from .utils.doe_star import star
+from .utils.doe_union import union
 
 
 def samCentralComposite(n, center=(4, 4), alpha='orthogonal', face='circumscribed'):

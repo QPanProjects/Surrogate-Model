@@ -15,7 +15,7 @@ Output:
 
 import numpy as np
 
-from .jd import jd
+from .kg_jd import jd
 
 def mmphi(X, q=2, p=1):
     # calculate the distances between all pairs of

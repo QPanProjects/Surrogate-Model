@@ -11,8 +11,8 @@ import math
 
 import numpy as np
 
-from .mmphi import mmphi
-from .perturb import perturb
+from .kg_mmphi import mmphi
+from .kg_perturb import perturb
 
 def mmlhs(X_start, population, iterations, q):
     X_s = X_start.copy()

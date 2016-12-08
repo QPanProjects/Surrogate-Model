@@ -15,7 +15,7 @@ Output:
 
 import numpy as np
 
-from .ismember import ismember
+from .kg_ismember import ismember
 
 def jd(X, p=1):
     # number of points in the sampling plan

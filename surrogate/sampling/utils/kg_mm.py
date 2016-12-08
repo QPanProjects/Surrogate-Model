@@ -16,7 +16,7 @@ Outputs:
 
 import numpy as np
 
-from .jd import jd
+from .kg_jd import jd
 
 def mm(X1, X2, p=1):
     # thats how two arrays are compared in their sorted form

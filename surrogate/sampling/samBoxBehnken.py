@@ -16,7 +16,7 @@ Abraham Lee.
 import numpy as np
 
 from .samFullFact import samFF2n
-from .utils.repeatCenter import repeatCenter
+from .utils.doe_repeatCenter import repeatCenter
 
 
 def samBoxBehnken(n, center=None):

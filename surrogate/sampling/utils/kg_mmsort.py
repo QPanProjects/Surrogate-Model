@@ -16,7 +16,7 @@ Output:
 
 import numpy as np
 
-from .mm import mm
+from .kg_mm import mm
 
 def mmsort(X3D, p=1):
     # Pre-allocate memory
