@@ -2,6 +2,10 @@
 Links:
     http://www.kdnuggets.com/2015/06/top-20-python-machine-learning-open-source-projects.html
 
+    http://scipy.org
+    SciPy: http://scipy.github.io/devdocs/
+    NumPy: https://docs.scipy.org/doc/numpy-dev/reference/
+
 """
 
 
