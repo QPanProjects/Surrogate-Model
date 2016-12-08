@@ -90,9 +90,3 @@ print '\nsampling.samRandom.samZipf'
 a, size = 2.0, 10
 print samZipf(a, size)
 
-print '\nnumpy.random'
-import numpy as np
-
-print np.random.f(dfnum=1, dfden=48, size=10)
-print np.random.pareto(3.0, 10)
-print np.random.triangular(-3, 0, 8, 10)
