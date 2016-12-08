@@ -11,10 +11,11 @@ Links:
 
 from .samFullFact import samFullFact, samFracFact, samFF2n
 from .samOptimalLHC import samOptimalLHC
+from .samPlackettBurman import samPlackettBurman
 from .samRLH import samRLH
 
 __all__ = [
     'samRLH',
     'samOptimalLHC',
-    'samFullFact', 'samFracFact', 'samFF2n'
+    'samFullFact', 'samFracFact', 'samFF2n', 'samPlackettBurman'
 ]
