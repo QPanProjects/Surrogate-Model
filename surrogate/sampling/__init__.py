@@ -22,11 +22,13 @@ from .samFullFact import samFullFact, samFracFact, samFF2n
 from .samLatinHypercube import samLatinHypercube
 from .samOptimalLHC import samOptimalLHC
 from .samPlackettBurman import samPlackettBurman
+from .samRandom import samRandom, samBeta, samBinomial, samChiSquare, samExponential
 from .samRandomLHC import samRandomLHC
 
 __all__ = [
     'samRandomLHC', 'samOptimalLHC',
     'samFullFact', 'samFracFact', 'samFF2n', 'samPlackettBurman',
     'samBoxBehnken', 'samCentralComposite',
-    'samLatinHypercube'
+    'samLatinHypercube',
+    'samRandom', 'samBeta', 'samBinomial', 'samChiSquare', 'samExponential'
 ]
