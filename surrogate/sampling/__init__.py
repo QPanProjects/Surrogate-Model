@@ -7,8 +7,14 @@ Links:
     https://en.wikipedia.org/wiki/Latin_hypercube_sampling
 
     https://docs.scipy.org/doc/numpy/reference/routines.random.html
+
+    Factorial Designs:
+        samFullFact, samFracFact, samFF2n, samPlackettBurman
+    Response-Surface Designs:
+        samBoxBehnken,
 """
 
+from .samBoxBehnken import samBoxBehnken
 from .samFullFact import samFullFact, samFracFact, samFF2n
 from .samOptimalLHC import samOptimalLHC
 from .samPlackettBurman import samPlackettBurman
@@ -17,5 +23,6 @@ from .samRLH import samRLH
 __all__ = [
     'samRLH',
     'samOptimalLHC',
-    'samFullFact', 'samFracFact', 'samFF2n', 'samPlackettBurman'
+    'samFullFact', 'samFracFact', 'samFF2n', 'samPlackettBurman',
+    'samBoxBehnken'
 ]
