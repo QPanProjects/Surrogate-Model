@@ -25,11 +25,11 @@ import pickle
 
 import numpy as np
 
-from .samRLH import samRLH
+from .samRandomLHC import samRandomLHC
 from .utils import mmlhs, mmsort
 
 
-# from surrogate.sampling.samRLH import samRLH
+# from surrogate.sampling.samRandomLHC import samRandomLHC
 # from surrogate.sampling.utils import mmlhs, mmsort
 
 def samOptimalLHC(n=2, k=2, population=30, iterations=30, generation=False):
@@ -52,7 +52,7 @@ def samOptimalLHC(n=2, k=2, population=30, iterations=30, generation=False):
     p = 1
 
     # we start with a random Latin hypercube
-    XStart = samRLH(n=n, k=k)
+    XStart = samRandomLHC(n=n, k=k)
 
     X3D = np.zeros((n, k, len(q)))
     # for each q optimize Phi_q

@@ -19,11 +19,10 @@ from .samCentralComposite import samCentralComposite
 from .samFullFact import samFullFact, samFracFact, samFF2n
 from .samOptimalLHC import samOptimalLHC
 from .samPlackettBurman import samPlackettBurman
-from .samRLH import samRLH
+from .samRandomLHC import samRandomLHC
 
 __all__ = [
-    'samRLH',
-    'samOptimalLHC',
+    'samRandomLHC', 'samOptimalLHC',
     'samFullFact', 'samFracFact', 'samFF2n', 'samPlackettBurman',
     'samBoxBehnken', 'samCentralComposite'
 ]

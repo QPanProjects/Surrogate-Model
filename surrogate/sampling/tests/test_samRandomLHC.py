@@ -1,9 +1,9 @@
-from surrogate.sampling.samRLH import samRLH
+from surrogate.sampling.samRandomLHC import samRandomLHC
 
-print '\nTest.sampling: samRLH'
+print '\nTest.sampling: samRandomLHC'
 n = 100
 k = 3
 print '\tInput:  n=\t' + '\t' + str(n) + ''
 print '\tInput:  k=\t' + '\t' + str(k) + ''
-X = samRLH(n=n, k=k)
+X = samRandomLHC(n=n, k=k)
 print '\tOutput: X=\t' + '\t'.join(map(str, X)) + ''

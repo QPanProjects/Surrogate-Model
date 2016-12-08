@@ -15,7 +15,8 @@ Outputs:
 
 import numpy as np
 
-def samRLH(n=2, k=2, Edges=0):
+
+def samRandomLHC(n=2, k=2, Edges=0):
     # pre-allocate memory
     X = np.zeros((n, k))
 
