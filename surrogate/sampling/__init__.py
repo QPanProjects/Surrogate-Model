@@ -11,12 +11,15 @@ Links:
     Factorial Designs:
         samFullFact, samFracFact, samFF2n, samPlackettBurman
     Response-Surface Designs:
-        samBoxBehnken,
+        samBoxBehnken, samCentralComposite
+    Randomized Designs:
+        samLatinHypercube
 """
 
 from .samBoxBehnken import samBoxBehnken
 from .samCentralComposite import samCentralComposite
 from .samFullFact import samFullFact, samFracFact, samFF2n
+from .samLatinHypercube import samLatinHypercube
 from .samOptimalLHC import samOptimalLHC
 from .samPlackettBurman import samPlackettBurman
 from .samRandomLHC import samRandomLHC
@@ -24,5 +27,6 @@ from .samRandomLHC import samRandomLHC
 __all__ = [
     'samRandomLHC', 'samOptimalLHC',
     'samFullFact', 'samFracFact', 'samFF2n', 'samPlackettBurman',
-    'samBoxBehnken', 'samCentralComposite'
+    'samBoxBehnken', 'samCentralComposite',
+    'samLatinHypercube'
 ]
