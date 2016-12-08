@@ -9,11 +9,12 @@ Links:
     https://docs.scipy.org/doc/numpy/reference/routines.random.html
 """
 
-
+from .fullfact import samFullFact, samFracFact, samFF2n
 from .samOptimalLHC import samOptimalLHC
 from .samRLH import samRLH
 
 __all__ = [
     'samRLH',
-    'samOptimalLHC'
+    'samOptimalLHC',
+    'samFullFact', 'samFracFact', 'samFF2n'
 ]
