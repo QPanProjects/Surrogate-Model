@@ -15,6 +15,7 @@ Links:
 """
 
 from .samBoxBehnken import samBoxBehnken
+from .samCentralComposite import samCentralComposite
 from .samFullFact import samFullFact, samFracFact, samFF2n
 from .samOptimalLHC import samOptimalLHC
 from .samPlackettBurman import samPlackettBurman
@@ -24,5 +25,5 @@ __all__ = [
     'samRLH',
     'samOptimalLHC',
     'samFullFact', 'samFracFact', 'samFF2n', 'samPlackettBurman',
-    'samBoxBehnken'
+    'samBoxBehnken', 'samCentralComposite'
 ]
