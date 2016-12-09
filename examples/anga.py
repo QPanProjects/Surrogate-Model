@@ -18,11 +18,10 @@ Implementation:
 
 import warnings
 
-from sklearn.neural_network import MLPRegressor
-
-from surrogate.estimator.neural_network import ANNSurrogate
-
 warnings.filterwarnings(action="ignore", category=Warning)
+
+from sklearn.neural_network import MLPRegressor
+from surrogate.estimator import ANNSurrogate
 
 if __name__ == "__main__":
     Xold_ind = [[0., 0.], [1., 1.], [10., 10.]]
