@@ -1,0 +1,34 @@
+Urgent (things I want to do immediately, formatted as the git commits I will use)
+---------------------------------------------------------------------------------
+
+* refactor the stupid interface code, api comparer is fucking gross
+* be smart enough to handle method missing
+* tests around the error messages of types and names
+* substitute_for should not depend on rspec-expectations
+* Error messages on blocks are actually useful
+
+TODO (next up after urgent, these will happen whenever I get around to it)
+--------------------------------------------------------------------------
+
+* when trying to set a return value, error is NoMethodError will_have_whatever, but would be nice for it to say `UndefinedMethodError bad_stuff is not defined`
+* Eventually it should be smart enough to not ignore natively implemented code with a [[:req]] argument
+* Remove dependency on all of RSpec and only depend on rspec-core, then have AC tests for the other shit
+* Add a better explanation for motivations
+* Figure out whether I'm supposed to be using clone or dup for the object -.^ (looks like there may also be an `initialize_copy` method I can take advantage of instead of crazy stupid shit I'm doing now)
+* config: rspec_mocks loaded, whether unprepared blocks should raise or just return nil
+* extract surrogate/rspec into its own gem
+* make substitutability matcher not care whether either are surrogates
+
+
+Future Features (Things that probably should eventually happen, but not anytime soon unless I get really inspired to work on this shit)
+---------------------------------------------------------------------------------------------------------------------------------------
+
+* Can endow a class multiple times, results aggregate instead of override
+* figure out how to talk about callbacks like #on_success
+* have some sort of reinitialization that can hook into setup/teardown steps of test suite (maybe, or maybe I'm happy with what I have)
+* Ability to disassociate the method name from the test (e.g. you shouldn't need to change a test just because you change a name)
+* ability to declare normal methods as being part of the API
+* ability to declare a define that uses the overridden method as the body, but can still act like an api method
+* assertions for order of invocations & methods
+* class generator? (supports a top-down style of development for when you write your mocks before you write your implementations)
+* deal with hard dependency on rspec-mocks
