@@ -16,38 +16,61 @@ Implementation:
         Retraining Frequency: Retraining frequency deter- mines when the ANNs should be updated during an ANGA run. Retraining frequency should decrease in later gener- ations as the search progresses into relatively smoother local regions.
 """
 
-from surrogate.base import SurrogateModel
+import warnings
 
+from sklearn.neural_network import MLPRegressor
 
-# class ANGA(object):
-class ANGA(SurrogateModel):
-    def __init__(self, x, y):
-        super(ANGA, self).__init__()
+from surrogate.estimator.neural_network import ANNSurrogate
 
-        self.x = x
-        self.y = y
-
-    def predict_proba(self, x):
-        super(ANGA, self).predict_proba(x)
-        pass
-
+warnings.filterwarnings(action="ignore", category=Warning)
 
 if __name__ == "__main__":
-    from sklearn import datasets
+    X = [[0., 0.], [1., 1.], [10., 10.]]
+    y = [0.0, 1.0, 10.0]
+    x_pred = [[5., 5.], [-10., -2.]]
 
-    iris = datasets.load_iris()
-    X, y = iris.data, iris.target
+    surrogate = ANNSurrogate(algorithm='l-bfgs', alpha=1e-5, hidden_layer_sizes=(5, 2), random_state=1)
+    surrogate.fit(X, y)
+    y_pred = surrogate.predict(X)
+    # print surrogate.regressor
+    # print y_pred
 
-    # def branin(x):
-    #     y = (x[1] - (5.1 / (4. * pi ** 2.)) * x[0] ** 2. + 5. * x[0] / pi - 6.) ** 2. + 10. * (
-    #     1. - 1. / (8. * pi)) * cos(
-    #         x[0]) + 10.
-    #     return y
-    # def branin_1d(x):
-    #     return branin(array([x[0], 2.275]))
-    # X = array([[0.0], [2.0], [3.0], [4.0], [6.0]])
-    # y = array([[branin_1d(case)] for case in X])
+    regressor = MLPRegressor(algorithm='l-bfgs', alpha=1e-5, hidden_layer_sizes=(5, 2), random_state=1)
+    regressor.fit(X, y)
+    y_pred = regressor.predict(X)
+    print regressor
+    print y_pred
 
-    anga = ANGA(X, y)
-    anga.fit(X, y)
-    anga.predict_proba(X)
+# from surrogate.base import SurrogateModel
+# class ANGA(object):
+# class ANGA(SurrogateModel):
+#     def __init__(self, x, y):
+#         super(ANGA, self).__init__()
+#
+#         self.x = x
+#         self.y = y
+#
+#     def predict_proba(self, x):
+#         super(ANGA, self).predict_proba(x)
+#         pass
+#
+#
+# if __name__ == "__main__":
+#     from sklearn import datasets
+#
+#     iris = datasets.load_iris()
+#     X, y = iris.data, iris.target
+#
+#     # def branin(x):
+#     #     y = (x[1] - (5.1 / (4. * pi ** 2.)) * x[0] ** 2. + 5. * x[0] / pi - 6.) ** 2. + 10. * (
+#     #     1. - 1. / (8. * pi)) * cos(
+#     #         x[0]) + 10.
+#     #     return y
+#     # def branin_1d(x):
+#     #     return branin(array([x[0], 2.275]))
+#     # X = array([[0.0], [2.0], [3.0], [4.0], [6.0]])
+#     # y = array([[branin_1d(case)] for case in X])
+#
+#     anga = ANGA(X, y)
+#     anga.fit(X, y)
+#     anga.predict_proba(X)

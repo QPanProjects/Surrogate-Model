@@ -1,5 +1,4 @@
 import warnings
-
 warnings.filterwarnings(action="ignore", category=Warning)
 
 from sklearn.neural_network import MLPClassifier, MLPRegressor
