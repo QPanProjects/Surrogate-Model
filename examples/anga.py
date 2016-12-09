@@ -16,30 +16,6 @@ Implementation:
         Retraining Frequency: Retraining frequency deter- mines when the ANNs should be updated during an ANGA run. Retraining frequency should decrease in later gener- ations as the search progresses into relatively smoother local regions.
 """
 
-import warnings
-
-warnings.filterwarnings(action="ignore", category=Warning)
-
-from sklearn.neural_network import MLPRegressor
-from surrogate.estimator import ANNSurrogate
-
-if __name__ == "__main__":
-    Xold_ind = [[0., 0.], [1., 1.], [10., 10.]]
-    Yold_obj = [0.0, 1.0, 10.0]
-    Xnew_ind = [[5., 5.], [-10., -2.]]
-
-    surrogate = ANNSurrogate(algorithm='l-bfgs', alpha=1e-5, hidden_layer_sizes=(5, 2), random_state=1)
-    surrogate.fit(Xold_ind, Yold_obj)
-    y_pred = surrogate.predict(Xnew_ind)
-    # print surrogate.regressor
-    print y_pred
-
-    regressor = MLPRegressor(algorithm='l-bfgs', alpha=1e-5, hidden_layer_sizes=(5, 2), random_state=1)
-    regressor.fit(Xold_ind, Yold_obj)
-    y_pred = regressor.predict(Xnew_ind)
-    # print regressor
-    print y_pred
-
 # from surrogate.base import SurrogateModel
 # class ANGA(object):
 # class ANGA(SurrogateModel):
@@ -73,3 +49,59 @@ if __name__ == "__main__":
 #     anga = ANGA(X, y)
 #     anga.fit(X, y)
 #     anga.predict_proba(X)
+
+
+import warnings
+
+warnings.filterwarnings(action="ignore", category=Warning)
+
+from surrogate.base import Individual
+from surrogate.sampling import samRandom
+from surrogate.estimator import ANNSurrogate
+from surrogate.benchmarks import zdt6
+
+if __name__ == "__main__":
+    _INF = 1e-14
+
+
+    # def ObjFunction(fun, *args, **kwargs):
+    #     return fun(*args, **kwargs)
+
+    # def Population(n=10, samStrategry):
+    def Population(n=10):
+        Individuals = []
+        for i in range(n):
+            variable = samRandom(n=10)
+            # variable = samBeta(a=0.1, b=0.1, size=10)
+
+            # objective = 'zdt6_fun'
+            objective = zdt6(variable)
+
+            constrain = []
+
+            fitness = 10.0 - i
+            # fitness = _INF
+
+            Individuals.append(Individual(variable, objective, constrain, fitness))
+        return Individuals
+
+
+    population = Population()
+
+    Xold_ind = [[0., 0.], [1., 1.], [10., 10.]]
+    Yold_obj = [0.0, 1.0, 10.0]
+    Xnew_ind = [[5., 5.], [-10., -2.]]
+
+    surrogate = ANNSurrogate(algorithm='l-bfgs', alpha=1e-5, hidden_layer_sizes=(5, 2), random_state=1)
+    surrogate.fit(Xold_ind, Yold_obj)
+    y_pred = surrogate.predict(Xnew_ind)
+    # print surrogate.regressor
+    print y_pred
+
+
+    # from sklearn.neural_network import MLPRegressor
+    # regressor = MLPRegressor(algorithm='l-bfgs', alpha=1e-5, hidden_layer_sizes=(5, 2), random_state=1)
+    # regressor.fit(Xold_ind, Yold_obj)
+    # y_pred = regressor.predict(Xnew_ind)
+    # # print regressor
+    # print y_pred
