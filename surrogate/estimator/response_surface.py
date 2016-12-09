@@ -6,9 +6,9 @@ from numpy.dual import lstsq
 from surrogate.base import SurrogateModel
 
 
-class ResponseSurface(SurrogateModel):
+class RSurfaceSurrogate(SurrogateModel):
     def __init__(self):
-        super(ResponseSurface, self).__init__()
+        super(RSurfaceSurrogate, self).__init__()
 
         self.m = 0  # number of training points
         self.n = 0  # number of independents
@@ -27,7 +27,7 @@ class ResponseSurface(SurrogateModel):
             Model responses at given inputs.
         """
 
-        super(ResponseSurface, self).fit(x, y)
+        super(RSurfaceSurrogate, self).fit(x, y)
 
         m = self.m = x.shape[0]
         n = self.n = x.shape[1]
@@ -65,7 +65,7 @@ class ResponseSurface(SurrogateModel):
             Point at which the surrogate is evaluated.
         """
 
-        super(ResponseSurface, self).predict(x)
+        super(RSurfaceSurrogate, self).predict(x)
 
         n = x.size
 

@@ -5,7 +5,7 @@
 
 from sklearn.neural_network import MLPRegressor
 
-from surrogate.estimator.neural_network import ANNSurrogate
+from surrogate.estimator import ANNSurrogate
 
 if __name__ == "__main__":
     X = [[0., 0.], [1., 1.], [10., 10.]]

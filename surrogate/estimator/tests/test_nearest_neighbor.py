@@ -2,16 +2,16 @@ import unittest
 
 import numpy as np
 
-from surrogate.estimator.nearest_neighbor import NearestNeighbor
+from surrogate.estimator import NNeighborSurrogate
 from surrogate.util.test import assert_rel_error
 
 
 class TestNearestNeighbor(unittest.TestCase):
     def test_unrecognized_type(self):
         with self.assertRaises(ValueError) as cm:
-            NearestNeighbor(interpolant_type='junk')
+            NNeighborSurrogate(interpolant_type='junk')
 
-        expected_msg = "NearestNeighbor: interpolant_type 'junk' not supported." \
+        expected_msg = "NNeighborSurrogate: interpolant_type 'junk' not supported." \
                        " interpolant_type must be one of ['linear', 'weighted'," \
                        " 'rbf']."
 
@@ -20,7 +20,7 @@ class TestNearestNeighbor(unittest.TestCase):
 
 class TestLinearInterpolator1D(unittest.TestCase):
     def setUp(self):
-        self.surrogate = NearestNeighbor(interpolant_type='linear')
+        self.surrogate = NNeighborSurrogate(interpolant_type='linear')
         self.x = np.array([[0.], [1.], [2.], [3.]])
         self.y = np.array([[0.], [1.], [1.], [0.]])
         self.surrogate.fit(self.x, self.y)
@@ -67,7 +67,7 @@ class TestLinearInterpolator1D(unittest.TestCase):
 
 class TestLinearInterpolatorND(unittest.TestCase):
     def setUp(self):
-        self.surrogate = NearestNeighbor(interpolant_type='linear')
+        self.surrogate = NNeighborSurrogate(interpolant_type='linear')
         self.x = np.array([[0., 0.], [2., 0.], [2., 2.], [0., 2.], [1., 1.]])
         self.y = np.array([[1., 0., .5, 1.],
                            [1., 0., .5, 1.],
@@ -140,7 +140,7 @@ class TestLinearInterpolatorND(unittest.TestCase):
 
 class TestWeightedInterpolator1D(unittest.TestCase):
     def setUp(self):
-        self.surrogate = NearestNeighbor(interpolant_type='weighted')
+        self.surrogate = NNeighborSurrogate(interpolant_type='weighted')
         self.x = np.array([[0.], [1.], [2.], [3.]])
         self.y = np.array([[0.], [1.], [1.], [0.]])
         self.surrogate.fit(self.x, self.y)
@@ -198,7 +198,7 @@ class TestWeightedInterpolator1D(unittest.TestCase):
 
 class TestWeightedInterpolatorND(unittest.TestCase):
     def setUp(self):
-        self.surrogate = NearestNeighbor(interpolant_type='weighted')
+        self.surrogate = NNeighborSurrogate(interpolant_type='weighted')
         self.x = np.array([[0., 0.], [2., 0.], [2., 2.], [0., 2.], [1., 1.]])
         self.y = np.array([[1., 0., .5, 1.],
                            [1., 0., .5, 1.],
@@ -286,7 +286,7 @@ class TestWeightedInterpolatorND(unittest.TestCase):
 
 class TestRBFInterpolator1D(unittest.TestCase):
     def setUp(self):
-        self.surrogate = NearestNeighbor(interpolant_type='rbf', n=4)
+        self.surrogate = NNeighborSurrogate(interpolant_type='rbf', n=4)
         self.x = np.array([[0.], [1.], [2.], [3.]])
         self.y = np.array([[0.], [2.], [2.], [0.]])
         self.surrogate.fit(self.x, self.y)
@@ -335,91 +335,91 @@ class TestRBFInterpolator1D(unittest.TestCase):
 
 class TestRBFInterpolatorND(unittest.TestCase):
     def setUp(self):
-        self.surrogate = NearestNeighbor(interpolant_type='rbf', n=5)
+        self.surrogate = NNeighborSurrogate(interpolant_type='rbf', n=5)
         self.x = np.array([[0., 0.], [2., 0.], [2., 2.], [0., 2.], [1., 1.]])
         self.y = np.array([[1., 0., .5, 1.],
                            [1., 0., .5, 1.],
                            [1., 0., .5, 1.],
                            [1., 0., .5, 1.],
                            [0., 1., .5, 0.]])
-        #     self.surrogate.fit(self.x, self.y)
-        #
-        # def test_training(self):
-        #     for x0, y0 in zip(self.x, self.y):
-        #         mu = self.surrogate.predict(x0)
-        #         assert_rel_error(self, mu, y0, 1e-9)
-        #
-        # def test_prediction(self):
-        #     test_x = np.array([[1., 0.5],
-        #                        [0.5, 1.0],
-        #                        [1.0, 1.5],
-        #                        [1.5, 1.],
-        #                        [0., 1.],
-        #                        [.5, .5]
-        #                        ])
-        #     a = 0.05453616
-        #     b = 0.5013363
-        #     c = 0.33860606
-        #     d = 0.13507662
-        #
-        #     expected_y = np.array([[a, b, 0.5, a],
-        #                            [a, b, 0.5, a],
-        #                            [a, b, 0.5, a],
-        #                            [a, b, 0.5, a],
-        #                            [c, d, 0.5, c],
-        #                            [0.37840446, 0.336283, 0.5, 0.37840446]
-        #                            ])
-        #
-        #     for x0, y0 in zip(test_x, expected_y):
-        #         mu = self.surrogate.predict(x0)
-        #         assert_rel_error(self, mu, y0, 1e-6)
-        #
-        # def test_bulk_prediction(self):
-        #     test_x = np.array([[1., 0.5],
-        #                        [0.5, 1.0],
-        #                        [1.0, 1.5],
-        #                        [1.5, 1.],
-        #                        [0., 1.],
-        #                        [.5, .5]
-        #                        ])
-        #
-        #     a = 0.05453616
-        #     b = 0.5013363
-        #     c = 0.33860606
-        #     d = 0.13507662
-        #
-        #     expected_y = np.array([[a, b, 0.5, a],
-        #                            [a, b, 0.5, a],
-        #                            [a, b, 0.5, a],
-        #                            [a, b, 0.5, a],
-        #                            [c, d, 0.5, c],
-        #                            [0.37840446, 0.336283, 0.5, 0.37840446]
-        #                            ])
-        #
-        #     mu = self.surrogate.predict(test_x)
-        #     assert_rel_error(self, mu, expected_y, 1e-6)
-        #
-        # def test_jacobian(self):
-        #     test_x = np.array([[0.5, 0.5],
-        #                        [0.5, 1.5],
-        #                        [1.5, 1.5],
-        #                        [1.5, 0.5]
-        #                        ])
-        #     a = -0.97153433
-        #     b = -0.97153433
-        #     c = 0.59055939
-        #     d = 0.59055939
-        #
-        #     expected_deriv = np.array([
-        #         [[a, b], [c, d], [0., 0.], [a, b]],
-        #         [[a, -b], [c, -d], [0., 0.], [a, -b]],
-        #         [[-a, -b], [-c, -d], [0., 0.], [-a, -b]],
-        #         [[-a, b], [-c, d], [0., 0.], [-a, b]]
-        #     ])
-        #
-        #     for x0, y0 in zip(test_x, expected_deriv):
-        #         mu = self.surrogate.linearize(x0)
-        #         assert_rel_error(self, mu, y0, 1e-6)
+        self.surrogate.fit(self.x, self.y)
+
+    def test_training(self):
+        for x0, y0 in zip(self.x, self.y):
+            mu = self.surrogate.predict(x0)
+            assert_rel_error(self, mu, y0, 1e-9)
+
+    def test_prediction(self):
+        test_x = np.array([[1., 0.5],
+                           [0.5, 1.0],
+                           [1.0, 1.5],
+                           [1.5, 1.],
+                           [0., 1.],
+                           [.5, .5]
+                           ])
+        a = 0.05453616
+        b = 0.5013363
+        c = 0.33860606
+        d = 0.13507662
+
+        expected_y = np.array([[a, b, 0.5, a],
+                               [a, b, 0.5, a],
+                               [a, b, 0.5, a],
+                               [a, b, 0.5, a],
+                               [c, d, 0.5, c],
+                               [0.37840446, 0.336283, 0.5, 0.37840446]
+                               ])
+
+        for x0, y0 in zip(test_x, expected_y):
+            mu = self.surrogate.predict(x0)
+            assert_rel_error(self, mu, y0, 1e-6)
+
+    def test_bulk_prediction(self):
+        test_x = np.array([[1., 0.5],
+                           [0.5, 1.0],
+                           [1.0, 1.5],
+                           [1.5, 1.],
+                           [0., 1.],
+                           [.5, .5]
+                           ])
+
+        a = 0.05453616
+        b = 0.5013363
+        c = 0.33860606
+        d = 0.13507662
+
+        expected_y = np.array([[a, b, 0.5, a],
+                               [a, b, 0.5, a],
+                               [a, b, 0.5, a],
+                               [a, b, 0.5, a],
+                               [c, d, 0.5, c],
+                               [0.37840446, 0.336283, 0.5, 0.37840446]
+                               ])
+
+        mu = self.surrogate.predict(test_x)
+        assert_rel_error(self, mu, expected_y, 1e-6)
+
+    def test_jacobian(self):
+        test_x = np.array([[0.5, 0.5],
+                           [0.5, 1.5],
+                           [1.5, 1.5],
+                           [1.5, 0.5]
+                           ])
+        a = -0.97153433
+        b = -0.97153433
+        c = 0.59055939
+        d = 0.59055939
+
+        expected_deriv = np.array([
+            [[a, b], [c, d], [0., 0.], [a, b]],
+            [[a, -b], [c, -d], [0., 0.], [a, -b]],
+            [[-a, -b], [-c, -d], [0., 0.], [-a, -b]],
+            [[-a, b], [-c, d], [0., 0.], [-a, b]]
+        ])
+
+        for x0, y0 in zip(test_x, expected_deriv):
+            mu = self.surrogate.linearize(x0)
+            assert_rel_error(self, mu, y0, 1e-6)
 
 
 if __name__ == "__main__":

@@ -13,7 +13,7 @@ _interpolators = OrderedDict([
 ])
 
 
-class NearestNeighbor(SurrogateModel):
+class NNeighborSurrogate(SurrogateModel):
     """
     Surrogate model that approximates values using a nearest neighbor
     approximation. `interpolant_type` argument must be one of 'linear',
@@ -33,10 +33,10 @@ class NearestNeighbor(SurrogateModel):
     """
 
     def __init__(self, interpolant_type='rbf', **kwargs):
-        super(NearestNeighbor, self).__init__()
+        super(NNeighborSurrogate, self).__init__()
 
         if interpolant_type not in _interpolators.keys():
-            msg = "NearestNeighbor: interpolant_type '{0}' not supported." \
+            msg = "NNeighborSurrogate: interpolant_type '{0}' not supported." \
                   " interpolant_type must be one of {1}.".format(
                 interpolant_type, list(_interpolators.keys())
             )
@@ -59,7 +59,7 @@ class NearestNeighbor(SurrogateModel):
         y : array-like
             Model responses at given inputs.
         """
-        super(NearestNeighbor, self).fit(x, y)
+        super(NNeighborSurrogate, self).fit(x, y)
         self.interpolant = _interpolators[self.interpolant_type](x, y, **self.interpolant_init_args)
 
     def predict(self, x, **kwargs):
@@ -75,7 +75,7 @@ class NearestNeighbor(SurrogateModel):
         kwargs :
             Additional keyword arguments passed to the interpolant.
         """
-        super(NearestNeighbor, self).predict(x)
+        super(NNeighborSurrogate, self).predict(x)
         return self.interpolant(x, **kwargs)
 
     def linearize(self, x, **kwargs):

@@ -1,11 +1,11 @@
 from .kriging import KrigingSurrogate, FloatKrigingSurrogate
-from .nearest_neighbor import NearestNeighbor
+from .nearest_neighbor import NNeighborSurrogate
 from .neural_network import ANNSurrogate
-from .response_surface import ResponseSurface
+from .response_surface import RSurfaceSurrogate
 
 __all__ = [
     'KrigingSurrogate', 'FloatKrigingSurrogate',
-    'ResponseSurface',
-    'NearestNeighbor',
+    'RSurfaceSurrogate',
+    'NNeighborSurrogate',
     'ANNSurrogate'
 ]

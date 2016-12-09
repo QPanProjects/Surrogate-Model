@@ -5,7 +5,7 @@ import unittest
 
 from numpy import array, linspace, sin, cos, pi
 
-from surrogate.estimator.response_surface import ResponseSurface
+from surrogate.estimator import RSurfaceSurrogate
 from surrogate.util.test import assert_rel_error
 
 
@@ -24,7 +24,7 @@ class TestResponseSurfaceSurrogate(unittest.TestCase):
 
         x = array([[0.0], [2.0], [3.0]])
         y = array([[branin_1d(case)] for case in x])
-        surrogate = ResponseSurface()
+        surrogate = RSurfaceSurrogate()
         surrogate.fit(x, y)
 
         for x0, y0 in zip(x, y):
@@ -35,7 +35,7 @@ class TestResponseSurfaceSurrogate(unittest.TestCase):
         x = array([[0.0], [2.0], [3.0], [4.0], [6.0]])
         y = array([[branin_1d(case)] for case in x])
 
-        surrogate = ResponseSurface()
+        surrogate = RSurfaceSurrogate()
         surrogate.fit(x, y)
 
         new_x = array([pi])
@@ -47,7 +47,7 @@ class TestResponseSurfaceSurrogate(unittest.TestCase):
         # Test for least squares solver utilization when ill-conditioned
         x = array([[case] for case in linspace(0., 1., 40)])
         y = sin(x)
-        surrogate = ResponseSurface()
+        surrogate = RSurfaceSurrogate()
         surrogate.fit(x, y)
         new_x = array([0.5])
         mu = surrogate.predict(new_x)
@@ -59,7 +59,7 @@ class TestResponseSurfaceSurrogate(unittest.TestCase):
         x = array([[-2., 0.], [-0.5, 1.5], [1., 1.], [0., .25], [.25, 0.], [.66, .33]])
         y = array([[branin(case)] for case in x])
 
-        surrogate = ResponseSurface()
+        surrogate = RSurfaceSurrogate()
         surrogate.fit(x, y)
 
         for x0, y0 in zip(x, y):
@@ -71,18 +71,18 @@ class TestResponseSurfaceSurrogate(unittest.TestCase):
         assert_rel_error(self, mu, branin([.5, .5]), 1e-1)
 
     def test_no_training_data(self):
-        surrogate = ResponseSurface()
+        surrogate = RSurfaceSurrogate()
 
         try:
             surrogate.predict([0., 1.])
         except RuntimeError as err:
             self.assertEqual(str(err),
-                             "ResponseSurface has not been trained, so no prediction can be made.")
+                             "RSurfaceSurrogate has not been trained, so no prediction can be made.")
         else:
             self.fail("RuntimeError Expected")
 
     def test_one_pt(self):
-        surrogate = ResponseSurface()
+        surrogate = RSurfaceSurrogate()
         x = array([[0.]])
         y = array([[1.]])
 
@@ -90,7 +90,7 @@ class TestResponseSurfaceSurrogate(unittest.TestCase):
         assert_rel_error(self, surrogate.betas, array([[1.], [0.], [0.]]), 1e-9)
 
     def test_vector_input(self):
-        surrogate = ResponseSurface()
+        surrogate = RSurfaceSurrogate()
 
         x = array([[0., 0., 0.], [1., 1., 1.]])
         y = array([[0.], [3.]])
@@ -102,7 +102,7 @@ class TestResponseSurfaceSurrogate(unittest.TestCase):
             assert_rel_error(self, mu, y0, 1e-9)
 
     def test_vector_output(self):
-        surrogate = ResponseSurface()
+        surrogate = RSurfaceSurrogate()
 
         x = array([[0.], [2.], [4.]])
         y = array([[0., 0.], [1., 1.], [2., 0.]])
@@ -114,7 +114,7 @@ class TestResponseSurfaceSurrogate(unittest.TestCase):
             assert_rel_error(self, mu, y0, 1e-9)
 
     def test_scalar_derivs(self):
-        surrogate = ResponseSurface()
+        surrogate = RSurfaceSurrogate()
 
         x = array([[0.], [1.], [2.], [3.]])
         y = x.copy()
@@ -125,7 +125,7 @@ class TestResponseSurfaceSurrogate(unittest.TestCase):
         assert_rel_error(self, jac[0][0], 1., 1e-3)
 
     def test_vector_derivs(self):
-        surrogate = ResponseSurface()
+        surrogate = RSurfaceSurrogate()
 
         x = array([[a, b] for a, b in
                    itertools.product(linspace(0, 1, 10), repeat=2)])

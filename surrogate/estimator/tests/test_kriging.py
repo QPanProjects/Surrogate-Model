@@ -3,7 +3,7 @@ import unittest
 
 from numpy import array, linspace, sin, cos, pi
 
-from surrogate.estimator.kriging import KrigingSurrogate
+from surrogate.estimator import KrigingSurrogate
 from surrogate.util.test import assert_rel_error
 
 
