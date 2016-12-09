@@ -25,19 +25,19 @@ from surrogate.estimator.neural_network import ANNSurrogate
 warnings.filterwarnings(action="ignore", category=Warning)
 
 if __name__ == "__main__":
-    X = [[0., 0.], [1., 1.], [10., 10.]]
-    y = [0.0, 1.0, 10.0]
+    Xpool_ind = [[0., 0.], [1., 1.], [10., 10.]]
+    Ypool_obj = [0.0, 1.0, 10.0]
     x_pred = [[5., 5.], [-10., -2.]]
 
     surrogate = ANNSurrogate(algorithm='l-bfgs', alpha=1e-5, hidden_layer_sizes=(5, 2), random_state=1)
-    surrogate.fit(X, y)
-    y_pred = surrogate.predict(X)
+    surrogate.fit(Xpool_ind, Ypool_obj)
+    y_pred = surrogate.predict(Xpool_ind)
     # print surrogate.regressor
     print y_pred
 
     regressor = MLPRegressor(algorithm='l-bfgs', alpha=1e-5, hidden_layer_sizes=(5, 2), random_state=1)
-    regressor.fit(X, y)
-    y_pred = regressor.predict(X)
+    regressor.fit(Xpool_ind, Ypool_obj)
+    y_pred = regressor.predict(Xpool_ind)
     # print regressor
     print y_pred
 
