@@ -240,15 +240,14 @@ class ANNSurrogate(SurrogateModel):
     def fit(self, x, y):
         super(ANNSurrogate, self).fit(x, y)
 
-        print 'fit'
+        # print 'fit'
         self.__model.fit(x, y)
 
     def predict(self, x):
         super(ANNSurrogate, self).predict(x)
 
-        print 'predict'
+        # print 'predict'
         y = self.__model.predict(x)
-        print y
         return y
 
     def predict_proba(self, x):
