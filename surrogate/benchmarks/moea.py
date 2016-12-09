@@ -16,11 +16,11 @@
 Regroup typical EC benchmarks functions to import easily and benchmark
 examples.
 """
-
-import random
 from functools import reduce
 from math import sin, cos, pi, exp, e, sqrt
 from operator import mul
+
+import numpy as np
 
 
 # Unimodal
@@ -40,7 +40,7 @@ def rand(individual):
        * - Function
          - :math:`f(\mathbf{x}) = \\text{\\texttt{random}}(0,1)`
     """
-    return random.random(),
+    return np.random.random(),
 
 
 def plane(individual):
@@ -394,7 +394,7 @@ def kursawe(individual):
     """
     f1 = sum(-10 * exp(-0.2 * sqrt(x * x + y * y)) for x, y in zip(individual[:-1], individual[1:]))
     f2 = sum(abs(x) ** 0.8 + 5 * sin(x * x * x) for x in individual)
-    return f1, f2
+    return np.array([f1, f2])
 
 
 def schaffer_mo(individual):
@@ -407,7 +407,9 @@ def schaffer_mo(individual):
 
     :math:`f_{\\text{Schaffer}2}(\\mathbf{x}) = (x_1-2)^2`
     """
-    return individual[0] ** 2, (individual[0] - 2) ** 2
+    f1 = individual[0] ** 2
+    f2 = (individual[0] - 2) ** 2
+    return np.array([f1, f2])
 
 
 def zdt1(individual):
@@ -422,7 +424,7 @@ def zdt1(individual):
     g = 1.0 + 9.0 * sum(individual[1:]) / (len(individual) - 1)
     f1 = individual[0]
     f2 = g * (1 - sqrt(f1 / g))
-    return f1, f2
+    return np.array([f1, f2])
 
 
 def zdt2(individual):
@@ -439,7 +441,7 @@ def zdt2(individual):
     g = 1.0 + 9.0 * sum(individual[1:]) / (len(individual) - 1)
     f1 = individual[0]
     f2 = g * (1 - (f1 / g) ** 2)
-    return f1, f2
+    return np.array([f1, f2])
 
 
 def zdt3(individual):
@@ -456,7 +458,7 @@ def zdt3(individual):
     g = 1.0 + 9.0 * sum(individual[1:]) / (len(individual) - 1)
     f1 = individual[0]
     f2 = g * (1 - sqrt(f1 / g) - f1 / g * sin(10 * pi * f1))
-    return f1, f2
+    return np.array([f1, f2])
 
 
 def zdt4(individual):
@@ -472,7 +474,7 @@ def zdt4(individual):
     g = 1 + 10 * (len(individual) - 1) + sum(xi ** 2 - 10 * cos(4 * pi * xi) for xi in individual[1:])
     f1 = individual[0]
     f2 = g * (1 - sqrt(f1 / g))
-    return f1, f2
+    return np.array([f1, f2])
 
 
 def zdt6(individual):
@@ -488,7 +490,7 @@ def zdt6(individual):
     g = 1 + 9 * (sum(individual[1:]) / (len(individual) - 1)) ** 0.25
     f1 = 1 - exp(-4 * individual[0]) * sin(6 * pi * individual[0]) ** 6
     f2 = g * (1 - (f1 / g) ** 2)
-    return f1, f2
+    return np.array([f1, f2])
 
 
 def dtlz1(individual, obj):
@@ -623,9 +625,9 @@ def fonseca(individual):
 
     :math:`f_{\\text{Fonseca}2}(\\mathbf{x}) = 1 - e^{-\\sum_{i=1}^{3}(x_i + \\frac{1}{\\sqrt{3}})^2}`
     """
-    f_1 = 1 - exp(-sum((xi - 1 / sqrt(3)) ** 2 for xi in individual[:3]))
-    f_2 = 1 - exp(-sum((xi + 1 / sqrt(3)) ** 2 for xi in individual[:3]))
-    return f_1, f_2
+    f1 = 1 - exp(-sum((xi - 1 / sqrt(3)) ** 2 for xi in individual[:3]))
+    f2 = 1 - exp(-sum((xi + 1 / sqrt(3)) ** 2 for xi in individual[:3]))
+    return np.array([f1, f2])
 
 
 def poloni(individual):
