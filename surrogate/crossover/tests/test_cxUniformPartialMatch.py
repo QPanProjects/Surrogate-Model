@@ -1,6 +1,6 @@
-from surrogate.crossover.cxUniformPartialMatch import cxUniformPartialMatch
+from surrogate.crossover import cxUniformPartialMatch
 
-print '\nTest.crossover: cxUniformPartialMatch'
+print '\nTest.crossover.cxUniformPartialMatch: cxUniformPartialMatch'
 ind1 = range(0, 10)
 # ind2 = range(10, 20)
 ind2 = range(9, -1, -1)

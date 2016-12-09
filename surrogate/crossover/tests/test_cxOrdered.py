@@ -1,6 +1,6 @@
-from surrogate.crossover.cxOrdered import cxOrdered
+from surrogate.crossover import cxOrdered
 
-print '\nTest.crossover: cxOrdered'
+print '\nTest.crossover.cxOrdered: cxOrdered'
 ind1 = range(0, 10)
 # ind2 = range(10, 20)
 ind2 = range(9, -1, -1)

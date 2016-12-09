@@ -1,6 +1,6 @@
-from surrogate.crossover.cxUniform import cxUniform
+from surrogate.crossover import cxUniform
 
-print '\nTest.crossover: cxUniform'
+print '\nTest.crossover.cxUniform: cxUniform'
 ind1 = range(0, 10)
 ind2 = range(10, 20)
 # ind2 = range(9,-1,-1)

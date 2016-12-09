@@ -1,6 +1,6 @@
-from surrogate.crossover.cxSimulatedBinaryBounded import cxSimulatedBinaryBounded
+from surrogate.crossover import cxSimulatedBinaryBounded
 
-print '\nTest.crossover: cxSimulatedBinaryBounded'
+print '\nTest.crossover.cxSimulatedBinaryBounded: cxSimulatedBinaryBounded'
 ind1 = range(0, 10)
 ind2 = range(10, 20)
 # ind2 = range(9,-1,-1)

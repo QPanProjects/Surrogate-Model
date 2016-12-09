@@ -1,6 +1,6 @@
-from surrogate.crossover.cxMessyOnePoint import cxMessyOnePoint
+from surrogate.crossover import cxMessyOnePoint
 
-print '\nTest.crossover: cxMessyOnePoint'
+print '\nTest.crossover.cxMessyOnePoint: cxMessyOnePoint'
 ind1 = range(0, 10)
 ind2 = range(10, 20)
 # ind2 = range(9,-1,-1)
