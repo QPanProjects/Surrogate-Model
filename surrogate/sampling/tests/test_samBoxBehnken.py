@@ -1,4 +1,4 @@
-from surrogate.sampling.samBoxBehnken import samBoxBehnken
+from surrogate.sampling import samBoxBehnken
 
-print '\nsampling.samBoxBehnken'
+print '\nTest sampling.samBoxBehnken: samBoxBehnken'
 print samBoxBehnken(3)

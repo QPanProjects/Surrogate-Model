@@ -1,4 +1,4 @@
-from surrogate.sampling.samCentralComposite import samCentralComposite
+from surrogate.sampling import samCentralComposite
 
-print '\nsampling.samCentralComposite'
+print '\nTest sampling.samCentralComposite: samCentralComposite'
 print samCentralComposite(3)

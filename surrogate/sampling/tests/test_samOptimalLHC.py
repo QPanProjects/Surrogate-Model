@@ -1,6 +1,6 @@
-from surrogate.sampling.samOptimalLHC import samOptimalLHC
+from surrogate.sampling import samOptimalLHC
 
-print '\nTest.sampling: samOptimalLHC'
+print '\nTest sampling.samOptimalLHC: samOptimalLHC'
 n = 3
 k = 3
 print '\tInput:  n=\t' + '\t' + str(n) + ''

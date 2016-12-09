@@ -1,4 +1,4 @@
-from surrogate.sampling.samPlackettBurman import samPlackettBurman
+from surrogate.sampling import samPlackettBurman
 
-print '\nsampling.samPlackettBurman.samPlackettBurman'
+print '\nTest sampling.samPlackettBurman: samPlackettBurman'
 print samPlackettBurman(3)

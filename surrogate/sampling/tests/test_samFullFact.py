@@ -1,10 +1,10 @@
-from surrogate.sampling.samFullFact import *
+from surrogate.sampling import *
 
-print '\nsampling.samFullFact.samFullFact'
+print '\nTest sampling.samFullFact: samFullFact'
 print samFullFact([2, 4, 3])
-print '\nsampling.samFullFact.samFF2n'
+print '\nTest sampling.samFullFact: samFF2n'
 print samFF2n(3)
-print '\nsampling.samFullFact.samFracFact'
+print '\nTest sampling.samFullFact: samFracFact'
 print 'a b ab'
 print samFracFact("a b ab")
 print 'A B AB'

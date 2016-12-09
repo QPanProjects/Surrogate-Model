@@ -1,4 +1,4 @@
-from surrogate.sampling.samLatinHypercube import samLatinHypercube
+from surrogate.sampling import samLatinHypercube
 
-print '\nsampling.samLatinHypercube'
+print '\nTest sampling.samLatinHypercube: samLatinHypercube'
 print samLatinHypercube(n=4, samples=6)

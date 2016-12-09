@@ -1,6 +1,6 @@
-from surrogate.sampling.samRandomLHC import samRandomLHC
+from surrogate.sampling import samRandomLHC
 
-print '\nTest.sampling: samRandomLHC'
+print '\nTest sampling.samRandomLHC: samRandomLHC'
 n = 3
 k = 3
 print '\tInput:  n=\t' + '\t' + str(n) + ''
