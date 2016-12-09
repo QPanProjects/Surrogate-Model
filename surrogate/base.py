@@ -13,8 +13,10 @@ Class definition for Individual, the base class for all surrogate models.
 
 # class Individual:
 class Individual(object):
-    def __init__(self, variable, fitness, constrain):
+    def __init__(self, variable, objective, constrain, fitness):
+        # needed
         self.variable = variable
+        # not yet decided
         self.fitness = fitness
         self.constrain = constrain
 
@@ -24,7 +26,7 @@ class Individual(object):
         self.strategy = set()
         self.solution = set()
         self.feature = None
-        self.objective = None
+        self.objective = objective
         self.dominate = None
 
 
@@ -32,7 +34,7 @@ class Individual(object):
     #     return len(self.variable)
 
     def __repr__(self):
-        return repr((self.variable, self.fitness, self.constrain))
+        return repr((self.variable, self.objective, self.constrain, self.fitness))
 
 
 ##############################################################################
