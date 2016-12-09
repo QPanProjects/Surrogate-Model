@@ -1,8 +1,8 @@
 from surrogate.sampling import *
 
 print '\nTest sampling.samRandom: samRandom'
-d0, d1 = 3, 2
-print samRandom(d0, d1)
+n = 3
+print samRandom(n)
 
 print '\nTest sampling.samRandom: samBeta'
 a, b, size = 0.1, 0.5, 10

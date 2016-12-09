@@ -13,8 +13,8 @@ Links:
 import numpy.random as rand
 
 
-def samRandom(n=2, k=2):
-    return rand.rand(n, k)
+def samRandom(n=2):
+    return rand.rand(n)
 
 
 def samBeta(a=0.1, b=0.1, size=None):  # real signature unknown; restored from __doc__
