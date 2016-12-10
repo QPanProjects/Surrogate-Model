@@ -13,28 +13,60 @@ Class definition for Individual, the base class for all surrogate models.
 
 # class Individual:
 class Individual(object):
-    def __init__(self, variable, objective, constrain, fitness):
+    def __init__(self, estimator, variable=None, objective=None, constraint=None, *args, **kwargs):
+        """
+        Optimization Problem Class Individual
+
+        *Arguments:
+        - opt_func -> FUNC: Objective function
+
+        **Keyword arguments:
+        - var_set -> INST: Variable set, *Default* = None
+        - obj_set -> INST: Objective set, *Default* = None
+        - con_set -> INST: Constraints set, *Default* = None
+
+        def ObjFunction(fun, *args, **kwargs):
+            return fun(*args, **kwargs)
+        """
+
         # needed
-        self.variable = variable
+        self.estimator = estimator
+
+        if variable is None:
+            self.variable = {}
+        else:
+            self.variable = variable
+
+        if objective is None:
+            self.objective = {}
+        else:
+            self.objective = objective
+
+        if constraint is None:
+            self.constraint = {}
+        else:
+            self.constraint = constraint
+
+        self.solution = {}
+
         # not yet decided
-        self.fitness = fitness
-        self.constrain = constrain
+        # self.fitness = None
+        # self.rank = None
+        # self.distance = None
+        # self.strategy = set()
+        # self.solution = set()
+        # self.feature = None
+        # self.dominate = None
 
-        self.rank = None
-        self.distance = None
-
-        self.strategy = set()
-        self.solution = set()
-        self.feature = None
-        self.objective = objective
-        self.dominate = None
-
+    def getVar(self, i):
+        if not (isinstance(i, int) and i >= 0):
+            raise ValueError("Variable index must be an integer >= 0 .")
+        return self._variables[i]
 
     # def __len__(self):
     #     return len(self.variable)
-
-    def __repr__(self):
-        return repr((self.variable, self.objective, self.constrain, self.fitness))
+        # def __repr__(self):
+        #     return repr((self.variable, self.objective, self.constraint, self.fitness))
 
 
 ##############################################################################
