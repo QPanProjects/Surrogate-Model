@@ -22,19 +22,20 @@ import random
 from collections import Sequence
 from itertools import repeat
 
-def mutGaussian(individual, mu=100, sigma=0.5, prob=0.5):
-    size = len(individual)
+
+def mutGaussian(variable, mu=100, sigma=0.5, prob=0.5):
+    size = variable.size
     if not isinstance(mu, Sequence):
         mu = repeat(mu, size)
     elif len(mu) < size:
-        raise IndexError("mu must be at least the size of individual: %d < %d" % (len(mu), size))
+        raise IndexError("mu must be at least the size of variable: %d < %d" % (len(mu), size))
     if not isinstance(sigma, Sequence):
         sigma = repeat(sigma, size)
     elif len(sigma) < size:
-        raise IndexError("sigma must be at least the size of individual: %d < %d" % (len(sigma), size))
+        raise IndexError("sigma must be at least the size of variable: %d < %d" % (len(sigma), size))
 
     for i, m, s in zip(xrange(size), mu, sigma):
         if random.random() < prob:
-            individual[i] += random.gauss(m, s)
+            variable[i] += random.gauss(m, s)
 
-    return individual,
+    return variable

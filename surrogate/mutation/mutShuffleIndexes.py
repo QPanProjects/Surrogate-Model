@@ -17,14 +17,15 @@ functions from the python base :mod:`random` module.
 
 import random
 
-def mutShuffleIndexes(individual, prob=0.5):
-    size = len(individual)
+
+def mutShuffleIndexes(variable, prob=0.5):
+    size = variable.size
     for i in xrange(size):
         if random.random() < prob:
             swap_indx = random.randint(0, size - 2)
             if swap_indx >= i:
                 swap_indx += 1
-            individual[i], individual[swap_indx] = \
-                individual[swap_indx], individual[i]
+            variable[i], variable[swap_indx] = \
+                variable[swap_indx], variable[i]
 
-    return individual,
+    return variable

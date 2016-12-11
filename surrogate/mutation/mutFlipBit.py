@@ -17,9 +17,10 @@ This function uses the :func:`~random.random` function from the python base
 
 import random
 
-def mutFlipBit(individual, prob=0.5):
-    for i in xrange(len(individual)):
-        if random.random() < prob:
-            individual[i] = type(individual[i])(not individual[i])
 
-    return individual,
+def mutFlipBit(variable, prob=0.5):
+    for i in xrange(variable.size):
+        if random.random() < prob:
+            variable[i] = type(variable[i])(not variable[i])
+
+    return variable

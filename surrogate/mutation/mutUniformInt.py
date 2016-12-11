@@ -19,19 +19,20 @@ import random
 from collections import Sequence
 from itertools import repeat
 
-def mutUniformInt(individual, low=0.0, up=1.0, prob=0.5):
-    size = len(individual)
+
+def mutUniformInt(variable, low=0.0, up=1.0, prob=0.5):
+    size = variable.size
     if not isinstance(low, Sequence):
         low = repeat(low, size)
     elif len(low) < size:
-        raise IndexError("low must be at least the size of individual: %d < %d" % (len(low), size))
+        raise IndexError("low must be at least the size of variable: %d < %d" % (len(low), size))
     if not isinstance(up, Sequence):
         up = repeat(up, size)
     elif len(up) < size:
-        raise IndexError("up must be at least the size of individual: %d < %d" % (len(up), size))
+        raise IndexError("up must be at least the size of variable: %d < %d" % (len(up), size))
 
     for i, xl, xu in zip(xrange(size), low, up):
         if random.random() < prob:
-            individual[i] = random.randint(xl, xu)
+            variable[i] = random.randint(xl, xu)
 
-    return individual,
+    return variable

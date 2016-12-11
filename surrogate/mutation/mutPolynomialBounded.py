@@ -19,20 +19,22 @@ import random
 from collections import Sequence
 from itertools import repeat
 
-def mutPolynomialBounded(individual, eta=20, low=0.0, up=1.0, prob=0.5):
-    size = len(individual)
+
+def mutPolynomialBounded(variable, eta=20, low=0.0, up=1.0, prob=1.0):
+    # size = len(variable)
+    size = variable.size
     if not isinstance(low, Sequence):
         low = repeat(low, size)
     elif len(low) < size:
-        raise IndexError("low must be at least the size of individual: %d < %d" % (len(low), size))
+        raise IndexError("low must be at least the size of variable: %d < %d" % (len(low), size))
     if not isinstance(up, Sequence):
         up = repeat(up, size)
     elif len(up) < size:
-        raise IndexError("up must be at least the size of individual: %d < %d" % (len(up), size))
+        raise IndexError("up must be at least the size of variable: %d < %d" % (len(up), size))
 
     for i, xl, xu in zip(xrange(size), low, up):
         if random.random() <= prob:
-            x = individual[i]
+            x = variable[i]
             delta_1 = (x - xl) / (xu - xl)
             delta_2 = (xu - x) / (xu - xl)
             rand = random.random()
@@ -49,5 +51,5 @@ def mutPolynomialBounded(individual, eta=20, low=0.0, up=1.0, prob=0.5):
 
             x = x + delta_q * (xu - xl)
             x = min(max(x, xl), xu)
-            individual[i] = x
-    return individual,
+            variable[i] = x
+    return variable
