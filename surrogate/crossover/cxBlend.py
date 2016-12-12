@@ -17,10 +17,11 @@ This function uses the :func:`~random.random` function from the python base
 
 import random
 
-def cxBlend(ind1, ind2, alpha=0.5):
-    for i, (x1, x2) in enumerate(zip(ind1, ind2)):
-        gamma = (1. + 2. * alpha) * random.random() - alpha
-        ind1[i] = (1. - gamma) * x1 + gamma * x2
-        ind2[i] = gamma * x1 + (1. - gamma) * x2
 
-    return ind1, ind2
+def cxBlend(var1, var2, alpha=0.5):
+    for i, (x1, x2) in enumerate(zip(var1, var2)):
+        gamma = (1. + 2. * alpha) * random.random() - alpha
+        var1[i] = (1. - gamma) * x1 + gamma * x2
+        var2[i] = gamma * x1 + (1. - gamma) * x2
+
+    return var1, var2

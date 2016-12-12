@@ -12,12 +12,14 @@ python base :mod:`random` module.
 
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
+import numpy as np
 
-import random
 
-def cxOnePoint(ind1, ind2):
-    size = min(len(ind1), len(ind2))
-    cxpoint = random.randint(1, size - 1)
-    ind1[cxpoint:], ind2[cxpoint:] = ind2[cxpoint:], ind1[cxpoint:]
+def cxOnePoint(var1, var2):
+    size = min(len(var1), len(var2))
+    # size = min(var1.size, var2.size)
+    cxpoint = np.random.randint(1, size - 1)
+    var1[cxpoint:], var2[cxpoint:] = var2[cxpoint:], var1[cxpoint:]
+    # var1[cxpoint:], var2[cxpoint:] = var2[cxpoint:].copy(), var1[cxpoint:].copy()
 
-    return ind1, ind2
+    return var1, var2

@@ -15,8 +15,10 @@ base :mod:`random` module.
 
 import random
 
-def cxTwoPoint(ind1, ind2):
-    size = min(len(ind1), len(ind2))
+
+def cxTwoPoint(var1, var2):
+    size = min(len(var1), len(var2))
+    # size = min(var1.size, var2.size)
     cxpoint1 = random.randint(1, size)
     cxpoint2 = random.randint(1, size - 1)
     if cxpoint2 >= cxpoint1:
@@ -24,6 +26,7 @@ def cxTwoPoint(ind1, ind2):
     else:  # Swap the two cx points
         cxpoint1, cxpoint2 = cxpoint2, cxpoint1
 
-    ind1[cxpoint1:cxpoint2], ind2[cxpoint1:cxpoint2] = ind2[cxpoint1:cxpoint2], ind1[cxpoint1:cxpoint2]
+    var1[cxpoint1:cxpoint2], var2[cxpoint1:cxpoint2] = var2[cxpoint1:cxpoint2], var1[cxpoint1:cxpoint2]
+    # var1[cxpoint1:cxpoint2], var2[cxpoint1:cxpoint2] = var2[cxpoint1:cxpoint2].copy(), var1[cxpoint1:cxpoint2].copy()
 
-    return ind1, ind2
+    return var1, var2

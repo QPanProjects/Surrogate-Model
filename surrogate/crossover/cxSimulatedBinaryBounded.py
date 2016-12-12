@@ -28,8 +28,10 @@ import random
 from collections import Sequence
 from itertools import repeat
 
-def cxSimulatedBinaryBounded(ind1, ind2, eta=15, low=0.0, up=1.0):
-    size = min(len(ind1), len(ind2))
+
+def cxSimulatedBinaryBounded(var1, var2, eta=15, low=0.0, up=1.0):
+    size = min(len(var1), len(var2))
+    # size = min(var1.size, var2.size)
     if not isinstance(low, Sequence):
         low = repeat(low, size)
     elif len(low) < size:
@@ -43,9 +45,9 @@ def cxSimulatedBinaryBounded(ind1, ind2, eta=15, low=0.0, up=1.0):
         if random.random() <= 0.5:
             # This epsilon should probably be changed for 0 since
             # floating point arithmetic in Python is safer
-            if abs(ind1[i] - ind2[i]) > 1e-14:
-                x1 = min(ind1[i], ind2[i])
-                x2 = max(ind1[i], ind2[i])
+            if abs(var1[i] - var2[i]) > 1e-14:
+                x1 = min(var1[i], var2[i])
+                x2 = max(var1[i], var2[i])
                 rand = random.random()
 
                 beta = 1.0 + (2.0 * (x1 - xl) / (x2 - x1))
@@ -69,10 +71,10 @@ def cxSimulatedBinaryBounded(ind1, ind2, eta=15, low=0.0, up=1.0):
                 c2 = min(max(c2, xl), xu)
 
                 if random.random() <= 0.5:
-                    ind1[i] = c2
-                    ind2[i] = c1
+                    var1[i] = c2
+                    var2[i] = c1
                 else:
-                    ind1[i] = c1
-                    ind2[i] = c2
+                    var1[i] = c1
+                    var2[i] = c2
 
-    return ind1, ind2
+    return var1, var2

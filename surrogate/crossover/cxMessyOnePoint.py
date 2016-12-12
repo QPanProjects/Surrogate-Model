@@ -15,9 +15,13 @@ This function uses the :func:`~random.randint` function from the python base
 
 import random
 
-def cxMessyOnePoint(ind1, ind2):
-    cxpoint1 = random.randint(0, len(ind1))
-    cxpoint2 = random.randint(0, len(ind2))
-    ind1[cxpoint1:], ind2[cxpoint2:] = ind2[cxpoint2:], ind1[cxpoint1:]
 
-    return ind1, ind2
+def cxMessyOnePoint(var1, var2):
+    cxpoint1 = random.randint(0, len(var1))
+    cxpoint2 = random.randint(0, len(var2))
+    # cxpoint1 = random.randint(0, var1.size)
+    # cxpoint2 = random.randint(0, var2.size)
+    var1[cxpoint1:], var2[cxpoint2:] = var2[cxpoint2:], var1[cxpoint1:]
+    # var1[cxpoint1:], var2[cxpoint1:] = var2[cxpoint1:].copy(), var1[cxpoint1:].copy()
+
+    return var1, var2

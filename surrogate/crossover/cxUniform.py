@@ -16,10 +16,12 @@ This function uses the :func:`~random.random` function from the python base
 
 import random
 
-def cxUniform(ind1, ind2, prob=0.5):
-    size = min(len(ind1), len(ind2))
+
+def cxUniform(var1, var2, prob=0.5):
+    size = min(len(var1), len(var2))
+    # size = min(var1.size, var2.size)
     for i in xrange(size):
         if random.random() < prob:
-            ind1[i], ind2[i] = ind2[i], ind1[i]
+            var1[i], var2[i] = var2[i], var1[i]
 
-    return ind1, ind2
+    return var1, var2

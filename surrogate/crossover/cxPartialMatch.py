@@ -23,14 +23,16 @@ This function uses the :func:`~random.randint` function from the python base
 
 import random
 
-def cxPartialyMatch(ind1, ind2):
-    size = min(len(ind1), len(ind2))
+
+def cxPartialyMatch(var1, var2):
+    size = min(len(var1), len(var2))
+    # size = min(var1.size, var2.size)
     p1, p2 = [0] * size, [0] * size
 
     # Initialize the position of each indices in the individuals
     for i in xrange(size):
-        p1[ind1[i]] = i
-        p2[ind2[i]] = i
+        p1[var1[i]] = i
+        p2[var2[i]] = i
     # Choose crossover points
     cxpoint1 = random.randint(0, size)
     cxpoint2 = random.randint(0, size - 1)
@@ -42,13 +44,13 @@ def cxPartialyMatch(ind1, ind2):
     # Apply crossover between cx points
     for i in xrange(cxpoint1, cxpoint2):
         # Keep track of the selected values
-        temp1 = ind1[i]
-        temp2 = ind2[i]
+        temp1 = var1[i]
+        temp2 = var2[i]
         # Swap the matched value
-        ind1[i], ind1[p1[temp2]] = temp2, temp1
-        ind2[i], ind2[p2[temp1]] = temp1, temp2
+        var1[i], var1[p1[temp2]] = temp2, temp1
+        var2[i], var2[p2[temp1]] = temp1, temp2
         # Position bookkeeping
         p1[temp1], p1[temp2] = p1[temp2], p1[temp1]
         p2[temp1], p2[temp2] = p2[temp2], p2[temp1]
 
-    return ind1, ind2
+    return var1, var2
