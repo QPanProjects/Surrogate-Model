@@ -19,7 +19,8 @@ import random
 
 
 def mutFlipBit(variable, prob=0.5):
-    for i in xrange(variable.size):
+    for i in xrange(len(variable)):
+        # for i in xrange(variable.size):
         if random.random() < prob:
             variable[i] = type(variable[i])(not variable[i])
 

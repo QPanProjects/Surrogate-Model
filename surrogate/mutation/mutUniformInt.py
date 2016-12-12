@@ -21,7 +21,8 @@ from itertools import repeat
 
 
 def mutUniformInt(variable, low=0.0, up=1.0, prob=0.5):
-    size = variable.size
+    size = len(variable)
+    # size = variable.size
     if not isinstance(low, Sequence):
         low = repeat(low, size)
     elif len(low) < size:

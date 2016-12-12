@@ -21,8 +21,8 @@ from itertools import repeat
 
 
 def mutPolynomialBounded(variable, eta=20, low=0.0, up=1.0, prob=1.0):
-    # size = len(variable)
-    size = variable.size
+    size = len(variable)
+    # size = variable.size
     if not isinstance(low, Sequence):
         low = repeat(low, size)
     elif len(low) < size:

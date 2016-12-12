@@ -19,7 +19,8 @@ import random
 
 
 def mutShuffleIndexes(variable, prob=0.5):
-    size = variable.size
+    size = len(variable)
+    # size = variable.size
     for i in xrange(size):
         if random.random() < prob:
             swap_indx = random.randint(0, size - 2)

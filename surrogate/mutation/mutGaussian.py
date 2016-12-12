@@ -23,8 +23,9 @@ from collections import Sequence
 from itertools import repeat
 
 
-def mutGaussian(variable, mu=100, sigma=0.5, prob=0.5):
-    size = variable.size
+def mutGaussian(variable, mu=1, sigma=0.5, prob=0.5):
+    size = len(variable)
+    # size = variable.size
     if not isinstance(mu, Sequence):
         mu = repeat(mu, size)
     elif len(mu) < size:
