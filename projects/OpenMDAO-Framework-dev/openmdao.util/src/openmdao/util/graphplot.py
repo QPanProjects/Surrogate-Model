@@ -1,4 +1,3 @@
-import json
 import os
 import pprint
 import shutil
@@ -6,6 +5,7 @@ import sys
 import tempfile
 import webbrowser
 
+import ioJSON
 from networkx.readwrite.json_graph import node_link_data
 
 _excluded_node_data = set([
@@ -154,7 +154,7 @@ def plot_graph(graph, scope=None, parent=None,
         # to avoid cross-site issues
         with open('__graph.js', 'w') as f:
             f.write("__mygraph__json = ")
-            json.dump(data, f)
+            ioJSON.dump(data, f)
             f.write(";\n")
 
         # open URL in web browser

@@ -1,5 +1,5 @@
 # 2.3.5 Seeding a population
-import json
+import ioJSON
 
 from deap import base
 from deap import creator
@@ -14,7 +14,7 @@ def initIndividual(icls, content):
 
 def initPopulation(pcls, ind_init, filename):
     with open(filename, "r") as pop_file:
-        contents = json.load(pop_file)
+        contents = ioJSON.load(pop_file)
     return pcls(ind_init(c) for c in contents)
 
 

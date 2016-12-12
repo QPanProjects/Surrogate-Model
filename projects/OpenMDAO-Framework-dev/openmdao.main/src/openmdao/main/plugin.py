@@ -10,7 +10,7 @@ import webbrowser
 try:
     import simplejson as json
 except ImportError:
-    import json
+    import ioJSON
 import pprint
 import StringIO
 from ConfigParser import SafeConfigParser

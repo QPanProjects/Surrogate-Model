@@ -9,11 +9,12 @@ from __future__ import print_function, division, absolute_import
 
 import argparse
 import collections
-import json
 import os
 import re
 import sys
 from urllib2 import urlopen
+
+import ioJSON
 
 Issue = collections.namedtuple('Issue', ('id', 'title', 'url'))
 
@@ -70,7 +71,7 @@ def main():
 def get_milestones(getter, project):
     url = "https://api.github.com/repos/{project}/milestones".format(project=project)
     raw_data, info = getter.get(url)
-    data = json.loads(raw_data)
+    data = ioJSON.loads(raw_data)
 
     milestones = {}
     for ms in data:
@@ -100,7 +101,7 @@ def get_issues(getter, project, milestone):
     issues = []
 
     for raw_data in raw_datas:
-        data = json.loads(raw_data)
+        data = ioJSON.loads(raw_data)
         for issue_data in data:
             issues.append(Issue(issue_data[u'number'],
                                 issue_data[u'title'],
@@ -115,7 +116,7 @@ class CachedGet(object):
             print("[gh_lists] using {0} as cache (remove it if you want fresh data)".format(filename),
                   file=sys.stderr)
             with open(filename, 'rb') as f:
-                self.cache = json.load(f)
+                self.cache = ioJSON.load(f)
         else:
             self.cache = {}
 
@@ -137,7 +138,7 @@ class CachedGet(object):
     def save(self):
         tmp = self.filename + ".new"
         with open(tmp, 'wb') as f:
-            json.dump(self.cache, f)
+            ioJSON.dump(self.cache, f)
         os.rename(tmp, self.filename)
 
 

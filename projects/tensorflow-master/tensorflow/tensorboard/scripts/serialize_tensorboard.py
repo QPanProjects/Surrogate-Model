@@ -25,13 +25,13 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-import json
 import os
 import os.path
 import shutil
 import threading
 import urllib
 
+import ioJSON
 import six
 import tensorflow as tf
 from six.moves import http_client
@@ -93,7 +93,7 @@ class TensorBoardStaticSerializer(object):
     def GetRouteAndSave(self, route, params=None):
         """GET given route and params. Serialize the result. Return as JSON."""
         url = Url(route, params)
-        return json.loads(self.GetAndSave(url))
+        return ioJSON.loads(self.GetAndSave(url))
 
     def Run(self):
         """Serialize everything from a TensorBoard backend."""

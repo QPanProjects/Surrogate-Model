@@ -22,11 +22,11 @@ from __future__ import division
 from __future__ import print_function
 
 import base64
-import json
 import os
 import shutil
 import threading
 
+import ioJSON
 import tensorflow as tf
 from six.moves import http_client
 from six.moves import xrange  # pylint: disable=redefined-builtin
@@ -66,7 +66,7 @@ class TensorboardServerTest(tf.test.TestCase):
         self._connection.request('GET', path)
         response = self._connection.getresponse()
         self.assertEqual(response.status, 200)
-        return json.loads(response.read().decode('utf-8'))
+        return ioJSON.loads(response.read().decode('utf-8'))
 
     def testBasicStartup(self):
         """Start the server up and then shut it down immediately."""

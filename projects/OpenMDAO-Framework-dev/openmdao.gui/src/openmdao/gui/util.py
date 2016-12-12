@@ -2,7 +2,6 @@
 """
 
 import glob
-import json
 import os
 import os.path
 import subprocess
@@ -11,6 +10,7 @@ import webbrowser
 from distutils.spawn import find_executable
 from os.path import isdir, exists, join, getsize, split
 
+import ioJSON
 from openmdao.util.fileutil import find_files
 
 
@@ -39,7 +39,7 @@ def print_dict(dict):
 def print_json(data):
     ''' Pretty print json data.
     '''
-    print json.dumps(json.loads(str(data)), indent=2)
+    print ioJSON.dumps(ioJSON.loads(str(data)), indent=2)
 
 
 def makenode(doc, path):

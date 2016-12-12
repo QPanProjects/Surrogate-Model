@@ -26,10 +26,10 @@ from __future__ import print_function
 import csv
 import gzip
 import imghdr
-import json
 import mimetypes
 import os
 
+import ioJSON
 from google.protobuf import text_format
 from six import BytesIO
 from six.moves import BaseHTTPServer
@@ -165,7 +165,7 @@ class TensorboardHandler(BaseHTTPServer.BaseHTTPRequestHandler):
           code: The numeric HTTP status code to use.
         """
 
-        output = json.dumps(float_wrapper.WrapSpecialFloats(obj))
+        output = ioJSON.dumps(float_wrapper.WrapSpecialFloats(obj))
 
         self.send_response(code)
         self.send_header('Content-Type', 'application/json')

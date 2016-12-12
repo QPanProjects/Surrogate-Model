@@ -25,7 +25,7 @@ import functools
 import traceback
 import warnings
 import inspect
-import json
+import ioJSON
 import weakref
 import io
 
@@ -192,7 +192,7 @@ class MemorizedResult(Logger):
             try:
                 with open(os.path.join(self._output_dir, 'metadata.json'),
                           'rb') as f:
-                    self.metadata = json.load(f)
+                    self.metadata = ioJSON.load(f)
             except:
                 pass
 
@@ -730,7 +730,7 @@ class MemorizedFunc(Logger):
         try:
             mkdirp(output_dir)
             with open(os.path.join(output_dir, 'metadata.json'), 'w') as f:
-                json.dump(metadata, f)
+                ioJSON.dump(metadata, f)
         except:
             pass
 

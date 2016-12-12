@@ -14,9 +14,9 @@
 #    License along with DEAP. If not, see <http://www.gnu.org/licenses/>.
 
 import array
-import json
 import random
 
+import ioJSON
 import numpy
 from deap import algorithms
 from deap import base
@@ -26,7 +26,7 @@ from deap import tools
 # gr*.json contains the distance map in list of list style in JSON format
 # Optimal solutions are : gr17 = 2085, gr24 = 1272, gr120 = 6942
 with open("tsp/gr17.json", "r") as tsp_data:
-    tsp = json.load(tsp_data)
+    tsp = ioJSON.load(tsp_data)
 
 distance_map = tsp["DistanceMatrix"]
 IND_SIZE = tsp["TourSize"]

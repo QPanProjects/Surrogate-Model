@@ -1,10 +1,10 @@
-import json
 import os.path
 import shutil
 import tempfile
 import time
 import unittest
 
+import ioJSON
 from openmdao.gui.consoleserver import ConsoleServer
 from openmdao.main.project import project_from_archive
 from openmdao.main.publisher import Publisher
@@ -50,13 +50,13 @@ class ConsoleServerTestCase(unittest.TestCase):
         type_info = types['Paraboloid']
         self.assertEqual(type_info['modpath'], 'paraboloid.Paraboloid')
 
-        components = json.loads(self.cserver.get_components())
+        components = ioJSON.loads(self.cserver.get_components())
 
         # CREATE ASSEMBLY
         self.cserver.put_object('prob', 'openmdao.main.assembly.Assembly')
 
         oldnum = len(components)
-        components = json.loads(self.cserver.get_components())
+        components = ioJSON.loads(self.cserver.get_components())
         self.assertEqual(len(components) - oldnum, 1)
 
         for comp in components:
@@ -81,7 +81,7 @@ class ConsoleServerTestCase(unittest.TestCase):
         self.cserver.put_object('prob.driver',
                                 'openmdao.lib.drivers.conmindriver.CONMINdriver')
 
-        components = json.loads(self.cserver.get_components())
+        components = ioJSON.loads(self.cserver.get_components())
         self.assertEqual(len(components) - oldnum, 1)
 
         for comp in components:
@@ -101,7 +101,7 @@ class ConsoleServerTestCase(unittest.TestCase):
                           'IOptimizer', 'IDriver', 'IHasEvents', 'IComponent', 'IContainer'])
 
         # CHECK DRIVER ATTRIBUTES
-        attributes = json.loads(self.cserver.get_attributes('prob.driver'))
+        attributes = ioJSON.loads(self.cserver.get_attributes('prob.driver'))
         self.assertEqual(attributes['type'], 'CONMINdriver')
         self.assertTrue('Inputs' in attributes)
         self.assertTrue('Outputs' in attributes)
@@ -123,7 +123,7 @@ class ConsoleServerTestCase(unittest.TestCase):
 
         self.assertEqual(self.cserver.file_forces_reload('/paraboloid.py'), True)
 
-        attributes = json.loads(self.cserver.get_attributes('prob.p'))
+        attributes = ioJSON.loads(self.cserver.get_attributes('prob.p'))
         self.assertEqual(attributes['type'], 'Paraboloid')
 
         self.assertTrue('Inputs' in attributes)
@@ -164,7 +164,7 @@ class ConsoleServerTestCase(unittest.TestCase):
         self.assertTrue(found_f_xy)
 
         # DATAFLOW
-        dataflow = json.loads(self.cserver.get_dataflow('prob'))
+        dataflow = ioJSON.loads(self.cserver.get_dataflow('prob'))
 
         self.assertEqual(len(dataflow), 6)
 
@@ -209,7 +209,7 @@ class ConsoleServerTestCase(unittest.TestCase):
 
         # WORKFLOW
         self.cserver.onecmd('prob.driver.workflow.add("p")')
-        driver_flow = json.loads(self.cserver.get_workflow('prob.driver'))[0]
+        driver_flow = ioJSON.loads(self.cserver.get_workflow('prob.driver'))[0]
         self.assertTrue('pathname' in driver_flow)
         self.assertTrue('type' in driver_flow)
         self.assertTrue('workflow' in driver_flow)

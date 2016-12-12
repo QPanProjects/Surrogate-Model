@@ -3,7 +3,7 @@ import cmd
 try:
     import simplejson as json
 except ImportError:
-    import json
+    import ioJSON
 import logging
 import os.path
 from os import utime

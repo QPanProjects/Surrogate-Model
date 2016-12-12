@@ -1,12 +1,12 @@
 from __future__ import division, print_function, absolute_import
 
 import inspect
-import json
 import os
 import time
 import traceback
 from collections import defaultdict, OrderedDict
 
+import ioJSON
 import numpy as np
 
 try:
@@ -442,11 +442,11 @@ class BenchGlobal(Benchmark):
             raise NotImplementedError()
         # load json backing file
         with open(self.dump_fn, 'r') as f:
-            self.results = json.load(f)
+            self.results = ioJSON.load(f)
 
     def teardown(self, name, ret_value, solver):
         with open(self.dump_fn, 'w') as f:
-            json.dump(self.results, f, indent=2, sort_keys=True)
+            ioJSON.dump(self.results, f, indent=2, sort_keys=True)
 
     def track_all(self, name, ret_value, solver):
         if name in self.results and solver in self.results[name]:
@@ -490,4 +490,4 @@ class BenchGlobal(Benchmark):
 
         # create the logfile to start with
         with open(self.dump_fn, 'w') as f:
-            json.dump({}, f, indent=2)
+            ioJSON.dump({}, f, indent=2)

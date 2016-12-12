@@ -5,7 +5,7 @@ from threading import RLock
 try:
     import simplejson as json
 except ImportError:
-    import json
+    import ioJSON
 
 try:
     import zmq
