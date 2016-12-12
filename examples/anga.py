@@ -120,9 +120,9 @@ def moeaLoop():
     CXPB = 0.9
     # estimator = benchmarks.zdt1
     # estimator = benchmarks.zdt2
-    estimator = benchmarks.zdt3
+    # estimator = benchmarks.zdt3
     # estimator = benchmarks.zdt4
-    # estimator = benchmarks.zdt6
+    estimator = benchmarks.zdt6
     weights = (-1.0, -1.0)
     # weights = (1.0, 1.0)
 
