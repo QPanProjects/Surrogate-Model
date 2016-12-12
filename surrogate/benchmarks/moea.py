@@ -24,7 +24,7 @@ import numpy as np
 
 
 # Unimodal
-def rand(individual):
+def rand(variable):
     """Random test objective function.
 
     .. list-table::
@@ -43,7 +43,7 @@ def rand(individual):
     return np.random.random(),
 
 
-def plane(individual):
+def plane(variable):
     """Plane test objective function.
 
     .. list-table::
@@ -59,10 +59,10 @@ def plane(individual):
        * - Function
          - :math:`f(\mathbf{x}) = x_0`
     """
-    return individual[0],
+    return variable[0],
 
 
-def sphere(individual):
+def sphere(variable):
     """Sphere test objective function.
 
     .. list-table::
@@ -78,10 +78,10 @@ def sphere(individual):
        * - Function
          - :math:`f(\mathbf{x}) = \sum_{i=1}^Nx_i^2`
     """
-    return sum(gene * gene for gene in individual),
+    return sum(gene * gene for gene in variable),
 
 
-def cigar(individual):
+def cigar(variable):
     """Cigar test objective function.
 
     .. list-table::
@@ -97,10 +97,10 @@ def cigar(individual):
        * - Function
          - :math:`f(\mathbf{x}) = x_0^2 + 10^6\\sum_{i=1}^N\,x_i^2`
     """
-    return individual[0] ** 2 + 1e6 * sum(gene * gene for gene in individual),
+    return variable[0] ** 2 + 1e6 * sum(gene * gene for gene in variable),
 
 
-def rosenbrock(individual):
+def rosenbrock(variable):
     """Rosenbrock test objective function.
 
     .. list-table::
@@ -120,10 +120,10 @@ def rosenbrock(individual):
        :width: 67 %
     """
     return sum(100 * (x * x - y) ** 2 + (1. - x) ** 2 \
-               for x, y in zip(individual[:-1], individual[1:])),
+               for x, y in zip(variable[:-1], variable[1:])),
 
 
-def h1(individual):
+def h1(variable):
     """ Simple two-dimensional function containing several local maxima.
     From: The Merits of a Parallel Genetic Algorithm in Solving Hard
     Optimization Problems, A. J. Knoek van Soest and L. J. R. Richard
@@ -147,15 +147,15 @@ def h1(individual):
     .. plot:: code/benchmarks/h1.py
        :width: 67 %
     """
-    num = (sin(individual[0] - individual[1] / 8)) ** 2 + (sin(individual[1] + individual[0] / 8)) ** 2
-    denum = ((individual[0] - 8.6998) ** 2 + (individual[1] - 6.7665) ** 2) ** 0.5 + 1
+    num = (sin(variable[0] - variable[1] / 8)) ** 2 + (sin(variable[1] + variable[0] / 8)) ** 2
+    denum = ((variable[0] - 8.6998) ** 2 + (variable[1] - 6.7665) ** 2) ** 0.5 + 1
     return num / denum,
 
     #
 
 
 # Multimodal
-def ackley(individual):
+def ackley(variable):
     """Ackley test objective function.
 
     .. list-table::
@@ -175,12 +175,12 @@ def ackley(individual):
     .. plot:: code/benchmarks/ackley.py
        :width: 67 %
     """
-    N = len(individual)
-    return 20 - 20 * exp(-0.2 * sqrt(1.0 / N * sum(x ** 2 for x in individual))) \
-           + e - exp(1.0 / N * sum(cos(2 * pi * x) for x in individual)),
+    N = len(variable)
+    return 20 - 20 * exp(-0.2 * sqrt(1.0 / N * sum(x ** 2 for x in variable))) \
+           + e - exp(1.0 / N * sum(cos(2 * pi * x) for x in variable)),
 
 
-def bohachevsky(individual):
+def bohachevsky(variable):
     """Bohachevsky test objective function.
 
     .. list-table::
@@ -201,10 +201,10 @@ def bohachevsky(individual):
        :width: 67 %
     """
     return sum(x ** 2 + 2 * x1 ** 2 - 0.3 * cos(3 * pi * x) - 0.4 * cos(4 * pi * x1) + 0.7
-               for x, x1 in zip(individual[:-1], individual[1:])),
+               for x, x1 in zip(variable[:-1], variable[1:])),
 
 
-def griewank(individual):
+def griewank(variable):
     """Griewank test objective function.
 
     .. list-table::
@@ -224,11 +224,11 @@ def griewank(individual):
     .. plot:: code/benchmarks/griewank.py
        :width: 67 %
     """
-    return 1.0 / 4000.0 * sum(x ** 2 for x in individual) - \
-           reduce(mul, (cos(x / sqrt(i + 1.0)) for i, x in enumerate(individual)), 1) + 1,
+    return 1.0 / 4000.0 * sum(x ** 2 for x in variable) - \
+           reduce(mul, (cos(x / sqrt(i + 1.0)) for i, x in enumerate(variable)), 1) + 1,
 
 
-def rastrigin(individual):
+def rastrigin(variable):
     """Rastrigin test objective function.
 
     .. list-table::
@@ -247,23 +247,23 @@ def rastrigin(individual):
     .. plot:: code/benchmarks/rastrigin.py
        :width: 67 %
     """
-    return 10 * len(individual) + sum(gene * gene - 10 * \
-                                      cos(2 * pi * gene) for gene in individual),
+    return 10 * len(variable) + sum(gene * gene - 10 * \
+                                    cos(2 * pi * gene) for gene in variable),
 
 
-def rastrigin_scaled(individual):
+def rastrigin_scaled(variable):
     """Scaled Rastrigin test objective function.
 
     :math:`f_{\\text{RastScaled}}(\mathbf{x}) = 10N + \sum_{i=1}^N \
         \left(10^{\left(\\frac{i-1}{N-1}\\right)} x_i \\right)^2 x_i)^2 - \
         10\cos\\left(2\\pi 10^{\left(\\frac{i-1}{N-1}\\right)} x_i \\right)`
     """
-    N = len(individual)
+    N = len(variable)
     return 10 * N + sum((10 ** (i / (N - 1)) * x) ** 2 -
-                        10 * cos(2 * pi * 10 ** (i / (N - 1)) * x) for i, x in enumerate(individual)),
+                        10 * cos(2 * pi * 10 ** (i / (N - 1)) * x) for i, x in enumerate(variable)),
 
 
-def rastrigin_skew(individual):
+def rastrigin_skew(variable):
     """Skewed Rastrigin test objective function.
 
      :math:`f_{\\text{RastSkew}}(\mathbf{x}) = 10N \sum_{i=1}^N \left(y_i^2 - 10 \\cos(2\\pi x_i)\\right)`
@@ -274,12 +274,12 @@ def rastrigin_skew(individual):
                                 x_i & \\text{ otherwise } \
                             \\end{cases}`
     """
-    N = len(individual)
+    N = len(variable)
     return 10 * N + sum((10 * x if x > 0 else x) ** 2
-                        - 10 * cos(2 * pi * (10 * x if x > 0 else x)) for x in individual),
+                        - 10 * cos(2 * pi * (10 * x if x > 0 else x)) for x in variable),
 
 
-def schaffer(individual):
+def schaffer(variable):
     """Schaffer test objective function.
 
     .. list-table::
@@ -301,10 +301,10 @@ def schaffer(individual):
         :width: 67 %
     """
     return sum((x ** 2 + x1 ** 2) ** 0.25 * ((sin(50 * (x ** 2 + x1 ** 2) ** 0.1)) ** 2 + 1.0)
-               for x, x1 in zip(individual[:-1], individual[1:])),
+               for x, x1 in zip(variable[:-1], variable[1:])),
 
 
-def schwefel(individual):
+def schwefel(variable):
     """Schwefel test objective function.
 
     .. list-table::
@@ -325,11 +325,11 @@ def schwefel(individual):
     .. plot:: code/benchmarks/schwefel.py
         :width: 67 %
     """
-    N = len(individual)
-    return 418.9828872724339 * N - sum(x * sin(sqrt(abs(x))) for x in individual),
+    N = len(variable)
+    return 418.9828872724339 * N - sum(x * sin(sqrt(abs(x))) for x in variable),
 
 
-def himmelblau(individual):
+def himmelblau(variable):
     """The Himmelblau's function is multimodal with 4 defined minimums in
     :math:`[-6, 6]^2`.
 
@@ -352,11 +352,11 @@ def himmelblau(individual):
     .. plot:: code/benchmarks/himmelblau.py
         :width: 67 %
     """
-    return (individual[0] * individual[0] + individual[1] - 11) ** 2 + \
-           (individual[0] + individual[1] * individual[1] - 7) ** 2,
+    return (variable[0] * variable[0] + variable[1] - 11) ** 2 + \
+           (variable[0] + variable[1] * variable[1] - 7) ** 2,
 
 
-def shekel(individual, a, c):
+def shekel(variable, a, c):
     """The Shekel multimodal function can have any number of maxima. The number
     of maxima is given by the length of any of the arguments *a* or *c*, *a*
     is a matrix of size :math:`M\\times N`, where *M* is the number of maxima
@@ -378,11 +378,11 @@ def shekel(individual, a, c):
     .. plot:: code/benchmarks/shekel.py
         :width: 67 %
     """
-    return sum((1. / (c[i] + sum((x - a[i][j]) ** 2 for j, x in enumerate(individual)))) for i in range(len(c))),
+    return sum((1. / (c[i] + sum((x - a[i][j]) ** 2 for j, x in enumerate(variable)))) for i in range(len(c))),
 
 
 # Multiobjectives
-def kursawe(individual):
+def kursawe(variable):
     """Kursawe multiobjective function.
 
     :math:`f_{\\text{Kursawe}1}(\\mathbf{x}) = \\sum_{i=1}^{N-1} -10 e^{-0.2 \\sqrt{x_i^2 + x_{i+1}^2} }`
@@ -392,13 +392,13 @@ def kursawe(individual):
     .. plot:: code/benchmarks/kursawe.py
        :width: 100 %
     """
-    f1 = sum(-10 * exp(-0.2 * sqrt(x * x + y * y)) for x, y in zip(individual[:-1], individual[1:]))
-    f2 = sum(abs(x) ** 0.8 + 5 * sin(x * x * x) for x in individual)
-    return np.array([f1, f2])
+    f1 = sum(-10 * exp(-0.2 * sqrt(x * x + y * y)) for x, y in zip(variable[:-1], variable[1:]))
+    f2 = sum(abs(x) ** 0.8 + 5 * sin(x * x * x) for x in variable)
+    return np.array([f1, f2]).tolist()
 
 
-def schaffer_mo(individual):
-    """Schaffer's multiobjective function on a one attribute *individual*.
+def schaffer_mo(variable):
+    """Schaffer's multiobjective function on a one attribute *variable*.
     From: J. D. Schaffer, "Multiple objective optimization with vector
     evaluated genetic algorithms", in Proceedings of the First International
     Conference on Genetic Algorithms, 1987.
@@ -407,12 +407,12 @@ def schaffer_mo(individual):
 
     :math:`f_{\\text{Schaffer}2}(\\mathbf{x}) = (x_1-2)^2`
     """
-    f1 = individual[0] ** 2
-    f2 = (individual[0] - 2) ** 2
-    return np.array([f1, f2])
+    f1 = variable[0] ** 2
+    f2 = (variable[0] - 2) ** 2
+    return np.array([f1, f2]).tolist()
 
 
-def zdt1(individual):
+def zdt1(variable):
     """ZDT1 multiobjective function.
 
     :math:`g(\\mathbf{x}) = 1 + \\frac{9}{n-1}\\sum_{i=2}^n x_i`
@@ -421,13 +421,13 @@ def zdt1(individual):
 
     :math:`f_{\\text{ZDT1}2}(\\mathbf{x}) = g(\\mathbf{x})\\left[1 - \\sqrt{\\frac{x_1}{g(\\mathbf{x})}}\\right]`
     """
-    g = 1.0 + 9.0 * sum(individual[1:]) / (len(individual) - 1)
-    f1 = individual[0]
+    g = 1.0 + 9.0 * sum(variable[1:]) / (len(variable) - 1)
+    f1 = variable[0]
     f2 = g * (1 - sqrt(f1 / g))
-    return np.array([f1, f2])
+    return np.array([f1, f2]).tolist()
 
 
-def zdt2(individual):
+def zdt2(variable):
     """ZDT2 multiobjective function.
 
     :math:`g(\\mathbf{x}) = 1 + \\frac{9}{n-1}\\sum_{i=2}^n x_i`
@@ -438,13 +438,13 @@ def zdt2(individual):
 
     """
 
-    g = 1.0 + 9.0 * sum(individual[1:]) / (len(individual) - 1)
-    f1 = individual[0]
+    g = 1.0 + 9.0 * sum(variable[1:]) / (len(variable) - 1)
+    f1 = variable[0]
     f2 = g * (1 - (f1 / g) ** 2)
-    return np.array([f1, f2])
+    return np.array([f1, f2]).tolist()
 
 
-def zdt3(individual):
+def zdt3(variable):
     """ZDT3 multiobjective function.
 
     :math:`g(\\mathbf{x}) = 1 + \\frac{9}{n-1}\\sum_{i=2}^n x_i`
@@ -455,13 +455,13 @@ def zdt3(individual):
 
     """
 
-    g = 1.0 + 9.0 * sum(individual[1:]) / (len(individual) - 1)
-    f1 = individual[0]
+    g = 1.0 + 9.0 * sum(variable[1:]) / (len(variable) - 1)
+    f1 = variable[0]
     f2 = g * (1 - sqrt(f1 / g) - f1 / g * sin(10 * pi * f1))
-    return np.array([f1, f2])
+    return np.array([f1, f2]).tolist()
 
 
-def zdt4(individual):
+def zdt4(variable):
     """ZDT4 multiobjective function.
 
     :math:`g(\\mathbf{x}) = 1 + 10(n-1) + \\sum_{i=2}^n \\left[ x_i^2 - 10\\cos(4\\pi x_i) \\right]`
@@ -471,13 +471,13 @@ def zdt4(individual):
     :math:`f_{\\text{ZDT4}2}(\\mathbf{x}) = g(\\mathbf{x})\\left[ 1 - \\sqrt{x_1/g(\\mathbf{x})} \\right]`
 
     """
-    g = 1 + 10 * (len(individual) - 1) + sum(xi ** 2 - 10 * cos(4 * pi * xi) for xi in individual[1:])
-    f1 = individual[0]
+    g = 1 + 10 * (len(variable) - 1) + sum(xi ** 2 - 10 * cos(4 * pi * xi) for xi in variable[1:])
+    f1 = variable[0]
     f2 = g * (1 - sqrt(f1 / g))
-    return np.array([f1, f2])
+    return np.array([f1, f2]).tolist()
 
 
-def zdt6(individual):
+def zdt6(variable):
     """ZDT6 multiobjective function.
 
     :math:`g(\\mathbf{x}) = 1 + 9 \\left[ \\left(\\sum_{i=2}^n x_i\\right)/(n-1) \\right]^{0.25}`
@@ -487,15 +487,15 @@ def zdt6(individual):
     :math:`f_{\\text{ZDT6}2}(\\mathbf{x}) = g(\\mathbf{x}) \left[ 1 - (f_{\\text{ZDT6}1}(\\mathbf{x})/g(\\mathbf{x}))^2 \\right]`
 
     """
-    g = 1 + 9 * (sum(individual[1:]) / (len(individual) - 1)) ** 0.25
-    f1 = 1 - exp(-4 * individual[0]) * sin(6 * pi * individual[0]) ** 6
+    g = 1 + 9 * (sum(variable[1:]) / (len(variable) - 1)) ** 0.25
+    f1 = 1 - exp(-4 * variable[0]) * sin(6 * pi * variable[0]) ** 6
     f2 = g * (1 - (f1 / g) ** 2)
-    return np.array([f1, f2])
+    return np.array([f1, f2]).tolist()
 
 
-def dtlz1(individual, obj):
+def dtlz1(variable, obj):
     """DTLZ1 mutliobjective function. It returns a tuple of *obj* values.
-    The individual must have at least *obj* elements.
+    The variable must have at least *obj* elements.
     From: K. Deb, L. Thiele, M. Laumanns and E. Zitzler. Scalable Multi-Objective
     Optimization Test Problems. CEC 2002, p. 825 - 830, IEEE Press, 2002.
 
@@ -513,19 +513,19 @@ def dtlz1(individual, obj):
 
     Where :math:`m` is the number of objectives and :math:`\\mathbf{x}_m` is a
     vector of the remaining attributes :math:`[x_m~\\ldots~x_n]` of the
-    individual in :math:`n > m` dimensions.
+    variable in :math:`n > m` dimensions.
 
     """
     g = 100 * (
-    len(individual[obj - 1:]) + sum((xi - 0.5) ** 2 - cos(20 * pi * (xi - 0.5)) for xi in individual[obj - 1:]))
-    f = [0.5 * reduce(mul, individual[:obj - 1], 1) * (1 + g)]
-    f.extend(0.5 * reduce(mul, individual[:m], 1) * (1 - individual[m]) * (1 + g) for m in reversed(xrange(obj - 1)))
+        len(variable[obj - 1:]) + sum((xi - 0.5) ** 2 - cos(20 * pi * (xi - 0.5)) for xi in variable[obj - 1:]))
+    f = [0.5 * reduce(mul, variable[:obj - 1], 1) * (1 + g)]
+    f.extend(0.5 * reduce(mul, variable[:m], 1) * (1 - variable[m]) * (1 + g) for m in reversed(xrange(obj - 1)))
     return f
 
 
-def dtlz2(individual, obj):
+def dtlz2(variable, obj):
     """DTLZ2 mutliobjective function. It returns a tuple of *obj* values.
-    The individual must have at least *obj* elements.
+    The variable must have at least *obj* elements.
     From: K. Deb, L. Thiele, M. Laumanns and E. Zitzler. Scalable Multi-Objective
     Optimization Test Problems. CEC 2002, p. 825 - 830, IEEE Press, 2002.
 
@@ -541,10 +541,10 @@ def dtlz2(individual, obj):
 
     Where :math:`m` is the number of objectives and :math:`\\mathbf{x}_m` is a
     vector of the remaining attributes :math:`[x_m~\\ldots~x_n]` of the
-    individual in :math:`n > m` dimensions.
+    variable in :math:`n > m` dimensions.
     """
-    xc = individual[:obj - 1]
-    xm = individual[obj - 1:]
+    xc = variable[:obj - 1]
+    xm = variable[obj - 1:]
     g = sum((xi - 0.5) ** 2 for xi in xm)
     f = [(1.0 + g) * reduce(mul, (cos(0.5 * xi * pi) for xi in xc), 1.0)]
     f.extend((1.0 + g) * reduce(mul, (cos(0.5 * xi * pi) for xi in xc[:m]), 1) * sin(0.5 * xc[m] * pi) for m in
@@ -553,9 +553,9 @@ def dtlz2(individual, obj):
     return f
 
 
-def dtlz3(individual, obj):
+def dtlz3(variable, obj):
     """DTLZ3 mutliobjective function. It returns a tuple of *obj* values.
-    The individual must have at least *obj* elements.
+    The variable must have at least *obj* elements.
     From: K. Deb, L. Thiele, M. Laumanns and E. Zitzler. Scalable Multi-Objective
     Optimization Test Problems. CEC 2002, p. 825 - 830, IEEE Press, 2002.
 
@@ -571,10 +571,10 @@ def dtlz3(individual, obj):
 
     Where :math:`m` is the number of objectives and :math:`\\mathbf{x}_m` is a
     vector of the remaining attributes :math:`[x_m~\\ldots~x_n]` of the
-    individual in :math:`n > m` dimensions.
+    variable in :math:`n > m` dimensions.
     """
-    xc = individual[:obj - 1]
-    xm = individual[obj - 1:]
+    xc = variable[:obj - 1]
+    xm = variable[obj - 1:]
     g = 100 * (len(xm) + sum((xi - 0.5) ** 2 - cos(20 * pi * (xi - 0.5)) for xi in xm))
     f = [(1.0 + g) * reduce(mul, (cos(0.5 * xi * pi) for xi in xc), 1.0)]
     f.extend((1.0 + g) * reduce(mul, (cos(0.5 * xi * pi) for xi in xc[:m]), 1) * sin(0.5 * xc[m] * pi) for m in
@@ -582,9 +582,9 @@ def dtlz3(individual, obj):
     return f
 
 
-def dtlz4(individual, obj, alpha):
+def dtlz4(variable, obj, alpha):
     """DTLZ4 mutliobjective function. It returns a tuple of *obj* values. The
-    individual must have at least *obj* elements. The *alpha* parameter allows
+    variable must have at least *obj* elements. The *alpha* parameter allows
     for a meta-variable mapping in :func:`dtlz2` :math:`x_i \\rightarrow
     x_i^\\alpha`, the authors suggest :math:`\\alpha = 100`.
     From: K. Deb, L. Thiele, M. Laumanns and E. Zitzler. Scalable Multi-Objective
@@ -602,10 +602,10 @@ def dtlz4(individual, obj, alpha):
 
     Where :math:`m` is the number of objectives and :math:`\\mathbf{x}_m` is a
     vector of the remaining attributes :math:`[x_m~\\ldots~x_n]` of the
-    individual in :math:`n > m` dimensions.
+    variable in :math:`n > m` dimensions.
     """
-    xc = individual[:obj - 1]
-    xm = individual[obj - 1:]
+    xc = variable[:obj - 1]
+    xm = variable[obj - 1:]
     g = sum((xi - 0.5) ** 2 for xi in xm)
     f = [(1.0 + g) * reduce(mul, (cos(0.5 * xi ** alpha * pi) for xi in xc), 1.0)]
     f.extend(
@@ -614,7 +614,7 @@ def dtlz4(individual, obj, alpha):
     return f
 
 
-def fonseca(individual):
+def fonseca(variable):
     """Fonseca and Fleming's multiobjective function.
     From: C. M. Fonseca and P. J. Fleming, "Multiobjective optimization and
     multiple constraint handling with evolutionary algorithms -- Part II:
@@ -625,13 +625,13 @@ def fonseca(individual):
 
     :math:`f_{\\text{Fonseca}2}(\\mathbf{x}) = 1 - e^{-\\sum_{i=1}^{3}(x_i + \\frac{1}{\\sqrt{3}})^2}`
     """
-    f1 = 1 - exp(-sum((xi - 1 / sqrt(3)) ** 2 for xi in individual[:3]))
-    f2 = 1 - exp(-sum((xi + 1 / sqrt(3)) ** 2 for xi in individual[:3]))
-    return np.array([f1, f2])
+    f1 = 1 - exp(-sum((xi - 1 / sqrt(3)) ** 2 for xi in variable[:3]))
+    f2 = 1 - exp(-sum((xi + 1 / sqrt(3)) ** 2 for xi in variable[:3]))
+    return np.array([f1, f2]).tolist()
 
 
-def poloni(individual):
-    """Poloni's multiobjective function on a two attribute *individual*. From:
+def poloni(variable):
+    """Poloni's multiobjective function on a two attribute *variable*. From:
     C. Poloni, "Hybrid GA for multi objective aerodynamic shape optimization",
     in Genetic Algorithms in Engineering and Computer Science, 1997.
 
@@ -647,8 +647,8 @@ def poloni(individual):
 
     :math:`f_{\\text{Poloni}2}(\\mathbf{x}) = (x_1 + 3)^2 + (x_2 + 1)^2`
     """
-    x_1 = individual[0]
-    x_2 = individual[1]
+    x_1 = variable[0]
+    x_2 = variable[1]
     A_1 = 0.5 * sin(1) - 2 * cos(1) + sin(2) - 1.5 * cos(2)
     A_2 = 1.5 * sin(1) - cos(1) + 2 * sin(2) - 0.5 * cos(2)
     B_1 = 0.5 * sin(x_1) - 2 * cos(x_1) + sin(x_2) - 1.5 * cos(x_2)
