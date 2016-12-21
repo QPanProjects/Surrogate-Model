@@ -116,6 +116,7 @@ def moeaLoop():
     _Npop = 4 * 10
     _Nobj = 2
     _Ncon = 0
+    _Rate = 1.0
     fileName = './files/moea.json'
     CXPB = 0.9
     # estimator = benchmarks.zdt1
