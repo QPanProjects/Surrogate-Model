@@ -176,7 +176,10 @@ def ackley(variable):
        :width: 67 %
     """
     N = len(variable)
-    return 20 - 20 * exp(-0.2 * sqrt(1.0 / N * sum(x ** 2 for x in variable))) \
+    algha = 20
+    beta = 0.2
+
+    return algha - algha * exp(-beta * sqrt(1.0 / N * sum(x ** 2 for x in variable))) \
            + e - exp(1.0 / N * sum(cos(2 * pi * x) for x in variable)),
 
 
