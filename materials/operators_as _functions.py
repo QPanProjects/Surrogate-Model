@@ -12,3 +12,15 @@ operator.
 
     mul(a, b)   __mul__(a, b)   Return a * b, for a and b numbers.
 """
+
+# encoding: utf-8
+# module __builtin__
+# from (built-in)
+# by generator 1.138
+from __future__ import print_function
+
+"""
+Built-in functions, exceptions, and other objects.
+
+Noteworthy: None is the `nil' object; Ellipsis represents `...' in slices.
+"""
