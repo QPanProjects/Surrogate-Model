@@ -70,6 +70,8 @@ from surrogate.sampling import samBeta, samUniform
 from surrogate.estimator import ANNSurrogate
 from surrogate.files import JSON
 
+from sklearn.preprocessing import StandardScaler
+
 # Xold_ind = [[0., 0., 0., 0.], [1., 1., 1., 1.], [10., 10., 10., 10.]]
 # # Yold_obj = [0.0, 1.0, 10.0]
 # Yold_obj = [[0., 0.], [1., 1.], [10., 10.]]
@@ -111,33 +113,38 @@ def Population(numPop=4, numVar=10, estimator=benchmarks.zdt6, weights=(-1.0, -1
 # def moeaLoop(surrogate, population):
 def moeaLoop():
     _INF = 1e-14
-    _Ndim = 10
-    _Ngen = 100
+    _Ndim = 100
+    # _Ndim = 10
+    # _Ngen = 100
+    _Ngen = 10
     _Npop = 4 * 10
+    # _Npop = 4 * 5
     _Nobj = 2
     _Ncon = 0
     _Rate = 1.0
     fileName = './files/moea.json'
     CXPB = 0.9
+
     # estimator = benchmarks.zdt1
     # estimator = benchmarks.zdt2
     estimator = benchmarks.zdt3
     # estimator = benchmarks.zdt4
     # estimator = benchmarks.zdt6
+    surrogate = ANNSurrogate(algorithm='l-bfgs', alpha=1e-5, hidden_layer_sizes=(8), random_state=1)
+
     weights = (-1.0, -1.0)
     # weights = (1.0, 1.0)
 
+    population = Population(numPop=_Npop, numVar=_Ndim, estimator=estimator, weights=weights)
     ioResultFile = JSON(fileName=fileName, numVar=_Ndim, numPop=_Npop, numCon=_Ncon, numObj=_Nobj, numGen=_Ngen)
     ioResultFile.writeHeader()
 
+    print 'ANNSurrogate'
+    X_scaler = StandardScaler()
     Xold_ind = np.zeros([_Npop, _Ndim])
     Yold_obj = np.zeros([_Npop, _Nobj])
-    Xnew_ind = samBeta(a=0.1, b=0.1, size=_Ndim)
-
-    surrogate = ANNSurrogate(algorithm='l-bfgs', alpha=1e-5, hidden_layer_sizes=(100,), random_state=1)
-    population = Population(numPop=_Npop, numVar=_Ndim, estimator=estimator, weights=weights)
-
-    print 'ANNSurrogate'
+    Xnew_ind = []
+    Xnew_ind.append(samBeta(a=0.1, b=0.1, size=_Ndim))
     for ipop in range(_Npop):
         Xold_ind[ipop] = [deepcopy(X) for X in population[ipop].variable]
         Yold_obj[ipop] = [deepcopy(Y) for Y in population[ipop].fitness.values]
@@ -146,11 +153,13 @@ def moeaLoop():
               + '\tMean_X: ' + str(np.mean(Xold_ind[ipop])) \
               + '\tStd_X: ' + str(np.std(Xold_ind[ipop])) \
               + '\tYold_obj: [' + '\t'.join(map("{:.5f}".format, Yold_obj[ipop])) + ']'
-    surrogate.fit(Xold_ind, Yold_obj)
-    Ynew_obj = surrogate.predict(Xnew_ind)
-    print 'End\t\tXnew_ind: [' + '\t'.join(map("{:.5f}".format, Xnew_ind)) + ']' \
-          + '\tMean_X: ' + str(np.mean(Xnew_ind)) \
-          + '\tStd_X: ' + str(np.std(Xnew_ind)) \
+    X_scaler.fit(Xold_ind)
+    surrogate.fit(X_scaler.transform(Xold_ind), Yold_obj)
+    Ynew_obj = surrogate.predict(X_scaler.transform(Xnew_ind))
+
+    print 'End\t\tXnew_ind: [' + '\t'.join(map("{:.5f}".format, Xnew_ind[0])) + ']' \
+          + '\tMean_X: ' + str(np.mean(Xnew_ind[0])) \
+          + '\tStd_X: ' + str(np.std(Xnew_ind[0])) \
           + '\tYnew_obj: [' + '\t'.join(map("{:.5f}".format, Ynew_obj[0])) + ']\n'
 
     igen = 0
@@ -217,21 +226,25 @@ def moeaLoop():
         for ind in invalid_ind:
             # ind.fitness.values = estimator(ind.variable)
 
+
             Xold_ind[ipop] = [deepcopy(X) for X in ind.variable]
             Yold_obj[ipop] = [deepcopy(Y) for Y in estimator(ind.variable)]
-            surrogate.fit(Xold_ind, Yold_obj)
+            surrogate.fit(X_scaler.transform(Xold_ind), Yold_obj)
 
-            Xnew_ind = [ind.variable]
-            Ynew_obj = surrogate.predict(Xnew_ind)
-            # print '\tXnew_ind: [' + '\t'.join(map("{:.5f}".format, Xnew_ind)) + ']' \
-            #       + '\tMean_X: ' + str(np.mean(Xnew_ind)) \
-            #       + '\tStd_X: ' + str(np.std(Xnew_ind)) \
+            Xnew_ind[0] = ind.variable
+            Ynew_obj = surrogate.predict(X_scaler.transform(Xnew_ind))
+            # print '\t' + str(ipop) \
+            #       + '\tXnew_ind: [' + '\t'.join(map("{:.5f}".format, Xnew_ind[0])) + ']' \
+            #       + '\tMean_X: ' + str(np.mean(Xnew_ind[0])) \
+            #       + '\tStd_X: ' + str(np.std(Xnew_ind[0])) \
             #       + '\tYnew_obj: [' + '\t'.join(map("{:.5f}".format, Ynew_obj[0])) + ']'
+
             # Xnew_ind = np.array(ind.variable)
-            # Ynew_obj = surrogate.predict(Xnew_ind)
-            # print '\tXnew_ind: [' + '\t'.join(map("{:.5f}".format, Xnew_ind[0])) + ']' \
-            #       + '\tMean_X: ' + str(np.mean(Xnew_ind)) \
-            #       + '\tStd_X: ' + str(np.std(Xnew_ind)) \
+            # Ynew_obj = surrogate.predict(X_scaler.transform(Xnew_ind))
+            # print '\t' + str(ipop) \
+            #       + '\tXnew_ind: [' + '\t'.join(map("{:.5f}".format, Xnew_ind[0])) + ']' \
+            #       + '\tMean_X: ' + str(np.mean(Xnew_ind[0])) \
+            #       + '\tStd_X: ' + str(np.std(Xnew_ind[0])) \
             #       + '\tYnew_obj: [' + '\t'.join(map("{:.5f}".format, Ynew_obj[0])) + ']'
             ind.fitness.values = Ynew_obj[0]
 
