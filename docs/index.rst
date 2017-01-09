@@ -1,7 +1,7 @@
 .. Surrogate Model documentation master file, created by
-sphinx-quickstart on Mon Jan  9 15:59:23 2017.
-You can adapt this file completely to your liking, but it should at least
-contain the root `toctree` directive.
+   sphinx-quickstart on Mon Jan  9 15:59:23 2017.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
 
 Welcome to Surrogate Model's documentation!
 ===========================================
@@ -15,9 +15,9 @@ Surrogate Model depends on * package.
 Contents:
 
 .. toctree::
-:maxdepth: 2
+   :maxdepth: 2
 
-       overview
+   overview
 
 Indices and tables
 ==================
