@@ -52,6 +52,7 @@ Implementation:
 
 
 import warnings
+
 warnings.filterwarnings(action="ignore", category=Warning)
 # warnings.filterwarnings(action="ignore", category=FutureWarning)
 # warnings.filterwarnings(action="ignore", category=ImportWarning)
@@ -121,9 +122,12 @@ def moeaLoop():
     # _Npop = 4 * 5
     _Nobj = 2
     _Ncon = 0
-    _Rate = 1.0
     fileName = './files/moea.json'
     CXPB = 0.9
+
+    _SD = [] # Standard Deviation
+    _SSD = [] # Scaled averaged Standard Deviation
+    _Rate = 1.0
 
     # estimator = benchmarks.zdt1
     # estimator = benchmarks.zdt2
@@ -199,6 +203,7 @@ def moeaLoop():
         # print
 
         for ind1, ind2 in zip(offspring[::2], offspring[1::2]):
+            # 20170109 implement sampling rate of anga
             if random.random() <= CXPB:
                 # print '\toffspring.cx.b'\
                 #       + '\tvar1: [' + ', '.join(map("{:.5f}".format, ind1.variable)) + ']'\
@@ -226,11 +231,10 @@ def moeaLoop():
         for ind in invalid_ind:
             # ind.fitness.values = estimator(ind.variable)
 
-
+            # TODO 20170109 implement sampling rate & ann of anga [estimator()]
             Xold_ind[ipop] = [deepcopy(X) for X in ind.variable]
             Yold_obj[ipop] = [deepcopy(Y) for Y in estimator(ind.variable)]
             surrogate.fit(X_scaler.transform(Xold_ind), Yold_obj)
-
             Xnew_ind[0] = ind.variable
             Ynew_obj = surrogate.predict(X_scaler.transform(Xnew_ind))
             # print '\t' + str(ipop) \
@@ -238,7 +242,11 @@ def moeaLoop():
             #       + '\tMean_X: ' + str(np.mean(Xnew_ind[0])) \
             #       + '\tStd_X: ' + str(np.std(Xnew_ind[0])) \
             #       + '\tYnew_obj: [' + '\t'.join(map("{:.5f}".format, Ynew_obj[0])) + ']'
+            ind.fitness.values = Ynew_obj[0]
 
+            # Xold_ind[ipop] = [deepcopy(X) for X in ind.variable]
+            # Yold_obj[ipop] = [deepcopy(Y) for Y in estimator(ind.variable)]
+            # surrogate.fit(X_scaler.transform(Xold_ind), Yold_obj)
             # Xnew_ind = np.array(ind.variable)
             # Ynew_obj = surrogate.predict(X_scaler.transform(Xnew_ind))
             # print '\t' + str(ipop) \
@@ -246,7 +254,7 @@ def moeaLoop():
             #       + '\tMean_X: ' + str(np.mean(Xnew_ind[0])) \
             #       + '\tStd_X: ' + str(np.std(Xnew_ind[0])) \
             #       + '\tYnew_obj: [' + '\t'.join(map("{:.5f}".format, Ynew_obj[0])) + ']'
-            ind.fitness.values = Ynew_obj[0]
+            # ind.fitness.values = Ynew_obj[0]
 
             ipop += 1
 
