@@ -231,7 +231,7 @@ def moeaLoop():
         for ind in invalid_ind:
             ind.fitness.values = estimator(ind.variable)
 
-            # TODO 20170109 comment to compare with anga
+            # TODO 20170109 keep comment, compare with anga
             # Xold_ind[ipop] = [deepcopy(X) for X in ind.variable]
             # Yold_obj[ipop] = [deepcopy(Y) for Y in estimator(ind.variable)]
             # surrogate.fit(X_scaler.transform(Xold_ind), Yold_obj)
