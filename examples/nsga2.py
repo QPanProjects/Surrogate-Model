@@ -232,10 +232,30 @@ def moeaLoop():
             ind.fitness.values = estimator(ind.variable)
 
             # TODO 20170105 keep comment, compare with anga
+            # # find in varaible pool (cache)?
+            # #     <Yes> retreive fitness from cache
+            # #         Ynew_obj = ind.fitness.values
+            # #         ind.fitness.values = Ynew_obj[0]
+            # #     <No > PDE sample [estimator()]?
+            # #         <Yes> model [estimator()]
+            # #             ind.fitness.values = estimator(ind.variable)
+            # #             <> update cache and training set of ANN
+            # #             # Xold_ind[ipop] = [deepcopy(X) for X in ind.variable]
+            # #             # Yold_obj = ind.fitness.values
+            # #         <No > predict by ANN [ANN.predict()]
+            # #             Ynew_obj = surrogate.predict(X_scaler.transform(Xnew_ind))
+            # #             ind.fitness.values = Ynew_obj[0]
+            # #
+            # # retraining ANN.fit()?
+            # #     <Yes> surrogate.fit(X_scaler.transform(Xold_ind), Yold_obj)
+            # #     <No > ind.fitness.values = ind.fitness.values
+            #
             # Xold_ind[ipop] = [deepcopy(X) for X in ind.variable]
             # Yold_obj[ipop] = [deepcopy(Y) for Y in estimator(ind.variable)]
+            # TODO 20170105 update retraining pool
             # surrogate.fit(X_scaler.transform(Xold_ind), Yold_obj)
             # Xnew_ind[0] = ind.variable
+            # TODO 20170105 predict by ANN
             # Ynew_obj = surrogate.predict(X_scaler.transform(Xnew_ind))
             # # print '\t' + str(ipop) \
             # #       + '\tXnew_ind: [' + '\t'.join(map("{:.5f}".format, Xnew_ind[0])) + ']' \
