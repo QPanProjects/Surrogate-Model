@@ -114,9 +114,9 @@ def Population(numPop=4, numVar=10, estimator=benchmarks.zdt6, weights=(-1.0, -1
 # def moeaLoop(surrogate, population):
 def moeaLoop():
     _INF = 1e-14
-    _Ndim = 100
     # _Ndim = 10
     # _Ngen = 100
+    _Ndim = 100
     _Ngen = 10
     _Npop = 4 * 10
     # _Npop = 4 * 5
@@ -127,7 +127,7 @@ def moeaLoop():
 
     _SD = [] # Standard Deviation
     _SSD = [] # Scaled averaged Standard Deviation
-    _Rate = 1.0
+    _Nret = 100 # Size of retraining pool
 
     # estimator = benchmarks.zdt1
     # estimator = benchmarks.zdt2
@@ -203,7 +203,7 @@ def moeaLoop():
         # print
 
         for ind1, ind2 in zip(offspring[::2], offspring[1::2]):
-            # 20170109 implement sampling rate of anga
+            # TODO 20170109 rate
             if random.random() <= CXPB:
                 # print '\toffspring.cx.b'\
                 #       + '\tvar1: [' + ', '.join(map("{:.5f}".format, ind1.variable)) + ']'\
@@ -231,7 +231,7 @@ def moeaLoop():
         for ind in invalid_ind:
             # ind.fitness.values = estimator(ind.variable)
 
-            # TODO 20170109 implement sampling rate & ann of anga [py:function:: estimator()]
+            # TODO 20170105 implement fitness sampling rate & retraining ann from anga [py:function:: estimator()]
             Xold_ind[ipop] = [deepcopy(X) for X in ind.variable]
             Yold_obj[ipop] = [deepcopy(Y) for Y in estimator(ind.variable)]
             surrogate.fit(X_scaler.transform(Xold_ind), Yold_obj)
