@@ -330,9 +330,9 @@ class StrategyOnePlusLambda(object):
 
 
 class StrategyMultiObjective(object):
-    """Multiobjective CMA-ES strategy based on the paper [Voss2010]_. It
-    is used similarly as the standard CMA-ES strategy with a generate-update
-    scheme.
+    """
+    Multiobjective CMA-ES strategy based on the paper [Voss2010]_.
+    It is used similarly as the standard CMA-ES strategy with a generate-update scheme.
 
     :param population: An initial population of individual.
     :param sigma: The initial step size of the complete system.
