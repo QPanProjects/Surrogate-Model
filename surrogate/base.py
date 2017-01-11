@@ -1,8 +1,11 @@
-"""Base classes for all estimators."""
-
 # Author: Quan Pan <quanpan302@hotmail.com>
 # License: MIT License
 # Create: 2016-12-02
+
+"""
+Base classes for all estimators.
+Class definition for Individual, the base class for all surrogate models.
+"""
 
 import sys
 
@@ -10,30 +13,13 @@ from collections import Sequence
 from operator import mul, truediv
 
 
-##############################################################################
-"""
-Class definition for Individual, the base class for all surrogate models.
-"""
-
-
-# class Individual:
 class Individual(object):
-    def __init__(self, estimator, variable=None, constraint=None, weights=(), *args, **kwargs):
-        """
-        Optimization Problem Class Individual
+    """A Individual
 
-        *Arguments:
-        - opt_func -> FUNC: Objective function
+    :param estimator: physical based model
+    """
 
-        **Keyword arguments:
-        - var_set -> INST: Variable set, *Default* = None
-        - obj_set -> INST: Objective set, *Default* = None
-        - con_set -> INST: Constraints set, *Default* = None
-
-        def ObjFunction(fun, *args, **kwargs):
-            return fun(*args, **kwargs)
-        """
-
+    def __init__(self, estimator, variable=None, constraint=None, weights=()):
         # needed
         self.estimator = estimator
 
@@ -61,40 +47,49 @@ class Individual(object):
         # self.feature = None
         # self.dominate = None
 
-        """deap
-        NDIM = 5
-        MU = 12
-        pop = toolbox.population(n=MU)
+        # deap
+        # NDIM = 5
+        # MU = 12
+        # pop = toolbox.population(n=MU)
+        #
+        # # Evaluate the individuals with an invalid fitness
+        # invalid_ind = [ind for ind in pop if not ind.fitness.valid]
+        # fitnesses = toolbox.map(toolbox.evaluate, invalid_ind)
+        #
+        # for ind, fit in zip(invalid_ind, fitnesses):
+        #     ind.fitness.values = fit
+        #
+        # # debug
+        # 10 = {individual} array('d', [0.87, 0.74, 0.16, 0.67, 0.42])
+        #     .fitness
+        #         .crowding_dist = {float} inf
+        #         .valid = {bool} True
+        #         .values = {tuple} (0.99, 8.46)
+        #         .weights = {tuple} (-1.0, -1.0)
+        #         .wvalues = {tuple} (-0.99, -8.46)
+        #     .itemsize = {int} 8
+        #     .typecode = {str} 'd'
 
-        # Evaluate the individuals with an invalid fitness
-        invalid_ind = [ind for ind in pop if not ind.fitness.valid]
-        fitnesses = toolbox.map(toolbox.evaluate, invalid_ind)
-
-        for ind, fit in zip(invalid_ind, fitnesses):
-            ind.fitness.values = fit
-
-        # debug
-        10 = {individual} array('d', [0.87, 0.74, 0.16, 0.67, 0.42])
-            .fitness
-                .crowding_dist = {float} inf
-                .valid = {bool} True
-                .values = {tuple} (0.99, 8.46)
-                .weights = {tuple} (-1.0, -1.0)
-                .wvalues = {tuple} (-0.99, -8.46)
-            .itemsize = {int} 8
-            .typecode = {str} 'd'
-
-        """
 
     def getVar(self, i):
+        """The fitness is a measure of quality of a solution. If *values* are
+        provided as a tuple, the fitness is initalized using those values,
+        otherwise it is empty (or invalid).
+
+        :param i: index of variable
+
+        .. note::
+           Note
+        """
+
         if not (isinstance(i, int) and i >= 0):
             raise ValueError("Variable index must be an integer >= 0 .")
         return self._variables[i]
 
     # def __len__(self):
     #     return len(self.variable)
-        # def __repr__(self):
-        #     return repr((self.variable, self.objective, self.constraint, self.fitness))
+    # def __repr__(self):
+    #     return repr((self.variable, self.objective, self.constraint, self.fitness))
 
 
 class Fitness(object):
@@ -103,7 +98,6 @@ class Fitness(object):
     otherwise it is empty (or invalid).
 
     :param values: The initial values of the fitness as a tuple, optional.
-    pan: objective function return values
 
     Fitnesses may be compared using the ``>``, ``<``, ``>=``, ``<=``, ``==``,
     ``!=``. The comparison of those operators is made lexicographically.
@@ -128,9 +122,9 @@ class Fitness(object):
     weights must be defined as a tuple where each element is associated to an
     objective.
     A negative weight element corresponds to: (-1.0, -1.0)
-        the minimization of the associated objective.
+    ``the minimization of the associated objective.``
     A positive weight element corresponds to: (1.0, 1.0)
-        the maximization of the associated objective.
+    ``the maximization of the associated objective.``
 
     .. note::
         If weights is not defined during subclassing, the following error will
@@ -193,6 +187,7 @@ class Fitness(object):
                     tested. The default value is `slice(None)`, representing
                     every objectives.
         """
+
         not_equal = False
         for self_wvalue, other_wvalue in zip(self.wvalues[obj], other.wvalues[obj]):
             if self_wvalue > other_wvalue:
@@ -204,6 +199,7 @@ class Fitness(object):
     @property
     def valid(self):
         """Assess if a fitness is valid or not."""
+
         return len(self.wvalues) != 0
 
     def __hash__(self):
@@ -242,17 +238,14 @@ class Fitness(object):
 
     def __str__(self):
         """Return the values of the Fitness object."""
+
         return str(self.values if self.valid else tuple())
 
     def __repr__(self):
         """Return the Python code to build a copy of the object."""
+
         return "%s.%s(%r)" % (self.__module__, self.__class__.__name__,
                               self.values if self.valid else tuple())
-
-##############################################################################
-"""
-Class definition for SurrogateModel, the base class for all surrogate models.
-"""
 
 
 class SurrogateModel(object):
