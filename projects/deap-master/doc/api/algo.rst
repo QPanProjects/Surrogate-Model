@@ -37,10 +37,10 @@ Covariance Matrix Adaptation Evolution Strategy
 .. automodule:: deap.cma
 
 .. autoclass:: deap.cma.Strategy(centroid, sigma[, **kargs])
-:members:
+    :members:
 
 .. autoclass:: deap.cma.StrategyOnePlusLambda(parent, sigma[, **kargs])
-:members:
+    :members:
 
 .. autoclass:: deap.cma.StrategyMultiObjective(population, sigma[, **kargs])
-:members:
+    :members:

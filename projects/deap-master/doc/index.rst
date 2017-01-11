@@ -1,5 +1,5 @@
 .. image:: _static/deap_long.png
-:width: 300 px
+   :width: 300 px
    :align: right
 
 DEAP documentation
