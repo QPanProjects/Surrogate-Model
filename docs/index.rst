@@ -3,21 +3,28 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Surrogate Model's documentation!
-===========================================
+Surrogate Model documentation
+=============================
+
+.. |github| raw:: html
+
+   <a href="https://github.com/quanpan302" target="_blank">Quan Pan</a>
 
 This is my Surrogate Model project.
 
-Requirements:
+`Surrogate Model <https://github.com/DailyActie/Surrogate-Model>`_, owned by |github|.
 
-Surrogate Model depends on * package.
+.. sidebar:: Feedback
 
-Contents:
+    Having trouble? Email: `Quan Pan <mailto:quanpan302@hotmail.com>`_
 
 .. toctree::
    :maxdepth: 2
 
    overview
+   installation
+   api/index
+   about
 
 Indices and tables
 ==================
