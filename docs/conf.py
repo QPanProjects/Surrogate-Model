@@ -17,6 +17,7 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 import sys
+import time
 
 # sys.path.insert(0, os.path.abspath('.'))
 # sys.path.append(os.path.abspath('.'))
@@ -56,7 +57,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Surrogate Model'
-copyright = u'2017, Quan Pan'
+copyright = u'2016-%s, Quan Pan' % time.strftime('%Y')
 author = u'Quan Pan'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -175,6 +176,7 @@ html_static_path = ['_static']
 # The empty string is equivalent to '%b %d, %Y'.
 #
 # html_last_updated_fmt = None
+html_last_updated_fmt = '%b %d, %Y'
 
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.
