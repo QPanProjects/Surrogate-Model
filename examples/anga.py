@@ -1,20 +1,23 @@
-""" Adaptive Neural Network Genetic Algorithm (ANGA)
+"""Adaptive Neural Network Genetic Algorithm (ANGA)
+
 Components:
-    Genetic Algorithm
-    Artificial Neural Networks
-    Caching
+* Genetic Algorithm
+* Artificial Neural Networks
+* Caching
+
 Implementation:
-    Fitness Sampling
-        Sampling Rate: Sampling rate determines how many individuals should be sampled from a population in each generation
-        Sampling Selection Strategy: Sampling selection strategy determines which individuals should be sampled from a population, given the current sampling rate.
-            random sampling, best sampling, tournament sampling, combined tournament+best sampling
-    ANN Training and Retraining
-        InitialTrainingGenerations: Alloftheindividualsin the first several generations of ANGA must be evaluated by the simulation models to generate the ANN training set.
-        Retraining Set Management: As more and more sampled solutions are generated from simulation model evaluations, the retraining set must be managed.
-            growing set approach, fixed set approach
-        Retraining Method: When the ANNs need to be retrained, the training algorithm can either load the previ- ously trained weights and continue the training episodes on the new training set, or it can re-initialize the ANN weights to random values and completely retrain the ANNs.
-        Retraining Frequency: Retraining frequency deter- mines when the ANNs should be updated during an ANGA run. Retraining frequency should decrease in later gener- ations as the search progresses into relatively smoother local regions.
+* Fitness Sampling
+    * Sampling Rate: Sampling rate determines how many individuals should be sampled from a population in each generation
+    * Sampling Selection Strategy: Sampling selection strategy determines which individuals should be sampled from a population, given the current sampling rate.
+    random sampling, best sampling, tournament sampling, combined tournament+best sampling
+* ANN Training and Retraining
+    * InitialTrainingGenerations: Alloftheindividualsin the first several generations of ANGA must be evaluated by the simulation models to generate the ANN training set.
+    * Retraining Set Management: As more and more sampled solutions are generated from simulation model evaluations, the retraining set must be managed.
+    growing set approach, fixed set approach
+    * Retraining Method: When the ANNs need to be retrained, the training algorithm can either load the previ- ously trained weights and continue the training episodes on the new training set, or it can re-initialize the ANN weights to random values and completely retrain the ANNs.
+    * Retraining Frequency: Retraining frequency deter- mines when the ANNs should be updated during an ANGA run. Retraining frequency should decrease in later gener- ations as the search progresses into relatively smoother local regions.
 """
+
 
 # from surrogate.base import SurrogateModel
 # class ANGA(object):
@@ -50,7 +53,6 @@ Implementation:
 #     anga.fit(X, y)
 #     anga.predict_proba(X)
 
-
 import warnings
 
 warnings.filterwarnings(action="ignore", category=Warning)
@@ -85,6 +87,15 @@ random.seed(0.5)
 
 
 def Population(numPop=4, numVar=10, estimator=benchmarks.zdt6, weights=(-1.0, -1.0)):
+    """Population
+
+    :param numPop:
+    :param numVar:
+    :param estimator:
+    :param weights:
+    :return:
+    """
+
     Individuals = []
     variables = [
         [0.34238,0.55126,0.16168,0.48371,0.06763,0.44667,0.86263,0.20732,0.69387,0.14216,0.77355,0.01406,0.04584,0.52986,0.43661,0.33434,0.74209,0.10401,0.72842,0.93044,0.60429,0.59564,0.13290,0.67822,0.05134,0.29150,0.67406,0.40855,0.90770,0.11460,0.31785,0.71099,0.54911,0.13772,0.72012,0.57978,0.56174,0.41030,0.59318,0.02373,0.07085,0.38774,0.98321,0.95610,0.60783,0.26427,0.23864,0.38667,0.59478,0.11615,0.90078,0.46229,0.83664,0.11390,0.90762,0.78042,0.63465,0.81593,0.78104,0.43407,0.07091,0.87192,0.89738,0.27897,0.24761,0.94504,0.19522,0.78887,0.53085,0.82305,0.69046,0.63141,0.01483,0.99412,0.42017,0.21348,0.16170,0.69172,0.80659,0.63886,0.95410,0.17915,0.26533,0.30091,0.58426,0.15614,0.17707,0.67962,0.06792,0.23327,0.31763,0.00217,0.27251,0.32120,0.17449,0.05171,0.48460,0.82493,0.27719,0.30186],
@@ -143,6 +154,8 @@ def Population(numPop=4, numVar=10, estimator=benchmarks.zdt6, weights=(-1.0, -1
 
 # def moeaLoop(surrogate, population):
 def moeaLoop():
+    """moeaLoop"""
+
     _INF = 1e-14
     # _Ngen = 100
     # _Ndim = 10
@@ -357,9 +370,7 @@ def moeaLoop():
 if __name__ == "__main__":
     moeaLoop()
 
-    """
-    Test Block
-    """
+
     # surrogate = ANNSurrogate(algorithm='l-bfgs', alpha=1e-5, hidden_layer_sizes=(5, 2), random_state=1)
     # surrogate.fit(Xold_ind, Yold_obj)
     # y_pred = surrogate.predict(Xnew_ind)
@@ -373,7 +384,3 @@ if __name__ == "__main__":
     # y_pred = regressor.predict(Xnew_ind)
     # # print regressor
     # print 'MLPRegressor.y_pred: ['+', '.join(map(str,y_pred))+']'
-
-    """
-
-    """

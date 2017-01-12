@@ -16,10 +16,20 @@ from operator import mul, truediv
 class Individual(object):
     """A Individual
 
+    :ref:`Fitness`
+
     :param estimator: physical based model
     """
 
     def __init__(self, estimator, variable=None, constraint=None, weights=()):
+        """__init__
+
+        :param estimator:
+        :param variable:
+        :param constraint:
+        :param weights:
+        :return:
+        """
         # needed
         self.estimator = estimator
 
@@ -78,8 +88,13 @@ class Individual(object):
 
         :param i: index of variable
 
+        .. code-block:: python
+
+            if not (isinstance(i, int) and i >= 0):
+                raise ValueError("Variable index must be an integer >= 0 .")
+
         .. note::
-           Note
+            Note
         """
 
         if not (isinstance(i, int) and i >= 0):
@@ -107,12 +122,11 @@ class Fitness(object):
     equal until the extra elements, the longer fitness will be superior to the
     shorter.
 
-    Different types of fitnesses are created in the :ref:`creating-types`
-    tutorial.
+    Different types of fitnesses.
 
     .. note::
-       When comparing fitness values that are **minimized**, ``a > b`` will
-       return :data:`True` if *a* is **smaller** than *b*.
+        When comparing fitness values that are **minimized**, ``a > b`` will
+        return :data:`True` if *a* is **smaller** than *b*.
     """
 
     weights = None
@@ -199,10 +213,13 @@ class Fitness(object):
     @property
     def valid(self):
         """Assess if a fitness is valid or not."""
-
         return len(self.wvalues) != 0
 
     def __hash__(self):
+        """hash
+
+        :return:
+        """
         return hash(self.wvalues)
 
     def __gt__(self, other):
@@ -238,25 +255,30 @@ class Fitness(object):
 
     def __str__(self):
         """Return the values of the Fitness object."""
-
         return str(self.values if self.valid else tuple())
 
     def __repr__(self):
         """Return the Python code to build a copy of the object."""
-
         return "%s.%s(%r)" % (self.__module__, self.__class__.__name__,
                               self.values if self.valid else tuple())
 
 
 class SurrogateModel(object):
-    """
-    Base class for surrogate models.
+    """A class for surrogate models.
+
+    :ref:`Individual`
     """
 
     def __init__(self):
         self.trained = False
 
     def fit(self, x, y):
+        """fit ML model
+
+        :param x: training dataset
+        :param y: training dataset
+        :return: void
+        """
         self.trained = True
 
     def predict(self, x):
@@ -279,11 +301,18 @@ class SurrogateModel(object):
 
 
 class MultiFiSurrogateModel(SurrogateModel):
-    """
-    Base class for surrogate models using multi-fiddelity training data
+    """Base class for surrogate models using multi-fiddelity training data
+
+    :param SurrogateModel: Object
     """
 
     def fit(self, x, y):
+        """fit ML model
+
+        :param x: training dataset
+        :param y: training dataset
+        :return: void
+        """
         super(MultiFiSurrogateModel, self).train(x, y)
         self.train_multifi([x], [y])
 

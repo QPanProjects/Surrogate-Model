@@ -1,8 +1,8 @@
 About
 =====
 
-Surrogate Model
----------------
+Project
+-------
 
 Author
 ------
