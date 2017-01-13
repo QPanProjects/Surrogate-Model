@@ -12,10 +12,12 @@
 #
 #    You should have received a copy of the GNU Lesser General Public
 #    License along with DEAP. If not, see <http://www.gnu.org/licenses/>.
+
 """
 Regroup typical EC benchmarks functions to import easily and benchmark
 examples.
 """
+
 from functools import reduce
 from math import sin, cos, pi, exp, e, sqrt
 from operator import mul
