@@ -39,7 +39,16 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.autosectionlabel',
     'sphinx.ext.doctest',
+    'sphinx.ext.mathjax',
 ]
+
+try:
+    import matplotlib
+except:
+    pass
+else:
+    extensions += ['matplotlib.sphinxext.only_directives',
+                   'matplotlib.sphinxext.plot_directive']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -124,7 +133,23 @@ pygments_style = 'sphinx'
 # keep_warnings = False
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
-todo_include_todos = False
+todo_include_todos = True
+
+# -- Options for pyplot extension ----------------------------------------------
+
+# Default value for the include-source option
+plot_include_source = False
+
+# Code that should be executed before each plot.
+# plot_pre_code
+
+# Base directory, to which ``plot::`` file names are relative
+# to.  (If None or empty, file names are relative to the
+# directory where the file containing the directive is.)
+# plot_basedir
+
+#  Whether to show links to the files in HTML.
+plot_html_show_formats = True
 
 # -- Options for HTML output ----------------------------------------------
 

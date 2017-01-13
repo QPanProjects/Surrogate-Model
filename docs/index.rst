@@ -29,6 +29,7 @@ This is my Surrogate Model project.
    overview
    installation
    api/index
+   benchmarks/index
    examples/index
    about
 
