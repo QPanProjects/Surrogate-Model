@@ -7,3 +7,4 @@ Examples
 	:maxdepth: 2
 
 	anga
+	nsga2
