@@ -7,3 +7,4 @@ Description of the functions, classes and modules contained within Surrogate.
 	:maxdepth: 2
    
 	base
+	files
