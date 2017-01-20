@@ -5,7 +5,7 @@ import numpy as np
 from matplotlib.pyplot import cm
 
 
-class JSON(object):
+class jsonMOEA(object):
     def __init__(self, fileName, numVar, numPop, numCon, numObj, numGen):
         self.fileName = fileName
         self.numPop = numPop

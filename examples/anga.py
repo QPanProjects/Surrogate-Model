@@ -72,7 +72,7 @@ from surrogate.crossover import cxSimulatedBinaryBounded
 from surrogate.mutation import mutPolynomialBounded
 from surrogate.sampling import samBeta, samUniform
 from surrogate.estimator import ANNSurrogate
-from surrogate.files import JSON
+from surrogate.files import jsonMOEA
 
 from sklearn.preprocessing import StandardScaler
 
@@ -185,7 +185,7 @@ def moeaLoop():
     # weights = (1.0, 1.0)
 
     population = Population(numPop=_Npop, numVar=_Ndim, estimator=estimator, weights=weights)
-    ioResultFile = JSON(fileName=fileName, numVar=_Ndim, numPop=_Npop, numCon=_Ncon, numObj=_Nobj, numGen=_Ngen)
+    ioResultFile = jsonMOEA(fileName=fileName, numVar=_Ndim, numPop=_Npop, numCon=_Ncon, numObj=_Nobj, numGen=_Ngen)
     ioResultFile.writeHeader()
 
     print 'ANNSurrogate'

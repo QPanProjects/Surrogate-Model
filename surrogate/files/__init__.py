@@ -1,7 +1,7 @@
-from .moeaJSON import JSON
+from .jsonMOEA import jsonMOEA
 from .delft3d import Delft3D
 
 __all__ = [
-    'JSON',
+    'jsonMOEA',
     'Delft3D'
 ]
