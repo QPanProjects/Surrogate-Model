@@ -179,3 +179,27 @@ class Delft3D(object):
                     file.seek((self.nvar-ivar-1)*4,1)
 
         return data
+
+    def readWaqMapDataAtVariableTime(self,ivar=0,itime=0):
+        """
+
+        :param ivar:
+        :param itime:
+        :return:
+        """
+        self.iseg = -1
+        self.ivar = ivar
+        self.itime[0] = itime
+        # data = [[ None for j in range(self.ntime)] for i in range(self.nseg)]
+        data = [[None for j in range(1)] for i in range(self.nseg)]
+        with open(self.fileName, mode='rb') as file:
+            file.seek(self.headOffset,0)
+
+            file.seek((self.blockOffset+4)*itime,1)
+            self.itime[1] = struct.unpack('i',file.read(4))[0]
+            for i in range(self.nseg):
+                file.seek(ivar*4,1)
+                data[i][0] = struct.unpack('f',file.read(4))[0]
+                file.seek((self.nvar-ivar-1)*4,1)
+
+        return data
