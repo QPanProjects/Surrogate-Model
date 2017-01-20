@@ -1,4 +1,6 @@
-#
+# Author: Quan Pan <quanpan302@hotmail.com>
+# License: MIT License
+# Create: 2016-12-02
 
 """
 Delft3D classes for all Delft3D generated result files.
@@ -15,6 +17,10 @@ class Delft3D(object):
     :param fileName: file name
     """
     def __init__(self, fileName):
+        """
+
+        :return:
+        """
         self.fileName = fileName
         self.fileSize = os.path.getsize(fileName)
 
@@ -37,9 +43,10 @@ class Delft3D(object):
         file.read(1), 8 bits is 1 byte.
 
         Map file structure: [row,column]::
+
             character(len=40) : moname(4) [4,40]
             integer : self.nvar, self.nseg [1,4],[1,4]
-            ntime = int(real(fileSize -4*40 -2*4 -self.nvar*20) /real(4+4*self.nvar*self.nseg))
+            ntime = int(real(fileSize -4*40 -2*4 -self.nvar*20) / real(4+4*self.nvar*self.nseg))
 
             character(len=20) : self.varlist(self.nvar) [self.nvar,20]
 
@@ -203,3 +210,35 @@ class Delft3D(object):
                 file.seek((self.nvar-ivar-1)*4,1)
 
         return data
+
+    def saveFigMap(self,ivar=0,itime=0):
+        """
+
+        :param ivar:
+        :param itime:
+        :return:
+        """
+        pass
+
+    def saveFigHis(self,ivar=0,iseg=0):
+        """
+
+        :param ivar:
+        :param iseg:
+        :return:
+        """
+        pass
+
+    def msgError(self,icode=0):
+        """
+
+        :param icode:
+        :return:
+        """
+        if icode == 0:
+            pass
+        elif icode == 0:
+            pass
+        else:
+            pass
+
