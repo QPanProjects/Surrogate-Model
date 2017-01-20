@@ -1,12 +1,30 @@
+# Author: Quan Pan
+
+"""
+JSON-MOEA class for save MOEA results into json file format.
+"""
+
 import json
 
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.pyplot import cm
 
-
 class jsonMOEA(object):
+    """jsonMOEA
+
+    :param fileName: file name
+    :param numVar: Number of Deciison Variables
+    :param numPop: Number of Populations
+    :param numCon: Number of Constrains
+    :param numObj: Number of Objective Functions
+    :param numGen: Number of Generations
+    """
     def __init__(self, fileName, numVar, numPop, numCon, numObj, numGen):
+        """
+
+        :return:
+        """
         self.fileName = fileName
         self.numPop = numPop
         self.numVar = numVar
@@ -15,17 +33,31 @@ class jsonMOEA(object):
         self.numGen = numGen
 
     def writeHeader(self):
+        """
+
+        :return:
+        """
         outFile = open(self.fileName, "wt")
         outFile.write("{\n")
         outFile.write("\"generation\": [\n")
         outFile.close()
 
     def writeEnd(self):
+        """
+
+        :return:
+        """
         outFile = open(self.fileName, "a")
         outFile.write("]\n}\n")
         outFile.close()
 
     def writePareto(self, individuals, igen):
+        """
+
+        :param individuals:
+        :param igen:
+        :return:
+        """
         outFile = open(self.fileName, "a")
         outFile.write("    {\n")
 
@@ -79,6 +111,10 @@ class jsonMOEA(object):
         outFile.close()
 
     def plot_json(self):
+        """
+
+        :return:
+        """
         with open(self.fileName) as data_file:
             data = json.load(data_file)
 

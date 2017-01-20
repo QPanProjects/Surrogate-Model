@@ -1,3 +1,9 @@
+# Author: Quan Pan
+
+"""
+Module files
+"""
+
 from .jsonMOEA import jsonMOEA
 from .delft3d import Delft3D
 
