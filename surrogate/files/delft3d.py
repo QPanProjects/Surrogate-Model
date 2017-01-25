@@ -47,9 +47,9 @@ class Delft3D(object):
         # print '--py:Delft3D.gridFname: '+self.gridFname
         # print '--py:Delft3D.mapFname: '+self.mapFname
 
-    def readWaqMapInit(self):
-        """readWaqMapInit
-        read Delft3D Water quality model map file.
+    def initWaqMap(self):
+        """initWaqMap
+        initiate read Delft3D Water quality model map file.
         open('b') is important -> binary
         file.read(1), 8 bits is 1 byte.
 
@@ -106,7 +106,7 @@ class Delft3D(object):
                self.nvar,\
                self.ntime
 
-    def readWaqGrid(self):
+    def getWaqGrid(self):
         """readWaqGrid
 
         :return:
@@ -138,7 +138,7 @@ class Delft3D(object):
                self.gridY,\
                self.gridIndex
 
-    def readWaqMapDataAtOffset(self,iseg=0,ivar=0,itime=0):
+    def getWaqMapDataAtOffset(self,iseg=0,ivar=0,itime=0):
         """
 
         :param iseg:
@@ -163,7 +163,7 @@ class Delft3D(object):
 
         return data
 
-    def readWaqMapDataAtTime(self,itime=0):
+    def getWaqMapDataAtTime(self,itime=0):
         """
 
         :param itime:
@@ -187,7 +187,7 @@ class Delft3D(object):
 
         return data
 
-    def readWaqMapDataAtSegment(self,iseg=0):
+    def getWaqMapDataAtSegment(self,iseg=0):
         """
 
         :param iseg:
@@ -213,7 +213,7 @@ class Delft3D(object):
 
         return data
 
-    def readWaqMapDataAtVariable(self,ivar=0):
+    def getWaqMapDataAtVariable(self,ivar=0):
         """
 
         :param ivar:
@@ -239,7 +239,7 @@ class Delft3D(object):
 
         return data
 
-    def readWaqMapDataAtVariableTime(self,ivar=0,itime=0):
+    def getWaqMapDataAtVariableTime(self,ivar=0,itime=0):
         """
 
         :param ivar:
@@ -265,6 +265,9 @@ class Delft3D(object):
                 file.seek((self.nvar-ivar-1)*4,1)
 
         return data
+
+    def getWaqMapMaxDataAtVariableTime(self,ivar=0,itime=0):
+        pass
 
     def saveFigMap(self,ivar=0,itime=0):
         """

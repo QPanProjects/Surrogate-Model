@@ -99,8 +99,8 @@ def readD3DWaq(taihuDir,caseName):
 
 
     d3d = Delft3D(gridFname=gridFname, mapFname=mapFname)
-    moname,varlist,maptime,nseg,nvar,ntime = d3d.readWaqMapInit()
-    nrow,ncol,gridX,gridY,gridIndex = d3d.readWaqGrid()
+    moname,varlist,maptime,nseg,nvar,ntime = d3d.initWaqMap()
+    nrow,ncol,gridX,gridY,gridIndex = d3d.getWaqGrid()
     maptime = [x/hour2sec for x in maptime]
 
     if iseg>=nseg:
@@ -120,24 +120,24 @@ def readD3DWaq(taihuDir,caseName):
     print '--py:Data read: [iseg='+str(iseg)+',ivar='+str(ivar)+',itime='+str(itime)+']'
 
 
-    # dataOffset = d3d.readWaqMapDataAtOffset(iseg=iseg,ivar=ivar,itime=itime) # ok
+    # dataOffset = d3d.getWaqMapDataAtOffset(iseg=iseg,ivar=ivar,itime=itime) # ok
     # # print dataOffset
 
-    # dataTime = d3d.readWaqMapDataAtTime(itime=itime) # ok
+    # dataTime = d3d.getWaqMapDataAtTime(itime=itime) # ok
     # # print dataTime[iseg][ivar][0]
 
-    dataSeg = d3d.readWaqMapDataAtSegment(iseg=iseg) # ok
+    dataSeg = d3d.getWaqMapDataAtSegment(iseg=iseg) # ok
     # print dataSeg[0][ivar][itime]
     print dataSeg[0][ivar][:]
     dataHis = dataSeg[0][ivar][:]
 
-    # dataVar = d3d.readWaqMapDataAtVariable(ivar=ivar) # ok
+    # dataVar = d3d.getWaqMapDataAtVariable(ivar=ivar) # ok
     # # print dataVar[iseg][0][itime]
     # # print dataVar[iseg][0][:]
     # dataHis = dataVar[iseg][0][:]
 
 
-    dataZ = d3d.readWaqMapDataAtVariableTime(ivar=ivar,itime=itime) # ok
+    dataZ = d3d.getWaqMapDataAtVariableTime(ivar=ivar,itime=itime) # ok
     dataMap = []
     for i in range(nrow):
         dataMap.append([dataZ[gridIndex[i][j]][0] if gridIndex[i][j]>0 else 0 for j in range(ncol)])
