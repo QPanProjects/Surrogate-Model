@@ -2,6 +2,13 @@
 # License: MIT License
 # Create: 2016-12-02
 
+# 0 --py:Success::
+# 1 --py:Warning::
+# 2 --py:Error::
+# --py:Start::
+# --py:End::
+# --py:Test::
+
 """
 Delft3D classes for all Delft3D generated result files.
 naming system: [method:read,write][software:Flow,Waq][file:Map,His]
@@ -44,8 +51,8 @@ class Delft3D(object):
         self.ivar = 0
         self.itime = [-1,-1]
 
-        # print '--py:Delft3D.gridFname: '+self.gridFname
-        # print '--py:Delft3D.mapFname: '+self.mapFname
+        # print '--py:Test:: Delft3D.gridFname: '+self.gridFname
+        # print '--py:Test:: Delft3D.mapFname: '+self.mapFname
 
     def initWaqMap(self):
         """initWaqMap
@@ -92,7 +99,7 @@ class Delft3D(object):
             # data = [[[None for k in range(self.ntime)] for j in range(self.nvar)] for i in range(self.nseg)]
             for k in range(0,self.ntime):
                 self.timlist.append(struct.unpack('i',file.read(4))[0])
-                # print 'self.timlist:\t'+str(self.timlist[k])
+                # print '--py:Test:: '+'self.timlist:\t'+str(self.timlist[k])
 
                 file.seek(self.nseg*self.nvar*4,1)
                 # for i in range(0,self.nseg):
@@ -297,7 +304,7 @@ class Delft3D(object):
         """
         icode = 0
         if i >= n:
-            message = '--py:Delft3D.Error: '+s+' '+str(i)+' > '+str(n)
+            message = '--py:Test:: Delft3D.Error: '+s+' '+str(i)+' > '+str(n)
             print message
             icode = 101
             self.msgError(icode,message)
