@@ -8,22 +8,30 @@ naming system: [method:read,write][software:Flow,Waq][file:Map,His]
 """
 
 import os
+import sys
 
 import struct
 
 class Delft3D(object):
     """Delft3D class
 
-    :param fileName: file name
+    :param gridFname: delft3D water quality grid file name
+    :param mapFname: delft3D water quality map file name
     """
-    def __init__(self, fileName):
+    def __init__(self, gridFname, mapFname):
         """
 
         :return:
         """
-        self.fileName = fileName
-        self.fileSize = os.path.getsize(fileName)
+        self.gridFname = gridFname
+        self.nrow = 0
+        self.ncol = 0
+        self.gridX = []
+        self.gridY = []
+        self.gridIndex = []
 
+        self.mapFname = mapFname
+        self.fileSize = os.path.getsize(mapFname)
         self.nseg = -1
         self.nvar = -1
         self.ntime = -1
@@ -36,8 +44,11 @@ class Delft3D(object):
         self.ivar = 0
         self.itime = [-1,-1]
 
+        # print '--py:Delft3D.gridFname: '+self.gridFname
+        # print '--py:Delft3D.mapFname: '+self.mapFname
+
     def readWaqMapInit(self):
-        """readWaqMap
+        """readWaqMapInit
         read Delft3D Water quality model map file.
         open('b') is important -> binary
         file.read(1), 8 bits is 1 byte.
@@ -65,7 +76,7 @@ class Delft3D(object):
 
         moname = []
 
-        with open(self.fileName, mode='rb') as file:
+        with open(self.mapFname, mode='rb') as file:
             for i in range(0,4):
                 moname.append(file.read(40).strip())
             self.nvar = struct.unpack('i',file.read(4))[0]
@@ -88,13 +99,44 @@ class Delft3D(object):
                 #     for j in range(0,self.nvar):
                 #         data[i][j][k] = struct.unpack('f',file.read(4))[0]
 
-        rtn = []
         return moname,\
                self.varlist,\
                self.timlist,\
                self.nseg,\
                self.nvar,\
                self.ntime
+
+    def readWaqGrid(self):
+        """readWaqGrid
+
+        :return:
+        """
+        with open(self.gridFname, mode='r') as file:
+            for line in file:
+                self.nrow += 1
+                rowIndex = [int(elt.strip()) for elt in line.split('\t')]
+                self.ncol = len(rowIndex)
+                # in alternative, if you need to use the file content as numbers
+                # inner_list = [int(elt.strip()) for elt in line.split(',')]
+                self.gridIndex.append(rowIndex)
+                self.gridX.append([float(i) if rowIndex[i]>0 else 0.0 for i in range(self.ncol)])
+                self.gridY.insert(0,[float(self.nrow-1) for y in range(self.ncol)])
+
+        # file = open(self.gridFname+'-index','w')
+        # strIndex = 'row\tcol\tindex\n'
+        # file.write(strIndex)
+        # for j in range(self.ncol):
+        #     for i in range(self.nrow-1,-1,-1):
+        #         if self.gridIndex[i][j]>0:
+        #             strIndex = str(self.nrow-i)+'\t'+str(j+1)+'\t'+str(self.gridIndex[i][j])+'\n'
+        #             file.write(strIndex)
+        # file.close()
+
+        return self.nrow,\
+               self.ncol,\
+               self.gridX,\
+               self.gridY,\
+               self.gridIndex
 
     def readWaqMapDataAtOffset(self,iseg=0,ivar=0,itime=0):
         """
@@ -104,10 +146,14 @@ class Delft3D(object):
         :param itime:
         :return:
         """
+        self.chkError(i=iseg,n=self.nseg,s='segment')
+        self.chkError(i=ivar,n=self.nvar,s='variable')
+        self.chkError(i=itime,n=self.ntime,s='time')
         self.iseg = iseg
         self.ivar = ivar
         self.itime[0] = itime
-        with open(self.fileName, mode='rb') as file:
+
+        with open(self.mapFname, mode='rb') as file:
             file.seek(self.headOffset,0)
 
             file.seek((self.blockOffset+4)*itime,1)
@@ -123,12 +169,14 @@ class Delft3D(object):
         :param itime:
         :return:
         """
+        self.chkError(i=itime,n=self.ntime,s='time')
         self.iseg = -1
         self.ivar = -1
         self.itime[0] = itime
+
         # data = [[ None for j in range(self.nvar)] for i in range(self.nseg)]
         data = [[[None for k in range(1)] for j in range(self.nvar)] for i in range(self.nseg)]
-        with open(self.fileName, mode='rb') as file:
+        with open(self.mapFname, mode='rb') as file:
             file.seek(self.headOffset,0)
 
             file.seek((self.blockOffset+4)*itime,1)
@@ -145,12 +193,14 @@ class Delft3D(object):
         :param iseg:
         :return:
         """
+        self.chkError(i=iseg,n=self.nseg,s='segment')
         self.iseg = iseg
         self.ivar = -1
         self.itime = [-1,-1]
+
         # data = [[ None for j in range(self.ntime)] for i in range(self.nvar)]
         data = [[[None for k in range(self.ntime)] for j in range(self.nvar)] for i in range(1)]
-        with open(self.fileName, mode='rb') as file:
+        with open(self.mapFname, mode='rb') as file:
             file.seek(self.headOffset,0)
 
             # file.seek((self.blockOffset+4)*itime,1)
@@ -169,12 +219,14 @@ class Delft3D(object):
         :param ivar:
         :return:
         """
+        self.chkError(i=ivar,n=self.nvar,s='variable')
         self.iseg = -1
         self.ivar = ivar
         self.itime = [-1,-1]
+
         # data = [[ None for j in range(self.ntime)] for i in range(self.nseg)]
         data = [[[None for k in range(self.ntime)] for j in range(1)] for i in range(self.nseg)]
-        with open(self.fileName, mode='rb') as file:
+        with open(self.mapFname, mode='rb') as file:
             file.seek(self.headOffset,0)
 
             # file.seek((self.blockOffset+4)*itime,1)
@@ -194,12 +246,15 @@ class Delft3D(object):
         :param itime:
         :return:
         """
+        self.chkError(i=ivar,n=self.nvar,s='variable')
+        self.chkError(i=itime,n=self.ntime,s='time')
         self.iseg = -1
         self.ivar = ivar
         self.itime[0] = itime
+
         # data = [[ None for j in range(self.ntime)] for i in range(self.nseg)]
         data = [[None for j in range(1)] for i in range(self.nseg)]
-        with open(self.fileName, mode='rb') as file:
+        with open(self.mapFname, mode='rb') as file:
             file.seek(self.headOffset,0)
 
             file.seek((self.blockOffset+4)*itime,1)
@@ -229,16 +284,31 @@ class Delft3D(object):
         """
         pass
 
-    def msgError(self,icode=0):
+    def chkError(self,i=0,n=0,s='empty'):
+        """
+
+        :param i: index of check variable
+        :param n: total amount of check variable
+        :param s: string of check variable
+        :return:
+        """
+        icode = 0
+        if i >= n:
+            message = '--py:Delft3D.Error: '+s+' '+str(i)+' > '+str(n)
+            print message
+            icode = 101
+            self.msgError(icode,message)
+
+
+        # return icode,message
+
+    def msgError(self,icode,message):
         """
 
         :param icode:
+        :param message:
         :return:
         """
-        if icode == 0:
-            pass
-        elif icode == 0:
-            pass
-        else:
-            pass
+        if icode >= 0:
+            sys.exit(message)
 
