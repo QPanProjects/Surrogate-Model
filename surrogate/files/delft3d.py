@@ -5,8 +5,8 @@
 # 0 --py:Success::
 # 1 --py:Warning::
 # 2 --py:Error::
-# --py:Start::
-# --py:End::
+# --py:Start::['+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")+']
+# --py:End::  ['+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")+']
 # --py:Test::
 
 """
