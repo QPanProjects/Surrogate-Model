@@ -7,8 +7,8 @@
 # 0 --py:Success::
 # 1 --py:Warning::
 # 2 --py:Error::
-# --py:Start::
-# --py:End::
+# --py:Start::['+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")+']
+# --py:End::  ['+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")+']
 # --py:Test::
 
 import os, sys, getopt, datetime
@@ -24,40 +24,40 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-from surrogate.files.delft3d import Delft3D
-def main(taihuDir, caseName, varName, iseg, itime):
+# from surrogate.files.delft3d import Delft3D
+# def main(taihuDir, caseName, varName, iseg, itime):
 
-# from delft3d import Delft3D
-# def main(argv):
-#     taihuDir = ''
-#     caseName = ''
-#     varName = ''
-#     try:
-#         opts, args = getopt.getopt(argv,"hd:c:v:p:t:",["dir=","case=","variable=","point=","time="])
-#     except getopt.GetoptError:
-#         print sys.argv[0]+' -d <dir> -c <case> -v <variable> -p <point> -t <time>'
-#         sys.exit(2)
-#     for opt, arg in opts:
-#         if opt in ("-h", "--help"):
-#             print sys.argv[0]+' -d <dir> -c <case> -v <variable> -p <point> -t <time>'
-#             sys.exit()
-#         elif opt in ("-d", "--dir"):
-#             taihuDir = arg
-#         elif opt in ("-c", "--case"):
-#             caseName = arg
-#         elif opt in ("-v", "--variable"):
-#             varName = arg
-#         elif opt in ("-p", "--point"):
-#             iseg = int(arg)
-#         elif opt in ("-t", "--time"):
-#             itime = int(arg)
+from delft3d import Delft3D
+def main(argv):
+    taihuDir = ''
+    caseName = ''
+    varName = ''
+    try:
+        opts, args = getopt.getopt(argv,"hd:c:v:p:t:",["dir=","case=","variable=","point=","time="])
+    except getopt.GetoptError:
+        print sys.argv[0]+' -d <dir> -c <case> -v <variable> -p <point> -t <time>'
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt in ("-h", "--help"):
+            print sys.argv[0]+' -d <dir> -c <case> -v <variable> -p <point> -t <time>'
+            sys.exit()
+        elif opt in ("-d", "--dir"):
+            taihuDir = arg
+        elif opt in ("-c", "--case"):
+            caseName = arg
+        elif opt in ("-v", "--variable"):
+            varName = arg
+        elif opt in ("-p", "--point"):
+            iseg = int(arg)
+        elif opt in ("-t", "--time"):
+            itime = int(arg)
 
-    print '--py:Start:: '+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print '--py:Start::['+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")+'] '+caseName
 
     if taihuDir and caseName and varName and iseg>=0 and itime>=0:
         readD3DWaq(taihuDir, caseName, varName, iseg, itime)
 
-    print '--py:End:: '+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print '--py:End::  ['+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")+']'
 
 
 def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
@@ -69,38 +69,8 @@ def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
     dy = 500.0 # meter
     hour2sec = 24*3600
 
-    blockFname = taihuDir+'/block00/block6.inp'
     gridFname  = taihuDir+'/coup00/couplnef.txt'
-    inpFname   = taihuDir+'/inp00/taihu.inp'
-
     mapFname   = taihuDir+'/'+caseName+'/taihu.map'
-
-    # strInputH = ""
-    # strInputH += "%i '%i (%i) %s' ' ' ' '\n"
-    # # index id num name
-    # print strInputH % (15311,1,1,'Tai')
-    #
-    # # for i in range(41):
-    # strInputB = ""
-    # strInputB += "; Data for '%s'\n"
-    # strInputB += "ITEM\n"
-    # strInputB += " '%i (%i) %s'\n"
-    # strInputB += "CONCENTRATIONS\n"
-    # strInputB += "   USEFOR 'FLOW' 'FLOW'\n"
-    # strInputB += "   USEFOR 'NO3' 'NO3'\n"
-    # strInputB += "   USEFOR 'PO4' 'PO4'\n"
-    # strInputB += "   USEFOR 'Continuity' 'Continuity'\n"
-    # strInputB += "TIME BLOCK\n"
-    # strInputB += "DATA\n"
-    # strInputB += " 'FLOW' 'NO3' 'PO4''Continuity'\n"
-    # # name id num name
-    # print strInputB % ('Tai',1,1,'Tai')
-    #
-    # strInputD = ""
-    # strInputD += "%s\t%.4e\t%.4e\t%.4e\t%.4e\n"
-    # # time FLOW NO3 PO4 Continuity
-    # # 2008/01/01-00:00:00  1.0040e+001  3.3000e-001  4.3000e-002  1.0000e+000
-    # print strInputD % ('2008/01/01-00:00:00',10.04,0.33,0.043,1.0)
 
     d3d = Delft3D(gridFname=gridFname, mapFname=mapFname)
     moname, varlist, maptime, nseg, nvar, ntime = d3d.initWaqMap()
@@ -202,38 +172,33 @@ def plotPcolor(taihuDir, maptime, varlist, iseg, ivar, x, y, z, z_min, z_max, st
     # plt.show()
     plt.clf()
 
-    # fig = plt.figure()
-    # ax = fig.add_subplot(111)
-    # ax.plot(maptime,dataHis)
-    # ax.grid()
-    # plt.show()
-
-
 
 if __name__ == "__main__":
-    icaseStart = 0
-    icaseEnd = 2
-
-    taihuDir = '../../../examples/files/taihu'
-    caseName=''
-    varName='GREENS'
-    iseg=0
-    itime=0
-
-    # # caseName = "s%08d" % 0
-    # iseg=10011
-    # ivar=79 # 79	GREENS
-    # itime=120
+    # icaseStart = 0
+    # icaseEnd = 2
     #
-    # # caseName = "s%08d" % 1
-    # iseg=10011
-    # ivar=46 # 46	GREENS
-    # itime=29
+    # taihuDir = '../../../examples/files/taihu'
+    # caseName=''
+    # varName='GREENS'
+    # iseg=0
+    # itime=0
+    #
+    # # # caseName = "s%08d" % 0
+    # # iseg=10011
+    # # ivar=79 # 79	GREENS
+    # # itime=120
+    # #
+    # # # caseName = "s%08d" % 1
+    # # iseg=10011
+    # # ivar=46 # 46	GREENS
+    # # itime=29
+    #
+    # # --py:[icaseStart = 0, icaseEnd = 2] => [s00000000, s00000001]
+    # for icase in range(icaseStart,icaseEnd):
+    #     caseName = "s%08d" % icase
+    #     main(taihuDir, caseName, varName, iseg, itime)
 
-    for icase in range(icaseStart,icaseEnd):
-        caseName = "s%08d" % icase
-        main(taihuDir, caseName, varName, iseg, itime)
-
-    # # python ./test_delft3d.py
-    # main(sys.argv[1:])
+    # # --sh:[icaseStart = 1, icaseEnd = 2] => [t00000001, t00000002]
+    # # python ./test_delft3d.py -d "$taihuDir" -c "$caseName" -v "$varName" -p "$iseg" -t "$itime"
+    main(sys.argv[1:])
 
