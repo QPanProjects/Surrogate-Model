@@ -225,8 +225,9 @@ class ANNSurrogate(SurrogateModel):
         # self.x = None
         # self.y = None
 
+        # algorithm => solver
         self.__model = MLPRegressor(hidden_layer_sizes=hidden_layer_sizes,
-                                    activation=activation, algorithm=algorithm, alpha=alpha,
+                                    activation=activation, solver=algorithm, alpha=alpha,
                                     batch_size=batch_size, learning_rate=learning_rate,
                                     learning_rate_init=learning_rate_init, power_t=power_t,
                                     max_iter=max_iter, shuffle=shuffle,
