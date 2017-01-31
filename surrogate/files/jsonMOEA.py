@@ -4,9 +4,14 @@
 JSON-MOEA class for save MOEA results into json file format.
 """
 
-import json
+import os, json
 
+import matplotlib as mpl
+if os.environ.get('DISPLAY','') == '':
+    # print('--py:Warning:: No display found. Using non-interactive Agg backend')
+    mpl.use('Agg')
 import matplotlib.pyplot as plt
+
 import numpy as np
 from matplotlib.pyplot import cm
 
@@ -109,6 +114,39 @@ class jsonMOEA(object):
         outFile.write("\n")
 
         outFile.close()
+
+    def savePlot(self):
+        with open(self.fileName) as data_file:
+            data = json.load(data_file)
+
+        gen = data["generation"]
+        gen_tot = len(gen)
+
+        color = iter(cm.gray(np.linspace(1, 0.1, gen_tot)))
+        # color = iter(cm.rainbow(np.linspace(0,1,gen_tot)))
+        for index, item in enumerate(gen):
+            obj = item["objective"][0]
+            obj_tot = len(obj)
+            x = []
+            y = []
+            r = index / gen_tot
+            g = index / gen_tot
+            b = index / gen_tot
+            for iobj in obj:
+                x.append(iobj[0])
+                y.append(iobj[1])
+            plt.plot(x, y, '.', color=next(color), label=str(index))
+
+        plt.title('moea.json')
+        plt.xlabel('obj1')
+        # plt.xlim([0.7,1.1])
+        plt.ylabel('obj2')
+        # plt.ylim([6,9])
+        plt.grid(True)
+        # plt.legend(loc='best')
+        plt.savefig(self.fileName+'.png')
+        # plt.show()
+        plt.clf()
 
     def plot_json(self):
         """
