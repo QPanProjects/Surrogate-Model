@@ -27,11 +27,14 @@ import numpy as np
 # from surrogate.files.delft3d import Delft3D
 # def main(taihuDir, caseName, varName, iseg, itime):
 
-from delft3d import Delft3D
+sys.path.append("..")
+from surrogate.files.delft3d import Delft3D
 def main(argv):
     taihuDir = ''
     caseName = ''
     varName = ''
+    iseg = 0
+    itime = 0
     try:
         opts, args = getopt.getopt(argv,"hd:c:v:p:t:",["dir=","case=","variable=","point=","time="])
     except getopt.GetoptError:
@@ -57,7 +60,7 @@ def main(argv):
     if taihuDir and caseName and varName and iseg>=0 and itime>=0:
         readD3DWaq(taihuDir, caseName, varName, iseg, itime)
 
-    print '--py:End::  ['+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")+']'
+    print '--py:End::  ['+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")+'] '+caseName
 
 
 def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
@@ -69,7 +72,7 @@ def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
     dy = 500.0 # meter
     hour2sec = 24*3600
 
-    gridFname  = taihuDir+'/coup00/couplnef.txt'
+    gridFname  = taihuDir+'/delcoupl/couplnef.txt'
     mapFname   = taihuDir+'/'+caseName+'/taihu.map'
 
     d3d = Delft3D(gridFname=gridFname, mapFname=mapFname)
@@ -148,10 +151,12 @@ def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
     strMapTitle = caseName+'/map_'+varlist[ivar]+'_t'+str(itime)
     # strMapTitle = caseName+'/map_'+varlist[ivar]+'_t'+str(maptime[itime])
 
-    plotPcolor(taihuDir, maptime, varlist, iseg, ivar, x, y, z, z_min, z_max, strMapTitle, dataHis, strHisTitle)
+    savePlotMap(taihuDir, x, y, z, z_min, z_max, strMapTitle)
+    savePlotHis(taihuDir, maptime, varlist, iseg, ivar, dataHis, strHisTitle)
 
+    saveObj(taihuDir, caseName, z, dataHis)
 
-def plotPcolor(taihuDir, maptime, varlist, iseg, ivar, x, y, z, z_min, z_max, strMapTitle, dataHis, strHisTitle):
+def savePlotMap(taihuDir, x, y, z, z_min, z_max, strMapTitle):
     print '--py:Start:: Plot map.'
     plt.pcolor(x, y, z, cmap='jet', vmin=z_min, vmax=z_max)
     plt.axis([x.min(), x.max(), y.min(), y.max()])
@@ -163,6 +168,7 @@ def plotPcolor(taihuDir, maptime, varlist, iseg, ivar, x, y, z, z_min, z_max, st
     # plt.show()
     plt.clf()
 
+def savePlotHis(taihuDir, maptime, varlist, iseg, ivar, dataHis, strHisTitle):
     print '--py:Start:: Plot his.'
     plt.plot(maptime,dataHis)
     plt.title('Point '+str(iseg))
@@ -171,6 +177,21 @@ def plotPcolor(taihuDir, maptime, varlist, iseg, ivar, x, y, z, z_min, z_max, st
     plt.savefig(taihuDir+'/'+strHisTitle+'.png')
     # plt.show()
     plt.clf()
+
+def saveObj(taihuDir, caseName, z, dataHis):
+    objfunFname = taihuDir+'/'+caseName+'/taihu_objfun.txt'
+    with open(objfunFname,'wt') as objfunFref:
+        obj1 = objfun1(dataMap=z)
+        obj2 = objfun2(dataHis=dataHis)
+        objfunFref.write('%.6f\t%.6f\n' % (obj1, obj2))
+
+def objfun1(dataMap):
+    obj = np.nanmean(dataMap)
+    return obj
+
+def objfun2(dataHis):
+    obj = np.nanmax(dataHis)
+    return obj
 
 
 if __name__ == "__main__":
