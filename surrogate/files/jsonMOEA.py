@@ -1,4 +1,13 @@
-# Author: Quan Pan
+# Author: Quan Pan <quanpan302@hotmail.com>
+# License: MIT License
+# Create: 2016-12-02
+
+# 0 --py:Success::
+# 1 --py:Warning::
+# 2 --py:Error::
+# --py:Start::['+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")+']
+# --py:End::  ['+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")+']
+# --py:Test::
 
 """
 JSON-MOEA class for save MOEA results into json file format.
@@ -28,6 +37,12 @@ class jsonMOEA(object):
     def __init__(self, fileName, numVar, numPop, numCon, numObj, numGen):
         """
 
+        :param fileName:
+        :param numVar:
+        :param numPop:
+        :param numCon:
+        :param numObj:
+        :param numGen:
         :return:
         """
         self.fileName = fileName
@@ -71,7 +86,6 @@ class jsonMOEA(object):
         for j in range(1, self.numVar):
             outFile.write(",%f" % (individuals[0].variable[j]))
         outFile.write("]")
-
         for i in range(1, self.numPop):
             outFile.write(",[%f" % (individuals[i].variable[0]))
             for j in range(1, self.numVar):
@@ -108,6 +122,7 @@ class jsonMOEA(object):
                 outFile.write("]")
             outFile.write("]")
             outFile.write("\n")
+
         outFile.write("    }")
         if igen < self.numGen - 1:
             outFile.write(",")
