@@ -13,6 +13,7 @@
     $rtnJSON = array(
         "his" => "",
         "map" => "",
+        "json"=> "",
         "py" => "",
     );
 
@@ -40,8 +41,9 @@
             $rtnJSON['py']  = $output;
             // foreach( $output as $text ){ echo "$text\n"; }
             //
-            $rtnJSON['his'] = $casename.'/his_'.$varname.'_s'.$iseg.'.png?'.(new \DateTime())->format('YmdHis');
-            $rtnJSON['map'] = $casename.'/map_'.$varname.'_t'.$itime.'.png?'.(new \DateTime())->format('YmdHis');
+            $rtnJSON['his']  = $casename.'/his_'.$varname.'_s'.$iseg.'.png?'.(new \DateTime())->format('YmdHis');
+            $rtnJSON['map']  = $casename.'/map_'.$varname.'_t'.$itime.'.png?'.(new \DateTime())->format('YmdHis');
+            $rtnJSON['json'] = $casename.'/map_'.$varname.'_t'.$itime.'.json';
             echo json_encode($rtnJSON);
         }
 

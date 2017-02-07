@@ -4,11 +4,16 @@
     <title>Taihu DSS SM</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="/assets/css/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.18.1/vis.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.18.1/vis.min.js"></script>
+
 
     <style>
     .noresize {
@@ -269,8 +274,12 @@
                                 <i class="fa fa-picture-o fa-3x fa-fw"></i>
                             </a>
                         </div>
+                        <div class="col-sm-12">
+                            <div id="grapht01" class="center-block"></div>
+                        </div>
                     </div>
                 </div>
+
 
                 <div class="col-sm-12">
                     <h3>t02</h3>
@@ -287,6 +296,9 @@
                             <a id="imgt02map" href="" target="_blank">
                                 <i class="fa fa-picture-o fa-3x fa-fw"></i>
                             </a>
+                        </div>
+                        <div class="col-sm-12">
+                            <div id="grapht02" class="center-block"></div>
                         </div>
                     </div>
                 </div>
@@ -417,6 +429,7 @@
 
         </div>
     </div>
+
     <div class="row">
         <div class="col-sm-12">
             <textarea rows="10" class="form-control noresize"></textarea>
@@ -473,6 +486,8 @@ $( document ).ready(function() {
                 $('#imgt01map').attr('href',data_array['map']).html(
                     '<img class="img-responsive" src="'+data_array['map']+'" alt="map">'
                 );
+
+                drawVisualization(data_array['json'],'grapht01');
             },
             error(xhr,status,error){
                 var icon = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>';
@@ -507,6 +522,8 @@ $( document ).ready(function() {
                 $('#imgt02map').attr('href',data_array['map']).html(
                     '<img class="img-responsive" src="'+data_array['map']+'" alt="map">'
                 );
+
+                drawVisualization(data_array['json'],'grapht02');
             },
             error(xhr,status,error){
                 var icon = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>';
@@ -534,7 +551,7 @@ $( document ).ready(function() {
                 logExe  = "--php:Start:: Model\n\n";
                 $textarea.text(logExe);
 
-                var icon = '<i class="fa fa-picture-o fa-3x fa-fw"></i>';
+                var icon = '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>';
                 $('#imgt01his').html( icon );
                 $('#imgt01map').html( icon );
                 $('#imgt02his').html( icon );
@@ -547,7 +564,7 @@ $( document ).ready(function() {
                 logExe += result;
                 $textarea.text(logExe);
 
-                var icon = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>';
+                var icon = '<i class="fa fa-picture-o fa-3x fa-fw"></i>';
                 $('#imgt01his').html( icon );
                 $('#imgt01map').html( icon );
                 $('#imgt02his').html( icon );
@@ -573,8 +590,45 @@ $( document ).ready(function() {
             }
         });
     });
-
 });
+
+    // Called when the Visualization API is loaded.
+    function drawVisualization(jsonFname,containerId) {
+        var data = null;
+
+        // Create and populate a data table.
+        var data = new vis.DataSet();
+
+        $.getJSON( jsonFname, function( jsonData ) {
+            var jsonMapContainer = document.getElementById(containerId);
+
+            for (var i = 0; i < jsonData['x'].length; i += 1) {
+            //for (var i = 0; i < 100; i += 1) {
+                data.add({
+                    x: jsonData['x'][i],
+                    y: jsonData['y'][i],
+                    z: jsonData['z'][i],
+                    style: jsonData['z'][i]
+                });
+            }
+
+            // specify options
+            var options = {
+                width:  '100%',
+                height: '500px',
+                style: 'surface',
+                showPerspective: false,
+                showGrid: true,
+                showShadow: false,
+                keepAspectRatio: true,
+                verticalRatio: 0.5
+            };
+
+            // create a graph3d
+            graph3d = new vis.Graph3d(jsonMapContainer, data, options);
+        });
+
+    }
 </script>
 </body>
 </html>

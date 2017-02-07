@@ -23,6 +23,7 @@ if os.environ.get('DISPLAY','') == '':
 import matplotlib.pyplot as plt
 import numpy as np
 
+import json
 
 # from surrogate.files.delft3d import Delft3D
 # def main(taihuDir, caseName, varName, iseg, itime):
@@ -122,9 +123,16 @@ def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
     # dataHis = dataVar[iseg][0][:]
 
     dataZ = d3d.getWaqMapDataAtVariableTime(ivar=ivar, itime=itime) # ok
+    jsonData = {'x': [], 'y': [], 'z': []}
     dataMap = []
     for i in range(nrow):
         dataMap.append([dataZ[gridIndex[i][j]][0] if gridIndex[i][j]>0 else 0 for j in range(ncol)])
+
+        for j in range(ncol):
+            if gridIndex[i][j]>0:
+                jsonData['x'].append(gridX[i][j])
+                jsonData['y'].append(gridY[i][j])
+                jsonData['z'].append(dataZ[gridIndex[i][j]][0])
 
     dataMap = np.array(dataMap)
     gridY = np.array(gridY)
@@ -145,16 +153,27 @@ def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
     x = gridX
     y = gridY
     z = dataMap
+
     # z_min, z_max = np.nanmin(z), np.nanmax(z)
 
     strHisTitle = caseName+'/his_'+varlist[ivar]+'_s'+str(iseg)
     strMapTitle = caseName+'/map_'+varlist[ivar]+'_t'+str(itime)
     # strMapTitle = caseName+'/map_'+varlist[ivar]+'_t'+str(maptime[itime])
+    strMapJson  = caseName+'/map_'+varlist[ivar]+'_t'+str(itime)
 
     savePlotMap(taihuDir, x, y, z, z_min, z_max, strMapTitle)
     savePlotHis(taihuDir, maptime, varlist, ivar, dataHis, strHisTitle)
+    saveJsonMap(taihuDir, jsonData, strMapJson)
 
     saveObj(taihuDir, caseName, z, dataHis)
+
+def saveJsonMap(taihuDir, jsonData, strMapJson):
+    print '--py:Start:: JSON map.'
+
+    jsonFref = open(taihuDir+'/'+strMapJson+'.json','wt')
+    json.dump(jsonData, jsonFref, indent=4)
+    jsonFref.close()
+
 
 def savePlotMap(taihuDir, x, y, z, z_min, z_max, strMapTitle):
     print '--py:Start:: Plot map.'
