@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
 
     <style>
     .noresize {
@@ -20,6 +21,7 @@
         width:100%;
         height:100%;
         height:calc(100% - 1px);
+        margin-bottom: 0px;
         background-image:url('/assets/img/taihu-feature-graphic.png');
         background-repeat:no-repeat !important;
         -webkit-background-size:cover !important;
@@ -90,20 +92,12 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-12">
-            <p id="gltimer" class="text-right"><i class="fa fa-clock-o" aria-hidden="true"></i></p>
+        <div class="col-sm-12 text-right">
+            <span id="gltimer"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-sm-8">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h3>Result</h3>
-                </div>
-            </div>
-
-
 <?php
     $ready2start = FALSE;
 
@@ -119,7 +113,7 @@
     $dir1 = $rootDir.'/t00000001';
     $dir2 = $rootDir.'/t00000002';
 
-    if( count($_GET) > 0 ) {
+    if( count($_GET) > 5 ) {
         if( $_GET['ngen'] && $_GET['ndim'] && $_GET['npop'] && $_GET['nobj'] ) {
         //if( isset($_GET['ncon']) && !empty($_GET['ncon']) && $_GET['cxpb'] ) {
             $_Ngen = intval($_GET['ngen']);
@@ -129,7 +123,7 @@
             $_Ncon = intval($_GET['ncon']);
             $_CXPB = floatval($_GET['cxpb']);
 
-            if( $_Npop % 4 > 0.0 ){
+            if( $_Npop % 4 > 0 ){
                 $_Ngen = intval($_GET['ngen']);
                 $_Ndim = intval($_GET['ndim']);
                 $_Npop = intval($_GET['npop']);
@@ -137,12 +131,10 @@
                 $_Ncon = intval($_GET['ncon']);
                 $_CXPB = floatval($_GET['cxpb']);
 
-                echo '<div class="row">';
-                    echo '<div class="col-sm-12">';
-                        echo '<div class="alert alert-danger">--php:Error:: Remainder of <strong>Npop</strong> divided by 4 is not 0!&nbsp;';
-                        print_r($_GET);
-                        echo '</div>';
-                    echo '</div>';
+                echo '<div class="alert alert-danger alert-dismissable">';
+                    echo '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+                    echo '--php:Error:: Remainder of <strong>Npop</strong> divided by 4 is not 0!&nbsp;';
+                    print_r($_GET);
                 echo '</div>';
 
             } else {
@@ -155,105 +147,36 @@
                                .' -x '.$_CXPB
                                .' 2>&1';
                 $ready2start = TRUE;
-
-
-                echo '<div class="row">';
-                    echo '<div class="col-sm-6">';
-                        echo '<table class="table table-hover">';
-                            echo '<thead>';
-                                echo '<tr>';
-                                    echo '<th>Gen</th>';
-                                    echo '<th>Obj</th>';
-                                    echo '<th>Var</th>';
-                                echo '</tr>';
-                            echo '</thead>';
-                        echo '</table>';
-                    echo '</div>';
-                    echo '<div class="col-sm-6">';
-                        echo '<div class="row">';
-                            echo '<div class="col-sm-12">';
-                                echo '<h4>'.$resultDir.'&nbsp;<a href="'.$resultDir.'/taihu.json" target="_blank">JSON</a></h4>';
-                            echo '</div>';
-                            echo '<div class="col-sm-12">';
-                                echo '<a id="imgjson" href="'.$resultDir.'/taihu.json.png" target="_blank">';
-                                    echo '<i class="fa fa-picture-o fa-3x fa-fw"></i>';
-                                echo '</a>';
-                            echo '</div>';
-                        echo '</div>';
-                    echo '</div>';
-                echo '</div>';
-
-                echo '<div class="row">';
-                    echo '<div class="col-sm-6">';
-                        echo '<h4>'.$dir1.'</h4>';
-                        echo '<div class="row">';
-                            echo '<div class="col-sm-6">';
-                                echo '<a id="imgt01hisg4011" href="'.$dir1.'/his_GREENS_s4011.png" target="_blank">';
-                                    echo '<i class="fa fa-picture-o fa-3x fa-fw"></i>';
-                                echo '</a>';
-                            echo '</div>';
-                            echo '<div class="col-sm-6">';
-                                echo '<a id="imgt01mapg1" href="'.$dir1.'/map_GREENS_t4.png" target="_blank">';
-                                    echo '<i class="fa fa-picture-o fa-3x fa-fw"></i>';
-                                echo '</a>';
-                            echo '</div>';
-                        echo '</div>';
-                    echo '</div>';
-
-                    echo '<div class="col-sm-6">';
-                        echo '<h4>'.$dir2.'</h4>';
-                        echo '<div class="row">';
-                            echo '<div class="col-sm-6">';
-                                echo '<a id="imgt02hisg4011" href="'.$dir2.'/his_GREENS_s4011.png" target="_blank">';
-                                    echo '<i class="fa fa-picture-o fa-3x fa-fw"></i>';
-                                echo '</a>';
-                            echo '</div>';
-                            echo '<div class="col-sm-6">';
-                                echo '<a id="imgt02mapg1" href="'.$dir2.'/map_GREENS_t4.png" target="_blank">';
-                                    echo '<i class="fa fa-picture-o fa-3x fa-fw"></i>';
-                                echo '</a>';
-                            echo '</div>';
-                        echo '</div>';
-                    echo '</div>';
-                echo '</div>';
             }
 
         } else {
-            $_Ngen = intval($_GET['ngen']);
-            $_Ndim = intval($_GET['ndim']);
-            $_Npop = intval($_GET['npop']);
-            $_Nobj = intval($_GET['nobj']);
-            $_Ncon = intval($_GET['ncon']);
-            $_CXPB = floatval($_GET['cxpb']);
-
-            echo '<div class="row">';
-                echo '<div class="col-sm-12">';
-                    echo '<div class="alert alert-danger">--php:Error:: check input!&nbsp;';
-                    print_r($_GET);
-                    echo '</div>';
-                echo '</div>';
+            echo '<div class="alert alert-danger alert-dismissable">';
+                echo '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+                echo '--php:Error:: Check input!&nbsp;';
+                print_r($_GET);
             echo '</div>';
         }
 
     } else {
-        echo '<div class="row">';
-            echo '<div class="col-sm-12">';
-                echo '<div class="alert alert-info">Welcome !&nbsp;';
-                echo '</div>';
-            echo '</div>';
-        echo '</div>';
+        echo '<div class="alert alert-info alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Welcome !&nbsp;</div>';
     }
 ?>
-        </div>
-        <div class="col-sm-4">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h3 class="text-right">Input</h3>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="row" style="background-color:#FFEBEE;">
+                <div class="col-sm-12 text-center">
+                    <h3>Input</h3>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h4>Model</h4>
+                        </div>
+                    </div>
                     <form action="index_sm.php" method="get" class="row">
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="ngen">Ngen</label>
@@ -313,11 +236,185 @@
                 echo '</div>';
 
                 echo '<div class="col-sm-12">';
-                    echo '<button id="startsm" type="button" class="btn btn-success btn-block">Start Surrogate Model</button>';
+                    echo '<button id="startsm" type="button" class="btn btn-success btn-block">Start</button>';
                 echo '</div>';
             }
             ?>
             </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="row" style="background-color:#E8F5E9;">
+                <div class="col-sm-12 text-center">
+                    <h3>Result</h3>
+                </div>
+            </div>
+
+            <?php
+            if( $ready2start ){
+            ?>
+            <div class="row text-center">
+                <div class="col-sm-12">
+                    <h3>t01</h3>
+                </div>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <a id="imgt01his" href="" target="_blank">
+                                <i class="fa fa-picture-o fa-3x fa-fw"></i>
+                            </a>
+                        </div>
+                        <div class="col-sm-6">
+                            <a id="imgt01map" href="" target="_blank">
+                                <i class="fa fa-picture-o fa-3x fa-fw"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <h3>t02</h3>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <a id="imgt02his" href="" target="_blank">
+                                <i class="fa fa-picture-o fa-3x fa-fw"></i>
+                            </a>
+                        </div>
+                        <div class="col-sm-6">
+                            <a id="imgt02map" href="" target="_blank">
+                                <i class="fa fa-picture-o fa-3x fa-fw"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row text-center">
+                        <div class="col-sm-12">
+                            <h4>&nbsp;<a id="filejson" href="" target="_blank">JSON</a></h4>
+                        </div>
+                        <div class="col-sm-12">
+                            <a id="imgjson" href="" target="_blank">
+                                <i class="fa fa-picture-o fa-3x fa-fw"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden-xs col-sm-12">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Gen</th>
+                                <th>Obj</th>
+                                <th>Var</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <?php
+            }
+            ?>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="row" style="background-color:#E3F2FD;">
+                <div class="col-sm-12 text-center">
+                    <h3>Plot</h3>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h4 class="text-right">t01</h4>
+                        </div>
+                    </div>
+                    <div id="imgt01" class="row">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="c">Case</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" name="c" id="c" value="1">
+                                <span class="help-block">Casename</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="v">Vare</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" name="v" id="v" value="GREENS" readonly>
+                                <span class="help-block">Variable Name</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="p">Point</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" name="p" id="p" value="1">
+                                <span class="help-block">Point position</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="t">Time</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" name="t" id="t" value="0">
+                                <span class="help-block">Time</span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <button id="startimg" type="submit" class="btn btn-primary btn-block <?php if(!$ready2start){ echo 'disabled';} ?>">Plot</button>
+                        </div>
+                    </div>
+                </div>
+
+               <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h4 class="text-right">t02</h4>
+                        </div>
+                    </div>
+                    <div id="imgt02" class="row">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="c">Case</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" name="c" id="c" value="2">
+                                <span class="help-block">Casename</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="v">Var</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" name="v" id="v" value="GREENS" readonly>
+                                <span class="help-block">Variable Name</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="p">Point</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" name="p" id="p" value="1">
+                                <span class="help-block">Point position</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="t">Time</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" name="t" id="t" value="0">
+                                <span class="help-block">Time</span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <button id="startimg" type="submit" class="btn btn-primary btn-block <?php if(!$ready2start){ echo 'disabled';} ?>">Plot</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
     <div class="row">
@@ -345,23 +442,79 @@ $( document ).ready(function() {
     var dir2 = "<?php echo $dir2; ?>";
     var resultDir = "<?php echo $resultDir; ?>";
 
-    $('#imgt01hisg4011').html(
-        '<img class="img-responsive" src="'+dir1+'/his_GREENS_s4011.png?'+serverTime.getTime()+'" alt="'+dir1+' his">'
-    );
-    $('#imgt01mapg1').html(
-        '<img class="img-responsive" src="'+dir1+'/map_GREENS_t4.png?'+serverTime.getTime()+'" alt="'+dir1+' map">'
-    );
-
-    $('#imgt02hisg4011').html(
-        '<img class="img-responsive" src="'+dir2+'/his_GREENS_s4011.png?'+serverTime.getTime()+'" alt="'+dir2+' his">'
-    );
-    $('#imgt02mapg1').html(
-        '<img class="img-responsive" src="'+dir2+'/map_GREENS_t4.png?'+serverTime.getTime()+'" alt="'+dir2+' map">'
-    );
-
-    $('#imgjson').html(
+    $('#filejson').attr('href',resultDir+'/taihu.json');
+    $('#imgjson').attr('href',resultDir+'/taihu.json.png').html(
         '<img class="img-responsive" src="'+resultDir+'/taihu.json.png?'+serverTime.getTime()+'" alt="Result JSON">'
     );
+
+    $("#imgt01 #startimg").click(function(){
+        $.ajax({
+            url: "result.php",
+            method: "GET",
+            async: true,
+            timeout: 0,
+            data: {
+                c: $("#imgt01 #c").val(),
+                v: $("#imgt01 #v").val(),
+                p: $("#imgt01 #p").val(),
+                t: $("#imgt01 #t").val()
+            },
+            beforeSend: function() {
+                var icon = '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>';
+                $('#imgt01his').html( icon );
+                $('#imgt01map').html( icon );
+            },
+            success: function(result,status,xhr){
+                var data_array = $.parseJSON(result);
+
+                $('#imgt01his').attr('href',data_array['his']).html(
+                    '<img class="img-responsive" src="'+data_array['his']+'" alt="his">'
+                );
+                $('#imgt01map').attr('href',data_array['map']).html(
+                    '<img class="img-responsive" src="'+data_array['map']+'" alt="map">'
+                );
+            },
+            error(xhr,status,error){
+                var icon = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>';
+                $('#imgt01his').html( icon );
+                $('#imgt01map').html( icon );
+            }
+        });
+    });
+    $("#imgt02 #startimg").click(function(){
+        $.ajax({
+            url: "result.php",
+            method: "GET",
+            async: true,
+            timeout: 0,
+            data: {
+                c: $("#imgt02 #c").val(),
+                v: $("#imgt02 #v").val(),
+                p: $("#imgt02 #p").val(),
+                t: $("#imgt02 #t").val()
+            },
+            beforeSend: function() {
+                var icon = '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>';
+                $('#imgt02his').html( icon );
+                $('#imgt02map').html( icon );
+            },
+            success: function(result,status,xhr){
+                var data_array = $.parseJSON(result);
+
+                $('#imgt02his').attr('href',data_array['his']).html(
+                    '<img class="img-responsive" src="'+data_array['his']+'" alt="his">'
+                );
+                $('#imgt02map').attr('href',data_array['map']).html(
+                    '<img class="img-responsive" src="'+data_array['map']+'" alt="map">'
+                );
+            },
+            error(xhr,status,error){
+                var icon = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>';
+                $('#imgt02his').html( icon );
+                $('#imgt02map').html( icon );
+            }
+        });
+    });
 
     $("button#startsm").click(function(){
         $.ajax({
@@ -378,50 +531,43 @@ $( document ).ready(function() {
                 cxpb: <?php echo $_CXPB; ?>
             },
             beforeSend: function() {
-                logExe  = "--php:Start:: Surrogate Model\n\n";
+                logExe  = "--php:Start:: Model\n\n";
                 $textarea.text(logExe);
 
-                var icon = '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>';
-                $('#imgt01hisg4011' ).html( icon );
-                $('#imgt01mapg1'    ).html( icon );
-                $('#imgt02hisg4011' ).html( icon );
-                $('#imgt02mapg1'    ).html( icon );
+                var icon = '<i class="fa fa-picture-o fa-3x fa-fw"></i>';
+                $('#imgt01his').html( icon );
+                $('#imgt01map').html( icon );
+                $('#imgt02his').html( icon );
+                $('#imgt02map').html( icon );
 
                 $('#imgjson').html( icon );
             },
             success: function(result,status,xhr){
-                logExe  = "--php:Success:: Surrogate Model " + xhr.status + " " + xhr.statusText+"\n\n";
+                logExe  = "--php:Success:: Model " + xhr.status + " " + xhr.statusText+"\n\n";
                 logExe += result;
                 $textarea.text(logExe);
 
-                $('#imgt01hisg4011').html(
-                    '<img class="img-responsive" src="'+dir1+'/his_GREENS_s4011.png?'+serverTime.getTime()+'" alt="'+dir1+' his">'
-                );
-                $('#imgt01mapg1').html(
-                    '<img class="img-responsive" src="'+dir1+'/map_GREENS_t4.png?'+serverTime.getTime()+'" alt="'+dir1+' map">'
-                );
+                var icon = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>';
+                $('#imgt01his').html( icon );
+                $('#imgt01map').html( icon );
+                $('#imgt02his').html( icon );
+                $('#imgt02map').html( icon );
 
-                $('#imgt02hisg4011').html(
-                    '<img class="img-responsive" src="'+dir2+'/his_GREENS_s4011.png?'+serverTime.getTime()+'" alt="'+dir2+' his">'
-                );
-                $('#imgt02mapg1').html(
-                    '<img class="img-responsive" src="'+dir2+'/map_GREENS_t4.png?'+serverTime.getTime()+'" alt="'+dir2+' map">'
-                );
-
-                $('#imgjson').html(
+                $('#filejson').attr('href',resultDir+'/taihu.json');
+                $('#imgjson').attr('href',resultDir+'/taihu.json.png').html(
                     '<img class="img-responsive" src="'+resultDir+'/taihu.json.png?'+serverTime.getTime()+'" alt="Result JSON">'
                 );
             },
             error(xhr,status,error){
-                logExe  = "--php:Error:: Surrogate Model " + xhr.status + " " + xhr.statusText+"\n\n";
+                logExe  = "--php:Error:: Model " + xhr.status + " " + xhr.statusText+"\n\n";
                 logExe += error;
                 $textarea.text(logExe);
 
                 var icon = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>';
-                $('#imgt01hisg4011' ).html( icon );
-                $('#imgt01mapg1'    ).html( icon );
-                $('#imgt02hisg4011' ).html( icon );
-                $('#imgt02mapg1'    ).html( icon );
+                $('#imgt01his').html( icon );
+                $('#imgt01map').html( icon );
+                $('#imgt02his').html( icon );
+                $('#imgt02map').html( icon );
 
                 $('#imgjson').html( icon );
             }
