@@ -152,7 +152,7 @@ def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
     # strMapTitle = caseName+'/map_'+varlist[ivar]+'_t'+str(maptime[itime])
 
     savePlotMap(taihuDir, x, y, z, z_min, z_max, strMapTitle)
-    savePlotHis(taihuDir, maptime, varlist, iseg, ivar, dataHis, strHisTitle)
+    savePlotHis(taihuDir, maptime, varlist, ivar, dataHis, strHisTitle)
 
     saveObj(taihuDir, caseName, z, dataHis)
 
@@ -168,10 +168,10 @@ def savePlotMap(taihuDir, x, y, z, z_min, z_max, strMapTitle):
     # plt.show()
     plt.clf()
 
-def savePlotHis(taihuDir, maptime, varlist, iseg, ivar, dataHis, strHisTitle):
+def savePlotHis(taihuDir, maptime, varlist, ivar, dataHis, strHisTitle):
     print '--py:Start:: Plot his.'
     plt.plot(maptime,dataHis)
-    plt.title('Point '+str(iseg))
+    plt.title(strHisTitle)
     plt.xlabel('time [day]')
     plt.ylabel(varlist[ivar]+' [g/m^3]')
     plt.savefig(taihuDir+'/'+strHisTitle+'.png')
