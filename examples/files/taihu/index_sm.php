@@ -275,11 +275,12 @@
                             </a>
                         </div>
                         <div class="col-sm-12">
-                            <div id="grapht01" class="center-block"></div>
+                            <div id="grapht01" class="center-block">
+                                <i class="fa fa-picture-o fa-3x fa-fw"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-
 
                 <div class="col-sm-12">
                     <h3>t02</h3>
@@ -298,7 +299,9 @@
                             </a>
                         </div>
                         <div class="col-sm-12">
-                            <div id="grapht02" class="center-block"></div>
+                            <div id="grapht02" class="center-block">
+                                <i class="fa fa-picture-o fa-3x fa-fw"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -476,6 +479,7 @@ $( document ).ready(function() {
                 var icon = '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>';
                 $('#imgt01his').html( icon );
                 $('#imgt01map').html( icon );
+                $('#grapht01').html( icon );
             },
             success: function(result,status,xhr){
                 var data_array = $.parseJSON(result);
@@ -493,6 +497,7 @@ $( document ).ready(function() {
                 var icon = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>';
                 $('#imgt01his').html( icon );
                 $('#imgt01map').html( icon );
+                $('#grapht01').html( icon );
             }
         });
     });
@@ -512,6 +517,7 @@ $( document ).ready(function() {
                 var icon = '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>';
                 $('#imgt02his').html( icon );
                 $('#imgt02map').html( icon );
+                $('#grapht02').html( icon );
             },
             success: function(result,status,xhr){
                 var data_array = $.parseJSON(result);
@@ -529,6 +535,7 @@ $( document ).ready(function() {
                 var icon = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>';
                 $('#imgt02his').html( icon );
                 $('#imgt02map').html( icon );
+                $('#grapht02').html( icon );
             }
         });
     });
@@ -554,8 +561,11 @@ $( document ).ready(function() {
                 var icon = '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>';
                 $('#imgt01his').html( icon );
                 $('#imgt01map').html( icon );
+                $('#grapht01').html( icon );
+
                 $('#imgt02his').html( icon );
                 $('#imgt02map').html( icon );
+                $('#grapht02').html( icon );
 
                 $('#imgjson').html( icon );
             },
@@ -567,8 +577,11 @@ $( document ).ready(function() {
                 var icon = '<i class="fa fa-picture-o fa-3x fa-fw"></i>';
                 $('#imgt01his').html( icon );
                 $('#imgt01map').html( icon );
+                $('#grapht01').html( icon );
+
                 $('#imgt02his').html( icon );
                 $('#imgt02map').html( icon );
+                $('#grapht02').html( icon );
 
                 $('#filejson').attr('href',resultDir+'/taihu.json');
                 $('#imgjson').attr('href',resultDir+'/taihu.json.png').html(
@@ -583,8 +596,11 @@ $( document ).ready(function() {
                 var icon = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>';
                 $('#imgt01his').html( icon );
                 $('#imgt01map').html( icon );
+                $('#grapht01').html( icon );
+
                 $('#imgt02his').html( icon );
                 $('#imgt02map').html( icon );
+                $('#grapht02').html( icon );
 
                 $('#imgjson').html( icon );
             }
@@ -592,43 +608,43 @@ $( document ).ready(function() {
     });
 });
 
-    // Called when the Visualization API is loaded.
-    function drawVisualization(jsonFname,containerId) {
-        var data = null;
+// Called when the Visualization API is loaded.
+function drawVisualization(jsonFname,containerId) {
+    var data = null;
 
-        // Create and populate a data table.
-        var data = new vis.DataSet();
+    // Create and populate a data table.
+    var data = new vis.DataSet();
 
-        $.getJSON( jsonFname, function( jsonData ) {
-            var jsonMapContainer = document.getElementById(containerId);
+    $.getJSON( jsonFname, function( jsonData ) {
+        var jsonMapContainer = document.getElementById(containerId);
 
-            for (var i = 0; i < jsonData['x'].length; i += 1) {
-            //for (var i = 0; i < 100; i += 1) {
-                data.add({
-                    x: jsonData['x'][i],
-                    y: jsonData['y'][i],
-                    z: jsonData['z'][i],
-                    style: jsonData['z'][i]
-                });
-            }
+        for (var i = 0; i < jsonData['x'].length; i += 1) {
+        //for (var i = 0; i < 100; i += 1) {
+            data.add({
+                x: jsonData['x'][i],
+                y: jsonData['y'][i],
+                z: jsonData['z'][i],
+                style: jsonData['z'][i]
+            });
+        }
 
-            // specify options
-            var options = {
-                width:  '100%',
-                height: '500px',
-                style: 'surface',
-                showPerspective: false,
-                showGrid: true,
-                showShadow: false,
-                keepAspectRatio: true,
-                verticalRatio: 0.5
-            };
+        // specify options
+        var options = {
+            width:  '100%',
+            height: '500px',
+            style: 'surface',
+            showPerspective: false,
+            showGrid: true,
+            showShadow: false,
+            keepAspectRatio: true,
+            verticalRatio: 0.5
+        };
 
-            // create a graph3d
-            graph3d = new vis.Graph3d(jsonMapContainer, data, options);
-        });
+        // create a graph3d
+        graph3d = new vis.Graph3d(jsonMapContainer, data, options);
+    });
 
-    }
+}
 </script>
 </body>
 </html>
