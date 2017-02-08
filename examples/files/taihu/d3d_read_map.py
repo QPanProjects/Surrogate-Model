@@ -155,17 +155,21 @@ def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
     z = dataMap
 
     # z_min, z_max = np.nanmin(z), np.nanmax(z)
+    saveObj(taihuDir, caseName, z, dataHis)
 
     strHisTitle = caseName+'/his_'+varlist[ivar]+'_s'+str(iseg)
+    if not os.path.isfile(strHisTitle):
+        savePlotHis(taihuDir, maptime, varlist, ivar, dataHis, strHisTitle)
+
     strMapTitle = caseName+'/map_'+varlist[ivar]+'_t'+str(itime)
     # strMapTitle = caseName+'/map_'+varlist[ivar]+'_t'+str(maptime[itime])
+    if not os.path.isfile(strMapTitle):
+        savePlotMap(taihuDir, x, y, z, z_min, z_max, strMapTitle)
+
     strMapJson  = caseName+'/map_'+varlist[ivar]+'_t'+str(itime)
+    if not os.path.isfile(strMapJson):
+        saveJsonMap(taihuDir, jsonData, strMapJson)
 
-    savePlotMap(taihuDir, x, y, z, z_min, z_max, strMapTitle)
-    savePlotHis(taihuDir, maptime, varlist, ivar, dataHis, strHisTitle)
-    saveJsonMap(taihuDir, jsonData, strMapJson)
-
-    saveObj(taihuDir, caseName, z, dataHis)
 
 def saveJsonMap(taihuDir, jsonData, strMapJson):
     print '--py:Start:: JSON map.'
