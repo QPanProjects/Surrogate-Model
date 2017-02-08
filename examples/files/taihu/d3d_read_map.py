@@ -162,6 +162,16 @@ def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
                 jsonData['y'].append(gridY[i][j])
                 jsonData['z'].append(dataZ[gridIndex[i][j]][0])
 
+    # import random
+    # jsonDataDF = {'legend': varlist[ivar], 'x': [], 'y': [], 'z': [], 'zMin': 0.4, 'zMax': 1.0}
+    # for i in range(0,nrow,5):
+    #     for j in range(0,ncol,5):
+    #         if gridIndex[i][j]>0:
+    #             jsonDataDF['x'].append(gridX[i][j])
+    #             jsonDataDF['y'].append(gridY[i][j])
+    #             jsonDataDF['z'].append(random.uniform(0.5, 0.55))
+    # saveJsonMap(taihuDir+'/df.json', jsonDataDF)
+
     dataMap = np.array(dataMap)
     gridY = np.array(gridY)
     gridX = np.array(gridX)
@@ -234,7 +244,6 @@ def saveJsonMap(mapJsonFname, jsonData):
     jsonFref = open(mapJsonFname,'wt')
     json.dump(jsonData, jsonFref, indent=4)
     jsonFref.close()
-
 
 
 if __name__ == "__main__":

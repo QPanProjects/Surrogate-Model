@@ -148,15 +148,15 @@
 
     echo '<div class="row">';
         echo '<div class="col-sm-6">';
-            echo '<h4>'.$dir1.'</h4>';
+            echo '<h4>t01</h4>';
             echo '<div class="row">';
                 echo '<div class="col-sm-6">';
-                    echo '<a id="imgt01hisg13183" href="'.$dir1.'/his_GREENS_s4011.png" target="_blank">';
+                    echo '<a id="imgt01hisg13183" href="'.$dir1.'/his_GREENS_s0.png" target="_blank">';
                         echo '<i class="fa fa-picture-o fa-3x fa-fw"></i>';
                     echo '</a>';
                 echo '</div>';
                 echo '<div class="col-sm-6">';
-                    echo '<a id="imgt01mapg1" href="'.$dir1.'/map_GREENS_t4.png" target="_blank">';
+                    echo '<a id="imgt01mapg1" href="'.$dir1.'/map_GREENS_t0.png" target="_blank">';
                         echo '<i class="fa fa-picture-o fa-3x fa-fw"></i>';
                     echo '</a>';
                 echo '</div>';
@@ -164,15 +164,15 @@
         echo '</div>';
 
         echo '<div class="col-sm-6">';
-            echo '<h4>'.$dir2.'</h4>';
+            echo '<h4>t02</h4>';
             echo '<div class="row">';
                 echo '<div class="col-sm-6">';
-                    echo '<a id="imgt02hisg13183" href="'.$dir2.'/his_GREENS_s4011.png" target="_blank">';
+                    echo '<a id="imgt02hisg13183" href="'.$dir2.'/his_GREENS_s0.png" target="_blank">';
                         echo '<i class="fa fa-picture-o fa-3x fa-fw"></i>';
                     echo '</a>';
                 echo '</div>';
                 echo '<div class="col-sm-6">';
-                    echo '<a id="imgt02mapg1" href="'.$dir2.'/map_GREENS_t4.png" target="_blank">';
+                    echo '<a id="imgt02mapg1" href="'.$dir2.'/map_GREENS_t0.png" target="_blank">';
                         echo '<i class="fa fa-picture-o fa-3x fa-fw"></i>';
                     echo '</a>';
                 echo '</div>';
@@ -204,17 +204,17 @@ $( document ).ready(function() {
     var resultDirS = "<?php echo $resultDirS; ?>";
 
     $('#imgt01hisg13183').html(
-        '<img class="img-responsive" src="'+dir1+'/his_GREENS_s4011.png?'+serverTime.getTime()+'" alt="'+dir1+' his">'
+        '<img class="img-responsive" src="'+dir1+'/his_GREENS_s0.png?'+serverTime.getTime()+'" alt="'+dir1+' his">'
     );
     $('#imgt01mapg1').html(
-        '<img class="img-responsive" src="'+dir1+'/map_GREENS_t4.png?'+serverTime.getTime()+'" alt="'+dir1+' map">'
+        '<img class="img-responsive" src="'+dir1+'/map_GREENS_t0.png?'+serverTime.getTime()+'" alt="'+dir1+' map">'
     );
 
     $('#imgt02hisg13183').html(
-        '<img class="img-responsive" src="'+dir2+'/his_GREENS_s4011.png?'+serverTime.getTime()+'" alt="'+dir2+' his">'
+        '<img class="img-responsive" src="'+dir2+'/his_GREENS_s0.png?'+serverTime.getTime()+'" alt="'+dir2+' his">'
     );
     $('#imgt02mapg1').html(
-        '<img class="img-responsive" src="'+dir2+'/map_GREENS_t4.png?'+serverTime.getTime()+'" alt="'+dir2+' map">'
+        '<img class="img-responsive" src="'+dir2+'/map_GREENS_t0.png?'+serverTime.getTime()+'" alt="'+dir2+' map">'
     );
 
     $('#imgjsonM').html(

@@ -414,6 +414,12 @@ $( document ).ready(function() {
                 );
 
                 drawVisualization(data_array['json'],'grapht01');
+
+                $( "div#grapht01" ).after( '<a href="/taihu/result_full3d.php?'+
+                     'c='+$("#imgt01 #c").val()+
+                    '&v='+$("#imgt01 #v").val()+
+                    '&t='+$("#imgt01 #t").val()+
+                    '" class="btn btn-info btn-block" target="_blank">Full</a>' );
             },
             error(xhr,status,error){
                 var icon = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>';
@@ -452,6 +458,12 @@ $( document ).ready(function() {
                 );
 
                 drawVisualization(data_array['json'],'grapht02');
+
+                $( "div#grapht02" ).after( '<a href="/taihu/result_full3d.php?'+
+                     'c='+$("#imgt02 #c").val()+
+                    '&v='+$("#imgt02 #v").val()+
+                    '&t='+$("#imgt02 #t").val()+
+                    '" class="btn btn-info btn-block" target="_blank">Full</a>' );
             },
             error(xhr,status,error){
                 var icon = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>';
@@ -546,7 +558,10 @@ function drawVisualization(jsonFname,containerId) {
             showGrid: true,
             showShadow: false,
             keepAspectRatio: true,
-            verticalRatio: 0.5
+            verticalRatio: 0.5,
+            legendLabel: jsonData['legend'],
+            zMin: jsonData['zMin'],
+            zMax: jsonData['zMax']
         };
 
         // create a graph3d

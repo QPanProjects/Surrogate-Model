@@ -20,14 +20,13 @@
     if( $_GET['c'] && $_GET['v'] ) {
     // && $_GET['s'] && $_GET['t']
         $casename = sprintf('t%08d', intval($_GET['c']));
-        $varname  = strtoupper($_GET['v']);
+        $varname  = $_GET['v'];
 
         if( $_GET['p'] >= 0 ){
             $iseg  = intval($_GET['p']);
         }
         if( $_GET['t'] >= 0){
             $itime = intval($_GET['t']);
-
         }
         if( $casename && $varname ) {
             $exe_py_cmd = 'python /var/www/html/taihu/d3d_read_map.py'
@@ -41,9 +40,9 @@
             $rtnJSON['py']  = $output;
             // foreach( $output as $text ){ echo "$text\n"; }
             //
-            $rtnJSON['his']  = $casename.'/his_'.$varname.'_s'.$iseg.'.png?'.(new \DateTime())->format('YmdHis');
-            $rtnJSON['map']  = $casename.'/map_'.$varname.'_t'.$itime.'.png?'.(new \DateTime())->format('YmdHis');
-            $rtnJSON['json'] = $casename.'/map_'.$varname.'_t'.$itime.'.json';
+            $rtnJSON['his']   = $casename.'/his_'.$varname.'_s'.$iseg.'.png?'.(new \DateTime())->format('YmdHis');
+            $rtnJSON['map']   = $casename.'/map_'.$varname.'_t'.$itime.'.png?'.(new \DateTime())->format('YmdHis');
+            $rtnJSON['json']  = $casename.'/map_'.$varname.'_t'.$itime.'.json';
             echo json_encode($rtnJSON);
         }
 
