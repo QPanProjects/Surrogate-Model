@@ -258,7 +258,7 @@
             <?php
             if( $ready2start ){
             ?>
-            <div class="row text-center" style="background-color:#F1F8E9">
+            <div class="row text-center">
                 <div class="col-sm-12">
                     <h3>t01</h3>
                 </div>

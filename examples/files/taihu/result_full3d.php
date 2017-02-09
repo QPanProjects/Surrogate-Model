@@ -38,14 +38,14 @@
         }
     }
 ?>
-<div class="container-fluid" style="background-color:#D3D3D3;">
+<div class="container-fluid" style="height:5%;background-color:#D3D3D3;">
     <div class="row text-center">
         <div class="col-sm-12">
             <a href="<?php echo $jsonFile; ?>" target="_blank"><?php echo $jsonFile; ?></a>
         </div>
     </div>
 </div>
-<div class="container-fluid" style="height:90%;">
+<div class="container-fluid" style="height:95%;">
     <div class="row" style="height:100%;">
         <div class="col-sm-12" style="height:100%;">
             <div id="graph" style="height:100%;"></div>

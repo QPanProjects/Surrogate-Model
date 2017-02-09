@@ -195,9 +195,9 @@ def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
         if not os.path.isfile(mapFigFname):
             savePlotMap(mapFigFname, gridX, gridY, dataMap, z_min, z_max, strMapTitle)
 
-        saveJsonMap(mapJsonFname, jsonData)
-        # if not os.path.isfile(mapJsonFname):
-        #     saveJsonMap(mapJsonFname, jsonData)
+        # saveJsonMap(mapJsonFname, jsonData)
+        if not os.path.isfile(mapJsonFname):
+            saveJsonMap(mapJsonFname, jsonData)
     else:
         saveObj(objfunFname, dataMap, dataHis)
 
