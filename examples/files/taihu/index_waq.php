@@ -415,11 +415,18 @@ $( document ).ready(function() {
 
                 drawVisualization(data_array['json'],'grapht01');
 
-                $( "div#grapht01" ).after( '<a href="/taihu/result_full3d.php?'+
-                     'c='+$("#imgt01 #c").val()+
-                    '&v='+$("#imgt01 #v").val()+
-                    '&t='+$("#imgt01 #t").val()+
-                    '" class="btn btn-info btn-block" target="_blank">Full</a>' );
+                if ( $("div#grapht01 + a#graphfull3d" ).length ) {
+                    $( "div#grapht01 + a#graphfull3d" ).attr( 'href','/taihu/result_full3d.php?'+
+                         'c='+$("#imgt01 #c").val()+
+                        '&v='+$("#imgt01 #v").val()+
+                        '&t='+$("#imgt01 #t").val() );
+                } else {
+                    $( "div#grapht01" ).after( '<a id="graphfull3d" href="/taihu/result_full3d.php?'+
+                         'c='+$("#imgt01 #c").val()+
+                        '&v='+$("#imgt01 #v").val()+
+                        '&t='+$("#imgt01 #t").val()+
+                        '" class="btn btn-info btn-block" target="_blank">Full</a>' );
+                }
             },
             error(xhr,status,error){
                 var icon = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>';
@@ -459,11 +466,18 @@ $( document ).ready(function() {
 
                 drawVisualization(data_array['json'],'grapht02');
 
-                $( "div#grapht02" ).after( '<a href="/taihu/result_full3d.php?'+
-                     'c='+$("#imgt02 #c").val()+
-                    '&v='+$("#imgt02 #v").val()+
-                    '&t='+$("#imgt02 #t").val()+
-                    '" class="btn btn-info btn-block" target="_blank">Full</a>' );
+                if ( $("div#grapht02 + a#graphfull3d" ).length ) {
+                    $( "div#grapht02 + a#graphfull3d" ).attr( 'href','/taihu/result_full3d.php?'+
+                         'c='+$("#imgt02 #c").val()+
+                        '&v='+$("#imgt02 #v").val()+
+                        '&t='+$("#imgt02 #t").val() );
+                } else {
+                    $( "div#grapht02" ).after( '<a id="graphfull3d" href="/taihu/result_full3d.php?'+
+                         'c='+$("#imgt02 #c").val()+
+                        '&v='+$("#imgt02 #v").val()+
+                        '&t='+$("#imgt02 #t").val()+
+                        '" class="btn btn-info btn-block" target="_blank">Full</a>' );
+                }
             },
             error(xhr,status,error){
                 var icon = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>';
