@@ -97,16 +97,9 @@
 
     <div class="btn-group btn-group-justified">
         <a class="btn btn-primary" href="/taihu/index_waq.php?iswaq=1&iewaq=2">WAQ</a>
-        <a class="btn btn-primary" href="/taihu/index_moea.php?ngen=2&ndim=10&npop=4&nobj=2&ncon=0&cxpb=0.9">MOEA</a>
-        <a class="btn btn-primary" href="/taihu/index_sm.php?ngen=2&ndim=10&npop=4&nobj=2&ncon=0&cxpb=0.9">Surrogate Model</a>
+        <a class="btn btn-primary" href="/taihu/index_moea.php?ngen=2&ndim=82&npop=4&nobj=2&ncon=0&cxpb=0.9">MOEA</a>
+        <a class="btn btn-primary" href="/taihu/index_sm.php?ngen=2&ndim=82&npop=4&nobj=2&ncon=0&cxpb=0.9">Surrogate</a>
     </div>
-
-    <div class="row">
-        <div class="col-sm-12">
-            <h2 class="text-right">Log</h2>
-        </div>
-    </div>
-
 
 <?php
     $rootDir = '/taihu';
@@ -116,31 +109,41 @@
     $dir2 = $rootDir.'/t00000002';
 
 
-    echo '<div class="row">';
+    echo '<div class="row text-center">';
         echo '<div class="col-sm-6">';
-            echo '<h3>MOEA</h3>';
             echo '<div class="row">';
                 echo '<div class="col-sm-12">';
-                    echo '<h4>'.$resultDirM.'&nbsp;<a href="'.$resultDirM.'/taihu.json" target="_blank">JSON</a></h4>';
+                    echo '<h3>MOEA</h3>';
                 echo '</div>';
+            echo '</div>';
+
+            echo '<div class="row">';
                 echo '<div class="col-sm-12">';
                     echo '<a id="imgjsonM" href="'.$resultDirM.'/taihu.json.png" target="_blank">';
                         echo '<i class="fa fa-picture-o fa-3x fa-fw"></i>';
                     echo '</a>';
                 echo '</div>';
+                echo '<div class="col-sm-12">';
+                    echo '<a class="btn btn-info btn-block" href="'.$resultDirM.'/taihu.json" target="_blank">JSON</a>';
+                echo '</div>';
             echo '</div>';
         echo '</div>';
 
         echo '<div class="col-sm-6">';
-            echo '<h3>Surrogate</h3>';
             echo '<div class="row">';
                 echo '<div class="col-sm-12">';
-                    echo '<h4>'.$resultDirS.'&nbsp;<a href="'.$resultDirS.'/taihu.json" target="_blank">JSON</a></h4>';
+                    echo '<h3>Surrogate</h3>';
                 echo '</div>';
+            echo '</div>';
+
+            echo '<div class="row">';
                 echo '<div class="col-sm-12">';
                     echo '<a id="imgjsonS" href="'.$resultDirS.'/taihu.json.png" target="_blank">';
                         echo '<i class="fa fa-picture-o fa-3x fa-fw"></i>';
                     echo '</a>';
+                echo '</div>';
+                echo '<div class="col-sm-12">';
+                    echo '<a class="btn btn-info btn-block" href="'.$resultDirS.'/taihu.json" target="_blank">JSON</a>';
                 echo '</div>';
             echo '</div>';
         echo '</div>';
@@ -148,7 +151,12 @@
 
     echo '<div class="row">';
         echo '<div class="col-sm-6">';
-            echo '<h4>t01</h4>';
+            echo '<div class="row text-center">';
+                echo '<div class="col-sm-12">';
+                    echo '<h4>t01</h4>';
+                echo '</div>';
+            echo '</div>';
+
             echo '<div class="row">';
                 echo '<div class="col-sm-6">';
                     echo '<a id="imgt01hisg13183" href="'.$dir1.'/his_GREENS_s0.png" target="_blank">';
@@ -164,7 +172,12 @@
         echo '</div>';
 
         echo '<div class="col-sm-6">';
-            echo '<h4>t02</h4>';
+            echo '<div class="row text-center">';
+                echo '<div class="col-sm-12">';
+                    echo '<h4>t02</h4>';
+                echo '</div>';
+            echo '</div>';
+
             echo '<div class="row">';
                 echo '<div class="col-sm-6">';
                     echo '<a id="imgt02hisg13183" href="'.$dir2.'/his_GREENS_s0.png" target="_blank">';

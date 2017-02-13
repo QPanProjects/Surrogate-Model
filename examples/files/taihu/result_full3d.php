@@ -61,47 +61,48 @@ $( document ).ready(function() {
     drawVisualization(jsonFile, 'graph');
 });
 
-// Called when the Visualization API is loaded.
 function drawVisualization(jsonFname,containerId) {
     var data = null;
-
-    // Create and populate a data table.
     var data = new vis.DataSet();
 
-    $.getJSON( jsonFname, function( jsonData ) {
-        var jsonMapContainer = document.getElementById(containerId);
+    var jsonMapContainer = document.getElementById(containerId);
 
-        for (var i = 0; i < jsonData['x'].length; i += 1) {
-        //for (var i = 0; i < 100; i += 1) {
-            data.add({
-                x: jsonData['x'][i],
-                y: jsonData['y'][i],
-                z: jsonData['z'][i],
-                style: jsonData['z'][i]
-            });
+    $.ajax({
+        url: jsonFname,
+        dataType: "json",
+        success: function(jsonData) {
+            jsonMapContainer.innerHtml = '';
+
+            for (var i = 0; i < jsonData['x'].length; i += 1) {
+                data.add({
+                    x: jsonData['x'][i],
+                    y: jsonData['y'][i],
+                    z: jsonData['z'][i],
+                    style: jsonData['z'][i]
+                });
+            }
+
+            var options = {
+                width:  '100%',
+                height: '100%',
+                style: 'surface',
+                showPerspective: false,
+                showGrid: true,
+                showShadow: false,
+                showLegend: true,
+                keepAspectRatio: true,
+                verticalRatio: 0.5,
+                legendLabel: jsonData['legend'],
+                zMin: jsonData['zMin'],
+                zMax: jsonData['zMax']
+            };
+            graph3d = new vis.Graph3d(jsonMapContainer, data, options);
+        },
+        error: function(xhr,status,error) {
+            var icon = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>';
+            jsonMapContainer.innerHtml = icon + status + ", " + error;
         }
-
-        // specify options
-//            style: 'line',
-        var options = {
-            width:  '100%',
-            height: '100%',
-            style: 'surface',
-            showPerspective: false,
-            showGrid: true,
-            showShadow: false,
-            showLegend: true,
-            keepAspectRatio: true,
-            verticalRatio: 0.5,
-            legendLabel: jsonData['legend'],
-            zMin: jsonData['zMin'],
-            zMax: jsonData['zMax']
-        };
-
-        // create a graph3d
-        graph3d = new vis.Graph3d(jsonMapContainer, data, options);
     });
-
 }
 </script>
 </body>

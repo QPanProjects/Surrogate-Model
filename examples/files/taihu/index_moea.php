@@ -258,49 +258,57 @@
             <?php
             if( $ready2start ){
             ?>
-            <div class="row text-center">
-                <div class="col-sm-12">
-                    <h3>t01</h3>
-                </div>
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <a id="imgt01his" href="" target="_blank">
-                                <i class="fa fa-picture-o fa-3x fa-fw"></i>
-                            </a>
-                        </div>
-                        <div class="col-sm-6">
-                            <a id="imgt01map" href="" target="_blank">
-                                <i class="fa fa-picture-o fa-3x fa-fw"></i>
-                            </a>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="row text-center">
+                        <div class="col-sm-12">
+                            <h4>t01</h4>
                         </div>
                         <div class="col-sm-12">
-                            <div id="grapht01" class="center-block">
-                                <i class="fa fa-picture-o fa-3x fa-fw"></i>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <a id="imgt01his" href="" target="_blank">
+                                        <i class="fa fa-picture-o fa-3x fa-fw"></i>
+                                    </a>
+                                </div>
+                                <div class="col-sm-12">
+                                    <a id="imgt01map" href="" target="_blank">
+                                        <i class="fa fa-picture-o fa-3x fa-fw"></i>
+                                    </a>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div id="grapht01" class="center-block">
+                                        <i class="fa fa-picture-o fa-3x fa-fw"></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-sm-12">
-                    <h3>t02</h3>
-                </div>
-
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <a id="imgt02his" href="" target="_blank">
-                                <i class="fa fa-picture-o fa-3x fa-fw"></i>
-                            </a>
-                        </div>
-                        <div class="col-sm-6">
-                            <a id="imgt02map" href="" target="_blank">
-                                <i class="fa fa-picture-o fa-3x fa-fw"></i>
-                            </a>
-                        </div>
+                <div class="col-sm-6">
+                    <div class="row text-center">
                         <div class="col-sm-12">
-                            <div id="grapht02" class="center-block">
-                                <i class="fa fa-picture-o fa-3x fa-fw"></i>
+                            <h4>t02</h4>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <a id="imgt02his" href="" target="_blank">
+                                        <i class="fa fa-picture-o fa-3x fa-fw"></i>
+                                    </a>
+                                </div>
+                                <div class="col-sm-12">
+                                    <a id="imgt02map" href="" target="_blank">
+                                        <i class="fa fa-picture-o fa-3x fa-fw"></i>
+                                    </a>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div id="grapht02" class="center-block">
+                                        <i class="fa fa-picture-o fa-3x fa-fw"></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -311,12 +319,12 @@
                 <div class="col-sm-12">
                     <div class="row text-center">
                         <div class="col-sm-12">
-                            <h4>&nbsp;<a id="filejson" href="" target="_blank">JSON</a></h4>
-                        </div>
-                        <div class="col-sm-12">
                             <a id="imgjson" href="" target="_blank">
                                 <i class="fa fa-picture-o fa-3x fa-fw"></i>
                             </a>
+                        </div>
+                        <div class="col-sm-12">
+                            <h4><a id="filejson" class="btn btn-info btn-block" href="" target="_blank">JSON</a></h4>
                         </div>
                     </div>
                 </div>
@@ -506,7 +514,7 @@ $( document ).ready(function() {
                         '" class="btn btn-info btn-block" target="_blank">Full</a>' );
                 }
             },
-            error(xhr,status,error){
+            error: function(xhr,status,error) {
                 var icon = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>';
                 $('#imgt01his').html( icon );
                 $('#imgt01map').html( icon );
@@ -557,7 +565,7 @@ $( document ).ready(function() {
                         '" class="btn btn-info btn-block" target="_blank">Full</a>' );
                 }
             },
-            error(xhr,status,error){
+            error: function(xhr,status,error) {
                 var icon = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>';
                 $('#imgt02his').html( icon );
                 $('#imgt02map').html( icon );
@@ -614,7 +622,7 @@ $( document ).ready(function() {
                     '<img class="img-responsive" src="'+resultDir+'/taihu.json.png?'+serverTime.getTime()+'" alt="Result JSON">'
                 );
             },
-            error(xhr,status,error){
+            error: function(xhr,status,error) {
                 logExe  = "--php:Error:: Model " + xhr.status + " " + xhr.statusText+"\n\n";
                 logExe += error;
                 $textarea.text(logExe);
@@ -637,15 +645,14 @@ $( document ).ready(function() {
 // Called when the Visualization API is loaded.
 function drawVisualization(jsonFname,containerId) {
     var data = null;
-
-    // Create and populate a data table.
     var data = new vis.DataSet();
 
+    var jsonMapContainer = document.getElementById(containerId);
+
     $.getJSON( jsonFname, function( jsonData ) {
-        var jsonMapContainer = document.getElementById(containerId);
+        jsonMapContainer.innerHtml = '';
 
         for (var i = 0; i < jsonData['x'].length; i += 1) {
-        //for (var i = 0; i < 100; i += 1) {
             data.add({
                 x: jsonData['x'][i],
                 y: jsonData['y'][i],
@@ -657,19 +664,18 @@ function drawVisualization(jsonFname,containerId) {
         // specify options
         var options = {
             width:  '100%',
-            height: '500px',
+            height: '300px',
             style: 'surface',
             showPerspective: false,
             showGrid: true,
             showShadow: false,
+            showLegend: true,
             keepAspectRatio: true,
             verticalRatio: 0.5,
             legendLabel: jsonData['legend'],
             zMin: jsonData['zMin'],
             zMax: jsonData['zMax']
         };
-
-        // create a graph3d
         graph3d = new vis.Graph3d(jsonMapContainer, data, options);
     });
 

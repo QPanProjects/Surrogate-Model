@@ -27,8 +27,7 @@
 
     .navbar {
         margin-bottom: 0;
-        border-bottom: 1px solid rgba(255,255,255,.3);
-
+        border-bottom: 1px solid rgba(227,242,253,.4);
     }
     .navbar-brand {
         font-weight: 700;
@@ -48,10 +47,10 @@
         outline: 0;
     }
     .nav.navbar-nav {
-        background-color: rgba(255,255,255,.4);
+        background-color: rgba(227,242,253,.1);
     }
     .navbar-custom.top-nav-collapse .nav.navbar-nav {
-        background-color: rgba(0,0,0,0);
+        background-color: rgba(227,242,253,.1);
     }
     .navbar-custom ul.nav li a {
         font-size: 12px;
@@ -70,7 +69,8 @@
         border-radius: 0;
     }
     .navbar-custom ul.nav ul.dropdown-menu li {
-        border-bottom: 1px solid #f5f5f5;
+        background-color: rgba(227,242,253,.1);
+        border-bottom: 1px solid rgba(227,242,253,.1);
     }
     .navbar-custom ul.nav ul.dropdown-menu li:last-child{
         border-bottom: none;
@@ -80,10 +80,18 @@
         color: #1976D2;
     }
     .navbar-custom ul.nav ul.dropdown-menu li a:hover {
-        background: #fefefe;
+        background-color: rgba(227,242,253,.4);
+    }
+
+    .navbar-custom.top-nav-collapse ul.nav ul.dropdown-menu li {
+        background-color: rgba(227,242,253,.1);
+        border-bottom: 1px solid rgba(227,242,253,.1);
     }
     .navbar-custom.top-nav-collapse ul.nav ul.dropdown-menu li a {
         color: #1E88E5;
+    }
+    .navbar-custom.top-nav-collapse ul.nav ul.dropdown-menu li a:hover {
+        background-color: rgba(227,242,253,.4);
     }
     .navbar-custom .nav li a {
         -webkit-transition: background .3s ease-in-out;
@@ -106,6 +114,7 @@
         padding: 4px 6px;
         font-size: 14px;
         color: #0D47A1;
+        border: 1px solid #0D47A1;
     }
     .navbar-toggle:focus,
     .navbar-toggle:active {
@@ -145,18 +154,19 @@
     .btn-circle:hover,
     .btn-circle:focus {
         outline: 0;
-        color: #fff;
+        color: #999;
         background: rgba(255,255,255,.1);
     }
     .btn-circle.btn-dark :hover,
     .btn-circle.btn-dark :focus {
         outline: 0;
         color: #999;
-        background: #fff;
+        background: rgba(255,255,255,.1);
     }
     .btn-circle.btn-dark :hover i,
     .btn-circle.btn-dark :focus i{
         color: #999;
+        background: rgba(255,255,255,.1);
     }
 
     .page-scroll .btn-circle i.animated {
@@ -249,6 +259,7 @@
         width:100%;
         height:100%;
         height:calc(100% - 1px);
+        margin-bottom: 0px;
         background-image:url('/assets/img/taihu-feature-graphic.png');
         background-repeat:no-repeat !important;
         -webkit-background-size:cover !important;
@@ -271,7 +282,7 @@
     footer {
         text-align: center;
         background-color: #f2f2f2;;
-        margin-top: 25px;
+        margin-top: 0px;
         padding: 15px;
     }
     footer p {
@@ -290,12 +301,9 @@
 
 <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
     <div class="container">
-
         <div class="navbar-header page-scroll">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+                <span><i class="fa fa-bars" aria-hidden="true"></i></span>
             </button>
             <a class="navbar-brand" href="/">
                 <h1>Home</h1>
@@ -305,19 +313,12 @@
         <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#secdss">DSS</a></li>
-                <li><a href="#sectaihu">Taihu</a></li>
                 <li><a href="#secwsn">WSN</a></li>
+                <li><a href="#sectaihu">Taihu</a></li>
 
+                <li><a href="#secmoea">Optimization</a></li>
                 <li><a href="#secdoc">Document</a></li>
                 <li><a href="#secabout">About</a></li>
-
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Test <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/moea/test_amga.php" target="_blank">AMGA2</a></li>
-                        <li><a href="/moea/test_nsga.php" target="_blank">NSGAII</a></li>
-                    </ul>
-                </li>
             </ul>
         </div>
 
@@ -326,25 +327,72 @@
 
 
 <div class="container">
-    <div class="jumbotron">
+    <div class="jumbotron text-center">
         <h1>Decision Support System</h1>
         <p>
             <a href="https://nl.linkedin.com/in/quanpan302" target="_blank">
                 <i class="fa fa-linkedin-square" aria-hidden="true"></i>&nbsp;Quan Pan
             </a>
         </p>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-12">
-            <p id="gltimer" class="text-right"><i class="fa fa-clock-o" aria-hidden="true"></i></p>
+        <div class="page-scroll">
+            <a href="#sectaihu" class="btn btn-circle btn-dark">
+                <i class="fa fa-angle-double-down animated"></i>
+            </a>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row text-right">
         <div class="col-sm-12">
-            <section id="secdss" class="section text-center">
+            <span id="gltimer"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+        </div>
+    </div>
+</div>
+
+<section id="secdss" class="section text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
                 <h2>Decision Support System</h2>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="secwsn" class="section text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Water Supply Network</h2>
+                <p>
+                    <a href="/wsn">
+                        <i class="fa fa-link animated" aria-hidden="true"></i>&nbsp;Water Supply Network DSS
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="sectaihu" class="section text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Taihu Lake</h2>
+                <p>
+                    <a href="/taihu">
+                        <i class="fa fa-link animated" aria-hidden="true"></i>&nbsp;Taihu Lake DSS
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="secmoea" class="section text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Multi-Objective Evolution Algorithm </h2>
                 <p>
                     <a href="/moea/test_amga.php" target="_blank">
                         <i class="fa fa-link animated" aria-hidden="true"></i>&nbsp;AMGA2
@@ -355,68 +403,40 @@
                         <i class="fa fa-link animated" aria-hidden="true"></i>&nbsp;NSGAII
                     </a>
                 </p>
-                <div class="page-scroll">
-                    <a href="#secabout" class="btn btn-circle btn-dark">
-                        <i class="fa fa-angle-double-down animated"></i>
-                    </a>
-                </div>
-            </section>
+            </div>
         </div>
     </div>
+</section>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <section id="sectaihu" class="section text-center">
-                <h2>Taihu Lake</h2>
-                <p>
-                    <a href="/taihu">
-                        <i class="fa fa-link animated" aria-hidden="true"></i>&nbsp;Taihu Lake DSS
-                    </a>
-                </p>
-            </section>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-12">
-            <section id="secwsn" class="section text-center">
-                <h2>Water Supply Network</h2>
-                <p>
-                    <a href="/wsn">
-                        <i class="fa fa-link animated" aria-hidden="true"></i>&nbsp;Water Supply Network DSS
-                    </a>
-                </p>
-            </section>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-12">
-            <section id="secdoc" class="section text-center">
+<section id="secdoc" class="section text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
                 <h2>Document</h2>
                 <p>
                     <a href="/docs/_build/html/" target="_blank">
                         <i class="fa fa-link animated" aria-hidden="true"></i>&nbsp;Document
                     </a>
                 </p>
-            </section>
+            </div>
         </div>
     </div>
+</section>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <section id="secabout" class="section text-center">
+<section id="secabout" class="section text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
                 <h2>About</h2>
                 <p>
                     <a href="/index_about.php">
                         <i class="fa fa-link animated" aria-hidden="true"></i>&nbsp;About
                     </a>
                 </p>
-            </section>
+            </div>
         </div>
     </div>
-
-</div>
+</section>
 
 <footer>
     <div class="container">
@@ -424,7 +444,7 @@
             <div class="col-sm-12">
                 <div class="wow shake" data-wow-delay="0.4s">
                     <div class="page-scroll">
-                        <a href="#secdss" id="totop" class="btn btn-circle btn-dark">
+                        <a href="#sectaihu" id="totop" class="btn btn-circle btn-dark">
                             <i class="fa fa-angle-double-up animated"></i>
                         </a>
                     </div>
