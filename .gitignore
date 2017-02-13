@@ -134,5 +134,8 @@ surrogate/files/tests/s00000001_map_GREENS_t120.png
 surrogate/sampling/sampling_plans/lhc_2_2.pkl
 surrogate/sampling/sampling_plans/lhc_3_3.pkl
 /examples/files/taihu/run_sm.py
+/examples/files/taihu/run_sm.php
 /examples/files/taihu/run_moea.py
+/examples/files/taihu/run_moea.php
 /examples/files/taihu/run_waq.py
+/examples/files/taihu/run_waq.php
