@@ -116,6 +116,12 @@ examples/files/taihu/s00000001/
 examples/files/taihu/t00000001/
 examples/files/taihu/t00000002/map_GREENS_df.json
 examples/files/taihu/t00000002/map_GREENS_t4.json
+/examples/files/taihu/run_sm.py
+# /examples/files/taihu/run_sm.php
+/examples/files/taihu/run_moea.py
+# /examples/files/taihu/run_moea.php
+/examples/files/taihu/run_waq.py
+# /examples/files/taihu/run_waq.php
 projects/OpenMDAO-Framework-dev/docs/srcdocs/modules/
 projects/OpenMDAO-Framework-dev/docs/srcdocs/packages/
 projects/deap-master/doc/_static/deap_icon-39x55.png
@@ -133,9 +139,3 @@ surrogate/files/tests/s00000001_his_GREENS_s10011.png
 surrogate/files/tests/s00000001_map_GREENS_t120.png
 surrogate/sampling/sampling_plans/lhc_2_2.pkl
 surrogate/sampling/sampling_plans/lhc_3_3.pkl
-/examples/files/taihu/run_sm.py
-/examples/files/taihu/run_sm.php
-/examples/files/taihu/run_moea.py
-/examples/files/taihu/run_moea.php
-/examples/files/taihu/run_waq.py
-/examples/files/taihu/run_waq.php
