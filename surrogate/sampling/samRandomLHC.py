@@ -24,23 +24,18 @@
 # License: MIT License
 # Create: 2016-12-02
 
-"""
-Generates a random latin hypercube within the [0,1]^k hypercube
-
-Inputs:
-    n-desired number of points
-    k-number of design variables (dimensions)
-    Edges-if Edges=1 the extreme bins will have their centers on the edges of the domain
-
-Outputs:
-    Latin hypercube sampling plan of n points in k dimensions
- """
-
 
 import numpy as np
 
 
 def samRandomLHC(n=2, k=2, Edges=0):
+    """Generates a random latin hypercube within the [0,1]^k hypercube
+
+    :param n: desired number of points
+    :param k: number of design variables (dimensions)
+    :param Edges: if Edges=1 the extreme bins will have their centers on the edges of the domain
+    :returns: Latin hypercube sampling plan of n points in k dimensions
+    """
     # pre-allocate memory
     X = np.zeros((n, k))
 

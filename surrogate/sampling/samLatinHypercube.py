@@ -43,73 +43,59 @@ import numpy as np
 
 
 def samLatinHypercube(n, samples=None, criterion=None, iterations=None):
-    """
-    Generate a latin-hypercube design
+    """Generate a latin-hypercube design
 
-    Parameters
-    ----------
-    n : int
-        The number of factors to generate samples for
+    :param n: The number of factors to generate samples for
+    :param samples: The number of samples to generate for each factor (Default: n)
+    :param criterion: Allowable values are "center" or "c", "maximin" or "m",
+                      "centermaximin" or "cm", and "correlation" or "corr". If no value
+                      given, the design is simply randomized.
+    :param iterations: The number of iterations in the maximin and correlations algorithms
+                       (Default: 5).
+    :returns: An n-by-samples design matrix that has been normalized so factor values
+              are uniformly spaced between zero and one.
 
-    Optional
-    --------
-    samples : int
-        The number of samples to generate for each factor (Default: n)
-    criterion : str
-        Allowable values are "center" or "c", "maximin" or "m",
-        "centermaximin" or "cm", and "correlation" or "corr". If no value
-        given, the design is simply randomized.
-    iterations : int
-        The number of iterations in the maximin and correlations algorithms
-        (Default: 5).
+    :Example:
 
-    Returns
-    -------
-    H : 2d-array
-        An n-by-samples design matrix that has been normalized so factor values
-        are uniformly spaced between zero and one.
-
-    Example
-    -------
     A 3-factor design (defaults to 3 samples)::
 
-        >>> samLatinHypercube(3)
-        array([[ 0.40069325,  0.08118402,  0.69763298],
-               [ 0.19524568,  0.41383587,  0.29947106],
-               [ 0.85341601,  0.75460699,  0.360024  ]])
+    >>> samLatinHypercube(3)
+    array([[ 0.40069325,  0.08118402,  0.69763298],
+           [ 0.19524568,  0.41383587,  0.29947106],
+           [ 0.85341601,  0.75460699,  0.360024  ]])
 
     A 4-factor design with 6 samples::
 
-        >>> samLatinHypercube(4, samples=6)
-        array([[ 0.27226812,  0.02811327,  0.62792445,  0.91988196],
-               [ 0.76945538,  0.43501682,  0.01107457,  0.09583358],
-               [ 0.45702981,  0.76073773,  0.90245401,  0.18773015],
-               [ 0.99342115,  0.85814198,  0.16996665,  0.65069309],
-               [ 0.63092013,  0.22148567,  0.33616859,  0.36332478],
-               [ 0.05276917,  0.5819198 ,  0.67194243,  0.78703262]])
+    >>> samLatinHypercube(4, samples=6)
+    array([[ 0.27226812,  0.02811327,  0.62792445,  0.91988196],
+           [ 0.76945538,  0.43501682,  0.01107457,  0.09583358],
+           [ 0.45702981,  0.76073773,  0.90245401,  0.18773015],
+           [ 0.99342115,  0.85814198,  0.16996665,  0.65069309],
+           [ 0.63092013,  0.22148567,  0.33616859,  0.36332478],
+           [ 0.05276917,  0.5819198 ,  0.67194243,  0.78703262]])
 
     A 2-factor design with 5 centered samples::
 
-        >>> samLatinHypercube(2, samples=5, criterion='center')
-        array([[ 0.3,  0.5],
-               [ 0.7,  0.9],
-               [ 0.1,  0.3],
-               [ 0.9,  0.1],
-               [ 0.5,  0.7]])
+    >>> samLatinHypercube(2, samples=5, criterion='center')
+    array([[ 0.3,  0.5],
+           [ 0.7,  0.9],
+           [ 0.1,  0.3],
+           [ 0.9,  0.1],
+           [ 0.5,  0.7]])
 
     A 3-factor design with 4 samples where the minimum distance between
     all samples has been maximized::
 
-        >>> samLatinHypercube(3, samples=4, criterion='maximin')
-        array([[ 0.02642564,  0.55576963,  0.50261649],
-               [ 0.51606589,  0.88933259,  0.34040838],
-               [ 0.98431735,  0.0380364 ,  0.01621717],
-               [ 0.40414671,  0.33339132,  0.84845707]])
+    >>> samLatinHypercube(3, samples=4, criterion='maximin')
+    array([[ 0.02642564,  0.55576963,  0.50261649],
+           [ 0.51606589,  0.88933259,  0.34040838],
+           [ 0.98431735,  0.0380364 ,  0.01621717],
+           [ 0.40414671,  0.33339132,  0.84845707]])
 
     A 4-factor design with 5 samples where the samples are as uncorrelated
     as possible (within 10 iterations)::
 
-        >>> samLatinHypercube(4, samples=5, criterion='correlate', iterations=10)
+    >>> samLatinHypercube(4, samples=5, criterion='correlate', iterations=10)
 
     """
     H = None

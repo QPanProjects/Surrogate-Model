@@ -24,20 +24,6 @@
 # License: MIT License
 # Create: 2016-12-02
 
-"""Polynomial mutation as implemented in original NSGA-II algorithm in
-C by Deb.
-
-:param individual: :term:`Sequence <sequence>` individual to be mutated.
-:param eta: Crowding degree of the mutation. A high eta will produce
-            a mutant resembling its parent, while a small eta will
-            produce a solution much more different.
-:param low: A value or a :term:`python:sequence` of values that
-            is the lower bound of the search space.
-:param up: A value or a :term:`python:sequence` of values that
-           is the upper bound of the search space.
-:returns: A tuple of one individual.
-"""
-
 
 import random
 from collections import Sequence
@@ -45,6 +31,19 @@ from itertools import repeat
 
 
 def mutPolynomialBounded(variable, eta=20, low=0.0, up=1.0, prob=1.0):
+    """Polynomial mutation as implemented in original NSGA-II algorithm in
+    C by Deb.
+
+    :param variable: :term:`Sequence <sequence>` Decision Variable to be mutated.
+    :param eta: Crowding degree of the mutation. A high eta will produce
+                a mutant resembling its parent, while a small eta will
+                produce a solution much more different.
+    :param low: A value or a :term:`python:sequence` of values that
+                is the lower bound of the search space.
+    :param up: A value or a :term:`python:sequence` of values that
+               is the upper bound of the search space.
+    :returns: A tuple of one variable.
+    """
     size = len(variable)
     # size = variable.size
     if not isinstance(low, Sequence):

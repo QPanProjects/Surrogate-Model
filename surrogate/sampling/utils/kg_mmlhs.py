@@ -24,12 +24,6 @@
 # License: MIT License
 # Create: 2016-12-02
 
-"""
-Evolutionary operation search for the most space filling Latin hypercube
-of a certain size and dimensionality. There is no need to call this
-directly - use bestlh.m
-"""
-
 
 import math
 
@@ -39,6 +33,10 @@ from .kg_mmphi import mmphi
 from .kg_perturb import perturb
 
 def mmlhs(X_start, population, iterations, q):
+    """Evolutionary operation search for the most space filling Latin hypercube
+    of a certain size and dimensionality. There is no need to call this
+    directly - use bestlh.m
+    """
     X_s = X_start.copy()
 
     n = np.size(X_s, 0)

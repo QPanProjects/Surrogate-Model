@@ -24,23 +24,22 @@
 # License: MIT License
 # Create: 2016-12-02
 
-"""Executes a one point crossover on the input :term:`sequence` individuals.
-The two individuals are modified in place. The resulting individuals will
-respectively have the length of the other.
-
-:param ind1: The first individual participating in the crossover.
-:param ind2: The second individual participating in the crossover.
-:returns: A tuple of two individuals.
-
-This function uses the :func:`~random.randint` function from the
-python base :mod:`random` module.
-"""
-
 
 import numpy as np
 
 
 def cxOnePoint(var1, var2):
+    """Executes a one point crossover on the input :term:`sequence` individuals.
+    The two individuals are modified in place. The resulting individuals will
+    respectively have the length of the other.
+
+    :param var1: The first variable participating in the crossover.
+    :param var2: The second variable participating in the crossover.
+    :returns: A tuple of two variables.
+
+    This function uses the :func:`~random.randint` function from the
+    python base :mod:`random` module.
+    """
     size = min(len(var1), len(var2))
     # size = min(var1.size, var2.size)
     cxpoint = np.random.randint(1, size - 1)

@@ -43,28 +43,17 @@ import numpy as np
 
 
 def repeatCenter(n, repeat):
-    """
-    Create the center-point portion of a design matrix
+    """Create the center-point portion of a design matrix
 
-    Parameters
-    ----------
-    n : int
-        The number of factors in the original design
-    repeat : int
-        The number of center points to repeat
+    :param n: The number of factors in the original design
+    :param repeat: The number of center points to repeat
+    :returns: The center-point portion of a design matrix (elements all zero).
 
-    Returns
-    -------
-    mat : 2d-array
-        The center-point portion of a design matrix (elements all zero).
+    :Example:
 
-    Example
-    -------
-    ::
-
-        >>> repeatCenter(3, 2)
-        array([[ 0.,  0.,  0.],
-               [ 0.,  0.,  0.]])
+    >>> repeatCenter(3, 2)
+    array([[ 0.,  0.,  0.],
+           [ 0.,  0.,  0.]])
 
     """
     return np.zeros((repeat, n))

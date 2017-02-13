@@ -46,95 +46,70 @@ from .utils.doe_union import union
 
 
 def samCentralComposite(n, center=(4, 4), alpha='orthogonal', face='circumscribed'):
-    """
-    Central composite design
+    """Central composite design
 
-    Parameters
-    ----------
-    n : int
-        The number of factors in the design.
+    :param n: The number of factors in the design.
+    :param center: A 1-by-2 array of integers, the number of center points in each block
+                   of the design. (Default: (4, 4)).
+    :param alpha: A string describing the effect of alpha has on the variance. ``alpha``
+                  can take on the following values:
+                      1. 'orthogonal' or 'o' (Default)
+                      2. 'rotatable' or 'r'
+    :param face: The relation between the start points and the corner (factorial) points.
+                 There are three options for this input:
+                     1. 'circumscribed' or 'ccc': This is the original form of the central
+                         composite design. The star points are at some distance ``alpha``
+                         from the center, based on the properties desired for the design.
+                         The start points establish new extremes for the low and high
+                         settings for all factors. These designs have circular, spherical,
+                         or hyperspherical symmetry and require 5 levels for each factor.
+                         Augmenting an existing factorial or resolution V fractional
+                         factorial design with star points can produce this design.
+                     2. 'inscribed' or 'cci': For those situations in which the limits
+                         specified for factor settings are truly limits, the CCI design
+                         uses the factors settings as the star points and creates a factorial
+                         or fractional factorial design within those limits (in other words,
+                         a CCI design is a scaled down CCC design with each factor level of
+                         the CCC design divided by ``alpha`` to generate the CCI design).
+                         This design also requires 5 levels of each factor.
+                     3. 'faced' or 'ccf': In this design, the star points are at the center
+                         of each face of the factorial space, so ``alpha`` = 1. This
+                         variety requires 3 levels of each factor. Augmenting an existing
+                         factorial or resolution V design with appropriate star points can
+                         also produce this design.
+    :return: The design matrix with coded levels -1 and 1
 
-    Optional
-    --------
-    center : int array
-        A 1-by-2 array of integers, the number of center points in each block
-        of the design. (Default: (4, 4)).
-    alpha : str
-        A string describing the effect of alpha has on the variance. ``alpha``
-        can take on the following values:
+    .. note::
+        - Fractional factorial designs are not (yet) available here.
+        - 'ccc' and 'cci' can be rotatable design, but 'ccf' cannot.
+        - If ``face`` is specified, while ``alpha`` is not, then the default value
+          of ``alpha`` is 'orthogonal'.
 
-        1. 'orthogonal' or 'o' (Default)
+    :Example:
 
-        2. 'rotatable' or 'r'
-
-    face : str
-        The relation between the start points and the corner (factorial) points.
-        There are three options for this input:
-
-        1. 'circumscribed' or 'ccc': This is the original form of the central
-           composite design. The star points are at some distance ``alpha``
-           from the center, based on the properties desired for the design.
-           The start points establish new extremes for the low and high
-           settings for all factors. These designs have circular, spherical,
-           or hyperspherical symmetry and require 5 levels for each factor.
-           Augmenting an existing factorial or resolution V fractional
-           factorial design with star points can produce this design.
-
-        2. 'inscribed' or 'cci': For those situations in which the limits
-           specified for factor settings are truly limits, the CCI design
-           uses the factors settings as the star points and creates a factorial
-           or fractional factorial design within those limits (in other words,
-           a CCI design is a scaled down CCC design with each factor level of
-           the CCC design divided by ``alpha`` to generate the CCI design).
-           This design also requires 5 levels of each factor.
-
-        3. 'faced' or 'ccf': In this design, the star points are at the center
-           of each face of the factorial space, so ``alpha`` = 1. This
-           variety requires 3 levels of each factor. Augmenting an existing
-           factorial or resolution V design with appropriate star points can
-           also produce this design.
-
-    Notes
-    -----
-    - Fractional factorial designs are not (yet) available here.
-    - 'ccc' and 'cci' can be rotatable design, but 'ccf' cannot.
-    - If ``face`` is specified, while ``alpha`` is not, then the default value
-      of ``alpha`` is 'orthogonal'.
-
-    Returns
-    -------
-    mat : 2d-array
-        The design matrix with coded levels -1 and 1
-
-    Example
-    -------
-    ::
-
-        >>> samCentralComposite(3)
-        array([[-1.        , -1.        , -1.        ],
-               [ 1.        , -1.        , -1.        ],
-               [-1.        ,  1.        , -1.        ],
-               [ 1.        ,  1.        , -1.        ],
-               [-1.        , -1.        ,  1.        ],
-               [ 1.        , -1.        ,  1.        ],
-               [-1.        ,  1.        ,  1.        ],
-               [ 1.        ,  1.        ,  1.        ],
-               [ 0.        ,  0.        ,  0.        ],
-               [ 0.        ,  0.        ,  0.        ],
-               [ 0.        ,  0.        ,  0.        ],
-               [ 0.        ,  0.        ,  0.        ],
-               [-1.82574186,  0.        ,  0.        ],
-               [ 1.82574186,  0.        ,  0.        ],
-               [ 0.        , -1.82574186,  0.        ],
-               [ 0.        ,  1.82574186,  0.        ],
-               [ 0.        ,  0.        , -1.82574186],
-               [ 0.        ,  0.        ,  1.82574186],
-               [ 0.        ,  0.        ,  0.        ],
-               [ 0.        ,  0.        ,  0.        ],
-               [ 0.        ,  0.        ,  0.        ],
-               [ 0.        ,  0.        ,  0.        ]])
-
-
+    >>> samCentralComposite(3)
+    array([[-1.        , -1.        , -1.        ],
+           [ 1.        , -1.        , -1.        ],
+           [-1.        ,  1.        , -1.        ],
+           [ 1.        ,  1.        , -1.        ],
+           [-1.        , -1.        ,  1.        ],
+           [ 1.        , -1.        ,  1.        ],
+           [-1.        ,  1.        ,  1.        ],
+           [ 1.        ,  1.        ,  1.        ],
+           [ 0.        ,  0.        ,  0.        ],
+           [ 0.        ,  0.        ,  0.        ],
+           [ 0.        ,  0.        ,  0.        ],
+           [ 0.        ,  0.        ,  0.        ],
+           [-1.82574186,  0.        ,  0.        ],
+           [ 1.82574186,  0.        ,  0.        ],
+           [ 0.        , -1.82574186,  0.        ],
+           [ 0.        ,  1.82574186,  0.        ],
+           [ 0.        ,  0.        , -1.82574186],
+           [ 0.        ,  0.        ,  1.82574186],
+           [ 0.        ,  0.        ,  0.        ],
+           [ 0.        ,  0.        ,  0.        ],
+           [ 0.        ,  0.        ,  0.        ],
+           [ 0.        ,  0.        ,  0.        ]])
     """
     # Check inputs
     assert isinstance(n, int) and n > 1, '"n" must be an integer greater than 1.'

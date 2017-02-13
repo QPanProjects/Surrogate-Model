@@ -24,23 +24,22 @@
 # License: MIT License
 # Create: 2016-12-02
 
-"""Executes a one point crossover on :term:`sequence` individual.
-The crossover will in most cases change the individuals size. The two
-individuals are modified in place.
-
-:param ind1: The first individual participating in the crossover.
-:param ind2: The second individual participating in the crossover.
-:returns: A tuple of two individuals.
-
-This function uses the :func:`~random.randint` function from the python base
-:mod:`random` module.
-"""
-
 
 import random
 
 
 def cxMessyOnePoint(var1, var2):
+    """Executes a one point crossover on :term:`sequence` individual.
+    The crossover will in most cases change the individuals size. The two
+    individuals are modified in place.
+
+    :param var1: The first variable participating in the crossover.
+    :param var2: The second variable participating in the crossover.
+    :returns: A tuple of two variables.
+
+    This function uses the :func:`~random.randint` function from the python base
+    :mod:`random` module.
+    """
     cxpoint1 = random.randint(0, len(var1))
     cxpoint2 = random.randint(0, len(var2))
     # cxpoint1 = random.randint(0, var1.size)

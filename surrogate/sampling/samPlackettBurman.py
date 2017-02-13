@@ -44,44 +44,35 @@ from scipy.linalg import toeplitz, hankel
 
 
 def samPlackettBurman(n):
-    """
-    Generate a Plackett-Burman design
+    """Generate a Plackett-Burman design
 
-    Parameter
-    ---------
-    n : int
-        The number of factors to create a matrix for.
+    :param n: The number of factors to create a matrix for.
+    :returns: An orthogonal design matrix with n columns, one for each factor, and
+              the number of rows being the next multiple of 4 higher than n (e.g.,
+              for 1-3 factors there are 4 rows, for 4-7 factors there are 8 rows,
+              etc.)
 
-    Returns
-    -------
-    H : 2d-array
-        An orthogonal design matrix with n columns, one for each factor, and
-        the number of rows being the next multiple of 4 higher than n (e.g.,
-        for 1-3 factors there are 4 rows, for 4-7 factors there are 8 rows,
-        etc.)
-
-    Example
-    -------
+    :Example:
 
     A 3-factor design::
 
-        >>> samPlackettBurman(3)
-        array([[-1., -1.,  1.],
-               [ 1., -1., -1.],
-               [-1.,  1., -1.],
-               [ 1.,  1.,  1.]])
+    >>> samPlackettBurman(3)
+    array([[-1., -1.,  1.],
+           [ 1., -1., -1.],
+           [-1.,  1., -1.],
+           [ 1.,  1.,  1.]])
 
     A 5-factor design::
 
-        >>> samPlackettBurman(5)
-        array([[-1., -1.,  1., -1.,  1.],
-               [ 1., -1., -1., -1., -1.],
-               [-1.,  1., -1., -1.,  1.],
-               [ 1.,  1.,  1., -1., -1.],
-               [-1., -1.,  1.,  1., -1.],
-               [ 1., -1., -1.,  1.,  1.],
-               [-1.,  1., -1.,  1., -1.],
-               [ 1.,  1.,  1.,  1.,  1.]])
+    >>> samPlackettBurman(5)
+    array([[-1., -1.,  1., -1.,  1.],
+           [ 1., -1., -1., -1., -1.],
+           [-1.,  1., -1., -1.,  1.],
+           [ 1.,  1.,  1., -1., -1.],
+           [-1., -1.,  1.,  1., -1.],
+           [ 1., -1., -1.,  1.,  1.],
+           [-1.,  1., -1.,  1., -1.],
+           [ 1.,  1.,  1.,  1.,  1.]])
 
     """
     assert n > 0, 'Number of factors must be a positive integer'

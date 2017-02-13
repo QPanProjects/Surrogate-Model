@@ -24,25 +24,21 @@
 # License: MIT License
 # Create: 2016-12-02
 
-"""
-Interchanges pairs of randomly chosen elements within randomly
-chosen columns of a sampling plan a number of times. If the plan is
-a Latin hypercube, the result of this operation will also be a Latin
-hypercube.
-
-Inputs:
-    X - sampling plan
-    PertNum - the number of changes (perturbations) to be made to X.
-Output:
-    X - perturbed sampling plan
-"""
-
 
 import math
 
 import numpy as np
 
 def perturb(X, PertNum):
+    """Interchanges pairs of randomly chosen elements within randomly
+    chosen columns of a sampling plan a number of times. If the plan is
+    a Latin hypercube, the result of this operation will also be a Latin
+    hypercube.
+
+    :param X: sampling plan
+    :param PertNum: the number of changes (perturbations) to be made to X.
+    :return: X perturbed sampling plan
+    """
     X_pert = X.copy()
     [n, k] = np.shape(X_pert)
 

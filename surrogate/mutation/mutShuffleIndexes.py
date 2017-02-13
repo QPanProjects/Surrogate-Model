@@ -24,25 +24,24 @@
 # License: MIT License
 # Create: 2016-12-02
 
-"""Shuffle the attributes of the input individual and return the mutant.
-The *individual* is expected to be a :term:`sequence`. The *prob* argument is the
-probability of each attribute to be moved. Usually this mutation is applied on
-vector of indices.
-
-:param individual: Individual to be mutated.
-:param prob: Independent probability for each attribute to be exchanged to
-              another position.
-:returns: A tuple of one individual.
-
-This function uses the :func:`~random.random` and :func:`~random.randint`
-functions from the python base :mod:`random` module.
-"""
-
 
 import random
 
 
 def mutShuffleIndexes(variable, prob=0.5):
+    """Shuffle the attributes of the input individual and return the mutant.
+    The *individual* is expected to be a :term:`sequence`. The *prob* argument is the
+    probability of each attribute to be moved. Usually this mutation is applied on
+    vector of indices.
+
+    :param variable: Decision Variable to be mutated.
+    :param prob: Independent probability for each attribute to be exchanged to
+                 another position.
+    :returns: A tuple of one variable.
+
+    This function uses the :func:`~random.random` and :func:`~random.randint`
+    functions from the python base :mod:`random` module.
+    """
     size = len(variable)
     # size = variable.size
     for i in xrange(size):

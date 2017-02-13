@@ -24,23 +24,22 @@
 # License: MIT License
 # Create: 2016-12-02
 
-"""Executes a two-point crossover on the input :term:`sequence`
-individuals. The two individuals are modified in place and both keep
-their original length.
-
-:param ind1: The first individual participating in the crossover.
-:param ind2: The second individual participating in the crossover.
-:returns: A tuple of two individuals.
-
-This function uses the :func:`~random.randint` function from the Python
-base :mod:`random` module.
-"""
-
 
 import random
 
 
 def cxTwoPoint(var1, var2):
+    """Executes a two-point crossover on the input :term:`sequence`
+    individuals. The two individuals are modified in place and both keep
+    their original length.
+
+    :param var1: The first variable participating in the crossover.
+    :param var2: The second variable participating in the crossover.
+    :returns: A tuple of two variables.
+
+    This function uses the :func:`~random.randint` function from the Python
+    base :mod:`random` module.
+    """
     size = min(len(var1), len(var2))
     # size = min(var1.size, var2.size)
     cxpoint1 = random.randint(1, size)

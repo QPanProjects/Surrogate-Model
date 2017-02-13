@@ -24,20 +24,6 @@
 # License: MIT License
 # Create: 2016-12-02
 
-"""Mutate an individual by replacing attributes, with probability *prob*,
-by a integer uniformly drawn between *low* and *up* inclusively.
-
-:param individual: :term:`Sequence <sequence>` individual to be mutated.
-:param low: The lower bound or a :term:`python:sequence` of
-            of lower bounds of the range from wich to draw the new
-            integer.
-:param up: The upper bound or a :term:`python:sequence` of
-           of upper bounds of the range from wich to draw the new
-           integer.
-:param prob: Independent probability for each attribute to be mutated.
-:returns: A tuple of one individual.
-"""
-
 
 import random
 from collections import Sequence
@@ -45,6 +31,19 @@ from itertools import repeat
 
 
 def mutUniformInt(variable, low=0.0, up=1.0, prob=0.5):
+    """Mutate an individual by replacing attributes, with probability *prob*,
+    by a integer uniformly drawn between *low* and *up* inclusively.
+
+    :param variable: :term:`Sequence <sequence>` Decision Variable to be mutated.
+    :param low: The lower bound or a :term:`python:sequence` of
+                of lower bounds of the range from wich to draw the new
+                integer.
+    :param up: The upper bound or a :term:`python:sequence` of
+               of upper bounds of the range from wich to draw the new
+               integer.
+    :param prob: Independent probability for each attribute to be mutated.
+    :returns: A tuple of one variable.
+    """
     size = len(variable)
     # size = variable.size
     if not isinstance(low, Sequence):

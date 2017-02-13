@@ -40,7 +40,8 @@ from scipy.optimize import minimize
 
 class KrigingSurrogate(SurrogateModel):
     """Surrogate Modeling method based on the simple Kriging interpolation.
-    Predictions are returned as a tuple of mean and RMSE"""
+    Predictions are returned as a tuple of mean and RMSE
+    """
 
     def __init__(self):
         super(KrigingSurrogate, self).__init__()

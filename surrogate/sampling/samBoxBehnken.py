@@ -46,44 +46,30 @@ from .utils.doe_repeatCenter import repeatCenter
 
 
 def samBoxBehnken(n, center=None):
-    """
-    Create a Box-Behnken design
+    """Create a Box-Behnken design
 
-    Parameters
-    ----------
-    n : int
-        The number of factors in the design
+    :param n: The number of factors in the design
+    :param center: The number of center points to include (default = 1).
+    :return: The design matrix
 
-    Optional
-    --------
-    center : int
-        The number of center points to include (default = 1).
+    :Example:
 
-    Returns
-    -------
-    mat : 2d-array
-        The design matrix
-
-    Example
-    -------
-    ::
-
-        >>> samBoxBehnken(3)
-        array([[-1., -1.,  0.],
-               [ 1., -1.,  0.],
-               [-1.,  1.,  0.],
-               [ 1.,  1.,  0.],
-               [-1.,  0., -1.],
-               [ 1.,  0., -1.],
-               [-1.,  0.,  1.],
-               [ 1.,  0.,  1.],
-               [ 0., -1., -1.],
-               [ 0.,  1., -1.],
-               [ 0., -1.,  1.],
-               [ 0.,  1.,  1.],
-               [ 0.,  0.,  0.],
-               [ 0.,  0.,  0.],
-               [ 0.,  0.,  0.]])
+    >>> samBoxBehnken(3)
+    array([[-1., -1.,  0.],
+           [ 1., -1.,  0.],
+           [-1.,  1.,  0.],
+           [ 1.,  1.,  0.],
+           [-1.,  0., -1.],
+           [ 1.,  0., -1.],
+           [-1.,  0.,  1.],
+           [ 1.,  0.,  1.],
+           [ 0., -1., -1.],
+           [ 0.,  1., -1.],
+           [ 0., -1.,  1.],
+           [ 0.,  1.,  1.],
+           [ 0.,  0.,  0.],
+           [ 0.,  0.,  0.],
+           [ 0.,  0.,  0.]])
 
     """
     assert n >= 3, 'Number of variables must be at least 3'

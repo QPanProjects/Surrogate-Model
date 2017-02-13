@@ -24,24 +24,20 @@
 # License: MIT License
 # Create: 2016-12-02
 
-"""
-Computes the distances between all pairs of points in a sampling plan
-X using the p-norm, sorts them in ascending order and removes multiple occurences.
-
-Inputs:
-    X-sampling plan being evaluated
-    p-distance norm (p=1 rectangular-default, p=2 Euclidean)
-Output:
-    J-multiplicity array (that is, the number of pairs separated by each distance value)
-    distinct_d-list of distinct distance values
-"""
-
 
 import numpy as np
 
 from .kg_ismember import ismember
 
 def jd(X, p=1):
+    """Computes the distances between all pairs of points in a sampling plan
+    X using the p-norm, sorts them in ascending order and removes multiple occurences.
+
+    :param X: sampling plan being evaluated
+    :param p: distance norm (p=1 rectangular-default, p=2 Euclidean)
+    :returns: J-multiplicity array (that is, the number of pairs separated by each distance value)
+              distinct_d-list of distinct distance values
+    """
     # number of points in the sampling plan
     n = np.size(X[:, 1])
 

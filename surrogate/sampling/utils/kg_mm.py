@@ -24,25 +24,22 @@
 # License: MIT License
 # Create: 2016-12-02
 
-"""
-Given two sampling plans chooses the one with the better space-filling properties
-(as per the Morris-Mitchell criterion)
-
-Inputs:
-    X1,X2-the two sampling plans
-    p- the distance metric to be used (p=1 rectangular-default, p=2 Euclidean)
-Outputs:
-    Mmplan-if Mmplan=0, identical plans or equally space-
-    filling, if Mmplan=1, X1 is more space filling, if Mmplan=2,
-    X2 is more space filling
-"""
-
 
 import numpy as np
 
 from .kg_jd import jd
 
 def mm(X1, X2, p=1):
+    """Given two sampling plans chooses the one with the better space-filling properties
+    (as per the Morris-Mitchell criterion)
+
+    :param X1: the two sampling plans
+    :param X2: the two sampling plans
+    :param p: the distance metric to be used (p=1 rectangular-default, p=2 Euclidean)
+    :return: Mmplan-if Mmplan=0, identical plans or equally space-
+             filling, if Mmplan=1, X1 is more space filling, if Mmplan=2,
+             X2 is more space filling
+    """
     # thats how two arrays are compared in their sorted form
     v = np.sort(X1) == np.sort(X2)
     if v.all() == True:  # if True, then the designs are the same

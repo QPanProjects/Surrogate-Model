@@ -24,25 +24,6 @@
 # License: MIT License
 # Create: 2016-12-02
 
-"""
-Generates an optimized Latin hypercube by optimizing the Morris-Mitchell
-criterion for a range of exponents and plots the first two dimensions of
-the current hypercube throughout the optimization process.
-
-Inputs:
-    n - number of points required
-    Population - number of individuals in the evolutionary operation
-                 optimizer
-    Iterations - number of generations the evolutionary operation
-                 optimizer is run for
-    Note: high values for the two inputs above will ensure high quality
-    hypercubes, but the search will take longer.
-    generation - if set to True, the LHC will be generated. If 'False,' the algorithm will check for an existing plan before generating.
-
-Output:
-    X - optimized Latin hypercube
-"""
-
 
 # Authors: Quan Pan <quanpan302@hotmail.com>
 
@@ -59,6 +40,23 @@ from .utils import mmlhs, mmsort
 # from surrogate.sampling.utils import mmlhs, mmsort
 
 def samOptimalLHC(n=2, k=2, population=30, iterations=30, generation=False):
+    """Generates an optimized Latin hypercube by optimizing the Morris-Mitchell
+    criterion for a range of exponents and plots the first two dimensions of
+    the current hypercube throughout the optimization process.
+
+    :param n: number of points required
+    :param Population: number of individuals in the evolutionary operation
+                       optimizer
+    :param Iterations: number of generations the evolutionary operation
+                       optimizer is run for
+    :returns: X optimized Latin hypercube
+
+    .. note::
+        high values for the two inputs above will ensure high quality
+        hypercubes, but the search will take longer.
+        generation - if set to True, the LHC will be generated. If 'False,' the algorithm will check for an existing plan before generating.
+
+    """
     PATH = os.path.dirname(os.path.abspath(__file__)) + '/sampling_plans/'
     # print PATH
 

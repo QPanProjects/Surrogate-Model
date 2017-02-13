@@ -43,41 +43,25 @@ import numpy as np
 
 
 def star(n, alpha='faced', center=(1, 1)):
-    """
-    Create the star points of various design matrices
+    """Create the star points of various design matrices
 
-    Parameters
-    ----------
-    n : int
-        The number of variables in the design
+    :param n: The number of variables in the design
+    :param alpha: Available values are 'faced' (default), 'orthogonal', or 'rotatable'
+    :param center: A 1-by-2 array of integers indicating the number of center points
+                   assigned in each block of the response surface design. Default is
+                   (1, 1).
+    :returns: H The star-point portion of the design matrix (i.e. at +/- alpha)
+              a The alpha value to scale the star points with.
 
-    Optional
-    --------
-    alpha : str
-        Available values are 'faced' (default), 'orthogonal', or 'rotatable'
-    center : array
-        A 1-by-2 array of integers indicating the number of center points
-        assigned in each block of the response surface design. Default is
-        (1, 1).
+    :Example:
 
-    Returns
-    -------
-    H : 2d-array
-        The star-point portion of the design matrix (i.e. at +/- alpha)
-    a : scalar
-        The alpha value to scale the star points with.
-
-    Example
-    -------
-    ::
-
-        >>> star(3)
-        array([[-1.,  0.,  0.],
-               [ 1.,  0.,  0.],
-               [ 0., -1.,  0.],
-               [ 0.,  1.,  0.],
-               [ 0.,  0., -1.],
-               [ 0.,  0.,  1.]])
+    >>> star(3)
+    array([[-1.,  0.,  0.],
+           [ 1.,  0.,  0.],
+           [ 0., -1.,  0.],
+           [ 0.,  1.,  0.],
+           [ 0.,  0., -1.],
+           [ 0.,  0.,  1.]])
 
     """
     # Star points at the center of each face of the factorial

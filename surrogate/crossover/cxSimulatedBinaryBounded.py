@@ -24,29 +24,6 @@
 # License: MIT License
 # Create: 2016-12-02
 
-"""Executes a simulated binary crossover that modify in-place the input
-individuals. The simulated binary crossover expects :term:`sequence`
-individuals of floating point numbers.
-
-:param ind1: The first individual participating in the crossover.
-:param ind2: The second individual participating in the crossover.
-:param eta: Crowding degree of the crossover. A high eta will produce
-            children resembling to their parents, while a small eta will
-            produce solutions much more different.
-:param low: A value or a :term:`python:sequence` of values that is the lower
-            bound of the search space.
-:param up: A value or a :term:`python:sequence` of values that is the upper
-           bound of the search space.
-:returns: A tuple of two individuals.
-
-This function uses the :func:`~random.random` function from the python base
-:mod:`random` module.
-
-.. note::
-   This implementation is similar to the one implemented in the
-   original NSGA-II C code presented by Deb.
-"""
-
 
 import random
 from collections import Sequence
@@ -54,6 +31,28 @@ from itertools import repeat
 
 
 def cxSimulatedBinaryBounded(var1, var2, eta=15, low=0.0, up=1.0):
+    """Executes a simulated binary crossover that modify in-place the input
+    individuals. The simulated binary crossover expects :term:`sequence`
+    individuals of floating point numbers.
+
+    :param var1: The first variable participating in the crossover.
+    :param var2: The second variable participating in the crossover.
+    :param eta: Crowding degree of the crossover. A high eta will produce
+                children resembling to their parents, while a small eta will
+                produce solutions much more different.
+    :param low: A value or a :term:`python:sequence` of values that is the lower
+                bound of the search space.
+    :param up: A value or a :term:`python:sequence` of values that is the upper
+               bound of the search space.
+    :returns: A tuple of two variables.
+
+    This function uses the :func:`~random.random` function from the python base
+    :mod:`random` module.
+
+    .. note::
+       This implementation is similar to the one implemented in the
+       original NSGA-II C code presented by Deb.
+    """
     size = min(len(var1), len(var2))
     # size = min(var1.size, var2.size)
     if not isinstance(low, Sequence):

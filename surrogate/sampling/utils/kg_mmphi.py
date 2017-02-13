@@ -24,24 +24,19 @@
 # License: MIT License
 # Create: 2016-12-02
 
-"""
-Calculates the sampling plan quality criterion of Morris and Mitchell
-
-Inputs:
-    X - Sampling plan
-    q - exponent used in the calculation of the metric (default = 2)
-    p - the distance metric to be used (p=1 rectangular - default , p=2 Euclidean)
-
-Output:
-    Phiq - sampling plan 'space-fillingness' metric
-"""
-
 
 import numpy as np
 
 from .kg_jd import jd
 
 def mmphi(X, q=2, p=1):
+    """Calculates the sampling plan quality criterion of Morris and Mitchell
+
+    :param X: Sampling plan
+    :param q: exponent used in the calculation of the metric (default = 2)
+    :param p: the distance metric to be used (p=1 rectangular - default , p=2 Euclidean)
+    :return: Phiq - sampling plan 'space-fillingness' metric
+    """
     # calculate the distances between all pairs of
     # points (using the p-norm) and build multiplicity array J
     J, d = jd(X, p)
