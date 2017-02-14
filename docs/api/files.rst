@@ -1,4 +1,4 @@
-files
+Files
 =====
 .. automodule:: surrogate.files
 
@@ -14,3 +14,8 @@ jsonMOEA
     :members:
     :special-members:
 
+decvarMOEA
+----------
+.. autoclass:: surrogate.files.decvarMOEA()
+    :members:
+    :special-members:

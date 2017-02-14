@@ -1,4 +1,4 @@
-base
+Base
 ====
 .. automodule:: surrogate.base
 
