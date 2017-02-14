@@ -16,7 +16,7 @@ Surrogate Model documentation
 
 This is my Surrogate Model project.
 
-|github_da_sm|, owned by |github_me|.
+|github_da_sm|, is created by |github_me|.
 
 .. sidebar:: Feedback
 

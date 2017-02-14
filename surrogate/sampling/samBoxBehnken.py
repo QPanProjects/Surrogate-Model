@@ -24,20 +24,6 @@
 # License: MIT License
 # Create: 2016-12-02
 
-"""
-This code was originally published by the following individuals for use with
-Scilab:
-    Copyright (C) 2012 - 2013 - Michael Baudin
-    Copyright (C) 2012 - Maria Christopoulou
-    Copyright (C) 2010 - 2011 - INRIA - Michael Baudin
-    Copyright (C) 2009 - Yann Collette
-    Copyright (C) 2009 - CEA - Jean-Marc Martinez
-
-    website: forge.scilab.org/index.php/p/scidoe/sourcetree/master/macros
-
-Much thanks goes to these individuals. It has been converted to Python by
-Abraham Lee.
-"""
 
 import numpy as np
 
@@ -51,6 +37,20 @@ def samBoxBehnken(n, center=None):
     :param n: The number of factors in the design
     :param center: The number of center points to include (default = 1).
     :return: The design matrix
+
+    This code was originally published by the following individuals for use with
+    Scilab:
+
+    - Copyright (C) 2012 - 2013 - Michael Baudin
+    - Copyright (C) 2012 - Maria Christopoulou
+    - Copyright (C) 2010 - 2011 - INRIA - Michael Baudin
+    - Copyright (C) 2009 - Yann Collette
+    - Copyright (C) 2009 - CEA - Jean-Marc Martinez
+
+    website: forge.scilab.org/index.php/p/scidoe/sourcetree/master/macros
+
+    Much thanks goes to these individuals. It has been converted to Python by
+    Abraham Lee.
 
     :Example:
 

@@ -24,20 +24,6 @@
 # License: MIT License
 # Create: 2016-12-02
 
-"""
-This code was originally published by the following individuals for use with
-Scilab:
-    Copyright (C) 2012 - 2013 - Michael Baudin
-    Copyright (C) 2012 - Maria Christopoulou
-    Copyright (C) 2010 - 2011 - INRIA - Michael Baudin
-    Copyright (C) 2009 - Yann Collette
-    Copyright (C) 2009 - CEA - Jean-Marc Martinez
-
-    website: forge.scilab.org/index.php/p/scidoe/sourcetree/master/macros
-
-Much thanks goes to these individuals. It has been converted to Python by
-Abraham Lee.
-"""
 
 import numpy as np
 
@@ -55,16 +41,30 @@ def samLatinHypercube(n, samples=None, criterion=None, iterations=None):
     :returns: An n-by-samples design matrix that has been normalized so factor values
               are uniformly spaced between zero and one.
 
+    This code was originally published by the following individuals for use with
+    Scilab:
+
+    - Copyright (C) 2012 - 2013 - Michael Baudin
+    - Copyright (C) 2012 - Maria Christopoulou
+    - Copyright (C) 2010 - 2011 - INRIA - Michael Baudin
+    - Copyright (C) 2009 - Yann Collette
+    - Copyright (C) 2009 - CEA - Jean-Marc Martinez
+
+    website: forge.scilab.org/index.php/p/scidoe/sourcetree/master/macros
+
+    Much thanks goes to these individuals. It has been converted to Python by
+    Abraham Lee.
+
     :Example:
 
-    A 3-factor design (defaults to 3 samples)::
+    A 3-factor design (defaults to 3 samples):
 
     >>> samLatinHypercube(3)
     array([[ 0.40069325,  0.08118402,  0.69763298],
            [ 0.19524568,  0.41383587,  0.29947106],
            [ 0.85341601,  0.75460699,  0.360024  ]])
 
-    A 4-factor design with 6 samples::
+    A 4-factor design with 6 samples:
 
     >>> samLatinHypercube(4, samples=6)
     array([[ 0.27226812,  0.02811327,  0.62792445,  0.91988196],
@@ -74,7 +74,7 @@ def samLatinHypercube(n, samples=None, criterion=None, iterations=None):
            [ 0.63092013,  0.22148567,  0.33616859,  0.36332478],
            [ 0.05276917,  0.5819198 ,  0.67194243,  0.78703262]])
 
-    A 2-factor design with 5 centered samples::
+    A 2-factor design with 5 centered samples:
 
     >>> samLatinHypercube(2, samples=5, criterion='center')
     array([[ 0.3,  0.5],
@@ -84,7 +84,7 @@ def samLatinHypercube(n, samples=None, criterion=None, iterations=None):
            [ 0.5,  0.7]])
 
     A 3-factor design with 4 samples where the minimum distance between
-    all samples has been maximized::
+    all samples has been maximized:
 
     >>> samLatinHypercube(3, samples=4, criterion='maximin')
     array([[ 0.02642564,  0.55576963,  0.50261649],
@@ -93,10 +93,9 @@ def samLatinHypercube(n, samples=None, criterion=None, iterations=None):
            [ 0.40414671,  0.33339132,  0.84845707]])
 
     A 4-factor design with 5 samples where the samples are as uncorrelated
-    as possible (within 10 iterations)::
+    as possible (within 10 iterations):
 
     >>> samLatinHypercube(4, samples=5, criterion='correlate', iterations=10)
-
     """
     H = None
 
@@ -176,7 +175,6 @@ def _lhscentered(n, samples):
 
 def _lhsmaximin(n, samples, iterations, lhstype):
     maxdist = 0
-
     # Maximize the minimum distance between points
     for i in range(iterations):
         if lhstype == 'maximin':
@@ -196,7 +194,6 @@ def _lhsmaximin(n, samples, iterations, lhstype):
 
 def _lhscorrelate(n, samples, iterations):
     mincorr = np.inf
-
     # Minimize the components correlation coefficients
     for i in range(iterations):
         # Generate a random LHS
@@ -213,34 +210,28 @@ def _lhscorrelate(n, samples, iterations):
 ################################################################################
 
 def _pdist(x):
-    """
-    Calculate the pair-wise point distances of a matrix
+    """Calculate the pair-wise point distances of a matrix
 
-    Parameters
-    ----------
-    x : 2d-array
-        An m-by-n array of scalars, where there are m points in n dimensions.
+    :param x: An m-by-n array of scalars, where there are m points in n dimensions.
+    :type x: 2d-array
 
-    Returns
-    -------
-    d : array
-        A 1-by-b array of scalars, where b = m*(m - 1)/2. This array contains
-        all the pair-wise point distances, arranged in the order (1, 0),
-        (2, 0), ..., (m-1, 0), (2, 1), ..., (m-1, 1), ..., (m-1, m-2).
+    :returns: d array
 
-    Examples
-    --------
-    ::
+              A 1-by-b array of scalars, where b = m*(m - 1)/2. This array contains
+              all the pair-wise point distances, arranged in the order (1, 0),
+              (2, 0), ..., (m-1, 0), (2, 1), ..., (m-1, 1), ..., (m-1, m-2).
+
+    :Example:
 
         >>> x = np.array([[0.1629447, 0.8616334],
         ...               [0.5811584, 0.3826752],
         ...               [0.2270954, 0.4442068],
         ...               [0.7670017, 0.7264718],
         ...               [0.8253975, 0.1937736]])
+
         >>> _pdist(x)
         array([ 0.6358488,  0.4223272,  0.6189940,  0.9406808,  0.3593699,
                 0.3908118,  0.3087661,  0.6092392,  0.6486001,  0.5358894])
-
     """
 
     x = np.atleast_2d(x)

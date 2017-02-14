@@ -42,7 +42,7 @@ import numpy as np
 class decvarMOEA(object):
 
     def __init__(self, varDir, casePref, numVar, numPop, numCon, numObj, numGen):
-        """
+        """decvarMOEA
 
         :param varDir:
         :param casePref: 't' for 'test'
@@ -78,7 +78,7 @@ class decvarMOEA(object):
 
 
     def writeHeader(self, igen):
-        """
+        """writeHeader
 
         :return:
         """
@@ -95,7 +95,7 @@ class decvarMOEA(object):
         pass
 
     def writeEnd(self):
-        """
+        """writeEnd
 
         :return:
         """

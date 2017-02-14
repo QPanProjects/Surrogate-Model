@@ -33,6 +33,9 @@ from surrogate.base import SurrogateModel
 
 
 class RSurfaceSurrogate(SurrogateModel):
+    """Response Surface Surrogate Model
+
+    """
     def __init__(self):
         super(RSurfaceSurrogate, self).__init__()
 
@@ -44,13 +47,11 @@ class RSurfaceSurrogate(SurrogateModel):
         """ Calculate response surface equation coefficients using least
         squares regression.
 
-        Args
-        ----
-        x : array-like
-            Training input locations
+        :param x: Training input locations
+        :type x: array-like
 
-        y : array-like
-            Model responses at given inputs.
+        :param y: Model responses at given inputs
+        :type y: array-like
         """
 
         super(RSurfaceSurrogate, self).fit(x, y)
@@ -81,14 +82,11 @@ class RSurfaceSurrogate(SurrogateModel):
         self.betas, rs, r, s = lstsq(X, y)
 
     def predict(self, x):
-        """
-        Calculates a predicted value of the response based on the current
+        """Calculates a predicted value of the response based on the current
         response surface model for the supplied list of inputs.
 
-        Args
-        ----
-        x : array-like
-            Point at which the surrogate is evaluated.
+        :param x: Point at which the surrogate is evaluated
+        :type x: array-like
         """
 
         super(RSurfaceSurrogate, self).predict(x)
@@ -115,13 +113,10 @@ class RSurfaceSurrogate(SurrogateModel):
         return X.dot(self.betas)
 
     def linearize(self, x):
-        """
-        Calculates the jacobian of the Kriging surface at the requested point.
+        """Calculates the jacobian of the Kriging surface at the requested point.
 
-        Args
-        ----
-        x : array-like
-            Point at which the surrogate Jacobian is evaluated.
+        :param x: Point at which the surrogate Jacobian is evaluated
+        :type x: array-like
         """
         n = self.n
         betas = self.betas

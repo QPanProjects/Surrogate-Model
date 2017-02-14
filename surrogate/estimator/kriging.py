@@ -63,16 +63,10 @@ class KrigingSurrogate(SurrogateModel):
         self.Y = zeros(0)
 
     def fit(self, x, y):
-        """
-        Train the surrogate model with the given set of inputs and outputs.
+        """Train the surrogate model with the given set of inputs and outputs.
 
-        Args
-        ----
-        x : array-like
-            Training input locations
-
-        y : array-like
-            Model responses at given inputs.
+        :param x: Training input locations
+        :param y: Model responses at given inputs.
         """
 
         super(KrigingSurrogate, self).fit(x, y)
@@ -89,7 +83,7 @@ class KrigingSurrogate(SurrogateModel):
         self.Y = y
 
         def _calcll(thetas):
-            """ Callback function"""
+            # Callback function
             self.thetas = thetas
             self._calculate_log_likelihood()
             return -self.log_likelihood
@@ -104,10 +98,8 @@ class KrigingSurrogate(SurrogateModel):
         self._calculate_log_likelihood()
 
     def _calculate_log_likelihood(self):
-        """
-        Calculates the log-likelihood (up to a constant) for a given
+        """Calculates the log-likelihood (up to a constant) for a given
         self.theta.
-
         """
         R = zeros((self.n, self.n))
         X, Y = self.X, self.Y
@@ -151,14 +143,10 @@ class KrigingSurrogate(SurrogateModel):
                                   - 1. / 2. * det_factor
 
     def predict(self, x):
-        """
-        Calculates a predicted value of the response based on the current
+        """Calculates a predicted value of the response based on the current
         trained model for the supplied list of inputs.
 
-        Args
-        ----
-        x : array-like
-            Point at which the surrogate is evaluated.
+        :param x: Point at which the surrogate is evaluated.
         """
 
         super(KrigingSurrogate, self).predict(x)
@@ -187,13 +175,9 @@ class KrigingSurrogate(SurrogateModel):
         return f, rmse
 
     def linearize(self, x):
-        """
-        Calculates the jacobian of the Kriging surface at the requested point.
+        """Calculates the jacobian of the Kriging surface at the requested point.
 
-        Args
-        ----
-        x : array-like
-            Point at which the surrogate Jacobian is evaluated.
+        :param x: Point at which the surrogate Jacobian is evaluated.
         """
 
         thetas = power(10., self.thetas)
@@ -209,7 +193,8 @@ class KrigingSurrogate(SurrogateModel):
 
 class FloatKrigingSurrogate(KrigingSurrogate):
     """Surrogate model based on the simple Kriging interpolation. Predictions are returned as floats,
-    which are the mean of the model's prediction."""
+    which are the mean of the model's prediction.
+    """
 
     def predict(self, x):
         dist = super(FloatKrigingSurrogate, self).predict(x)

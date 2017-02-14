@@ -24,22 +24,29 @@
 # License: MIT License
 # Create: 2016-12-02
 
-"""
-encoding: utf-8
-module numpy.random.mtrand
-from /System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/numpy/random/mtrand.so
-by generator 1.138
-no doc
-
-Links:
-    https://docs.scipy.org/doc/numpy/reference/routines.random.html
-
-"""
 
 import numpy.random as rand
 
 
 def samRandom(n=2):
+    """samRandom
+
+    :param n: default 2
+    :return:
+
+    .. note:: Not sphinx doc!! 20170214
+        Encoding: utf-8
+
+        module numpy.random.mtrand
+
+        from /System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/numpy/random/mtrand.so
+        by generator 1.138
+
+        no doc
+
+        Links:
+            https://docs.scipy.org/doc/numpy/reference/routines.random.html
+    """
     return rand.rand(n)
 
 
@@ -62,22 +69,20 @@ def samBeta(a=0.1, b=0.1, size=None):  # real signature unknown; restored from _
 
     It is often seen in Bayesian inference and order statistics.
 
-    Parameters
-    ----------
-    a : float
-        Alpha, non-negative.
-    b : float
-        Beta, non-negative.
-    size : int or tuple of ints, optional
-        Output shape.  If the given shape is, e.g., ``(m, n, k)``, then
-        ``m * n * k`` samples are drawn.  Default is None, in which case a
-        single value is returned.
+    :param a: Alpha, non-negative
+    :type a: float
 
-    Returns
-    -------
-    out : ndarray
-        Array of the given shape, containing values drawn from a
-        Beta distribution.
+    :param b: Beta, non-negative
+    :type b: float
+
+    :param size: Output shape.  If the given shape is, e.g., ``(m, n, k)``, then
+                 ``m * n * k`` samples are drawn.  Default is None, in which case a
+                 single value is returned.
+    :type size: int or tuple of ints, optional
+
+    :returns: out, ndarray
+              Array of the given shape, containing values drawn from a
+              Beta distribution.
     """
     return rand.beta(a=a, b=b, size=size)
 

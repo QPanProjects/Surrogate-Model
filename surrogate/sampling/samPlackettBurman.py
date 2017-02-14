@@ -24,20 +24,6 @@
 # License: MIT License
 # Create: 2016-12-02
 
-"""
-This code was originally published by the following individuals for use with
-Scilab:
-    Copyright (C) 2012 - 2013 - Michael Baudin
-    Copyright (C) 2012 - Maria Christopoulou
-    Copyright (C) 2010 - 2011 - INRIA - Michael Baudin
-    Copyright (C) 2009 - Yann Collette
-    Copyright (C) 2009 - CEA - Jean-Marc Martinez
-
-    website: forge.scilab.org/index.php/p/scidoe/sourcetree/master/macros
-
-Much thanks goes to these individuals. It has been converted to Python by
-Abraham Lee.
-"""
 
 import numpy as np
 from scipy.linalg import toeplitz, hankel
@@ -52,9 +38,23 @@ def samPlackettBurman(n):
               for 1-3 factors there are 4 rows, for 4-7 factors there are 8 rows,
               etc.)
 
+    This code was originally published by the following individuals for use with
+    Scilab:
+
+    - Copyright (C) 2012 - 2013 - Michael Baudin
+    - Copyright (C) 2012 - Maria Christopoulou
+    - Copyright (C) 2010 - 2011 - INRIA - Michael Baudin
+    - Copyright (C) 2009 - Yann Collette
+    - Copyright (C) 2009 - CEA - Jean-Marc Martinez
+
+    website: forge.scilab.org/index.php/p/scidoe/sourcetree/master/macros
+
+    Much thanks goes to these individuals. It has been converted to Python by
+    Abraham Lee.
+
     :Example:
 
-    A 3-factor design::
+    A 3-factor design:
 
     >>> samPlackettBurman(3)
     array([[-1., -1.,  1.],
@@ -62,7 +62,7 @@ def samPlackettBurman(n):
            [-1.,  1., -1.],
            [ 1.,  1.,  1.]])
 
-    A 5-factor design::
+    A 5-factor design:
 
     >>> samPlackettBurman(5)
     array([[-1., -1.,  1., -1.,  1.],
@@ -73,7 +73,6 @@ def samPlackettBurman(n):
            [ 1., -1., -1.,  1.,  1.],
            [-1.,  1., -1.,  1., -1.],
            [ 1.,  1.,  1.,  1.,  1.]])
-
     """
     assert n > 0, 'Number of factors must be a positive integer'
     keep = int(n)
