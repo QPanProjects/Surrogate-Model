@@ -1,0 +1,55 @@
+{% extends "!layout.html" %}
+
+
+{% block rootrellink %}
+        <li><a href="{{ pathto('index') }}">home</a>|&nbsp;</li>
+        <li><a href="{{ pathto('quickstart') }}">quick start</a>|&nbsp;</li>
+        <li><a href="{{ pathto('documentation/index') }}">documentation</a>|&nbsp;</li>
+        <li><a href="{{ pathto('tutorials/index') }}">tutorials</a>|&nbsp;</li>
+        <li><a href="{{ pathto('examples/index') }}">examples</a>|&nbsp;</li>
+{% endblock %}
+
+
+{% block relbar1 %}
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="{{ pathto('index') }}"><img src="{{pathto("_static/logo.png", 1) }}" border="0" alt="py4sci"/></a>
+</div>
+{{ super() }}
+{% endblock %}
+
+{% block sidebarlogo %}
+<h3>News</h3>
+<p> 10/2013 V1.1.5 is out! <a href="http://sourceforge.net/apps/mediawiki/pagmo/index.php?title=V1.1.5_Release_Notes">Release Notes</a> </p>
+<p> 03/2013 PyGMO tries GSoC. <a href="http://sourceforge.net/apps/mediawiki/pagmo/index.php?title=GSoC_2013">Project pages</a>  </p>
+<h3>Get PyGMO: UNIX</h3>
+<p> First you need to  <a href="{{ pathto('pre_req') }}">prepare your system</a>
+to run PyGMO.
+(and install third-party optional packages)</p>
+<p> Then you may <a href="{{ pathto('download') }}">get PyGMO</a> </p>
+<p> As a last step,  <a href="{{ pathto('install') }}">compile and install</a> PyGMO </p>
+
+<h3>Get PyGMO: win32</h3>
+<p> Download the <a href="http://sourceforge.net/projects/pagmo/files/latest/download">autoinstaller</a>
+
+<h3>Shortcuts</h3>
+<p> <a href="{{ pathto('documentation/algorithms') }}"> Algorithms </a>
+<p> <a href="{{ pathto('documentation/problems') }}"> Problems </a>
+<p> <a href="{{ pathto('documentation/topology') }}"> Topologies </a>
+
+<h3>Report a Bug</h3>
+<p> Go to our <a href="https://sourceforge.net/p/pagmo/tickets/?source=navbar"> bugtracker </a>
+
+<h3>Request for support</h3>
+<p> Contact our <a href="http://sourceforge.net/mailarchive/forum.php?forum_name=pagmo-devel">
+mailinglist</a>
+{% endblock %}
+
+{% block sidebartoc %}{% endblock %}
+{% block sidebarsourcelink %}{% endblock %}
+
+
+{# put the sidebar before the body #}
+{% block sidebar1 %}{{ sidebar() }}{% endblock %}
+{% block sidebar2 %}{% endblock %}
+
