@@ -104,26 +104,26 @@ class jsonMOEA(object):
         outFile.write("    {\n")
 
         outFile.write("        \"variable\"   : [")
-        outFile.write("[%f" % (individuals[0].variable[0]))
+        outFile.write("[%.6f" % (individuals[0].variable[0]))
         for j in range(1, self.numVar):
-            outFile.write(",%f" % (individuals[0].variable[j]))
+            outFile.write(",%.6f" % (individuals[0].variable[j]))
         outFile.write("]")
         for i in range(1, self.numPop):
-            outFile.write(",[%f" % (individuals[i].variable[0]))
+            outFile.write(",[%.6f" % (individuals[i].variable[0]))
             for j in range(1, self.numVar):
-                outFile.write(",%f" % (individuals[i].variable[j]))
+                outFile.write(",%.6f" % (individuals[i].variable[j]))
             outFile.write("]")
         outFile.write("],\n")
 
         outFile.write("        \"objective\"  : [[")
-        outFile.write("[%f" % (individuals[0].fitness.values[0]))
+        outFile.write("[%.6f" % (individuals[0].fitness.values[0]))
         for j in range(1, self.numObj):
-            outFile.write(",%f" % (individuals[0].fitness.values[j]))
+            outFile.write(",%.6f" % (individuals[0].fitness.values[j]))
         outFile.write("]")
         for i in range(1, self.numPop):
-            outFile.write(",[%f" % (individuals[i].fitness.values[0]))
+            outFile.write(",[%.6f" % (individuals[i].fitness.values[0]))
             for j in range(1, self.numObj):
-                outFile.write(",%f" % (individuals[i].fitness.values[j]))
+                outFile.write(",%.6f" % (individuals[i].fitness.values[j]))
             outFile.write("]")
         outFile.write("]]")
 
@@ -133,14 +133,14 @@ class jsonMOEA(object):
 
         if self.numCon > 0:
             outFile.write("        \"constraint\" : [")
-            outFile.write("[%f" % (individuals[0].constraint[0]))
+            outFile.write("[%.6f" % (individuals[0].constraint[0]))
             for j in range(1, self.numCon):
-                outFile.write(",%f" % (individuals[0].constraint[j]))
+                outFile.write(",%.6f" % (individuals[0].constraint[j]))
             outFile.write("]")
             for i in range(1, self.numPop):
-                outFile.write(",[%f" % (individuals[i].constraint[0]))
+                outFile.write(",[%.6f" % (individuals[i].constraint[0]))
                 for j in range(1, self.numCon):
-                    outFile.write(",%f" % (individuals[i].constraint[j]))
+                    outFile.write(",%.6f" % (individuals[i].constraint[j]))
                 outFile.write("]")
             outFile.write("]")
             outFile.write("\n")
@@ -169,16 +169,37 @@ class jsonMOEA(object):
             r = index / gen_tot
             g = index / gen_tot
             b = index / gen_tot
+
             for iobj in obj:
                 x.append(iobj[0])
                 y.append(iobj[1])
-            plt.plot(x, y, '.', color=next(color), label=str(index))
+
+                # print '['+'\t'.join(map(str,iobj))+']'
+            plt.plot(x, y, 'o', color=next(color), label=str(index))
+
+        # minmax = [min(x), max(x), min(y), max(y)]
 
         plt.title('moea.json')
         plt.xlabel('obj1')
-        # plt.xlim([0.7,1.1])
+        # if minmax[0]==0.0 and minmax[1]==0.0:
+        #     plt.xlim([minmax[0]-0.05,minmax[1]+0.05])
+        # elif minmax[0]==0.0 and minmax[1]!=0.0:
+        #     plt.xlim([minmax[0]-0.05,minmax[1]+0.05*abs(minmax[1])])
+        # elif minmax[0]!=0.0 and minmax[1]==0.0:
+        #     plt.xlim([minmax[0]-0.05*abs(minmax[0]),minmax[1]+0.05])
+        # else:
+        #     plt.xlim([minmax[0]-0.05*abs(minmax[0]),minmax[1]+0.05*abs(minmax[1])])
+        # # plt.xlim([minmax[0]-0.05*abs(minmax[0]),minmax[1]+0.05*abs(minmax[1])])
         plt.ylabel('obj2')
-        # plt.ylim([6,9])
+        # if minmax[2]==0.0 and minmax[3]==0.0:
+        #     plt.ylim([minmax[2]-0.05,minmax[3]+0.05])
+        # elif minmax[2]==0.0 and minmax[3]!=0.0:
+        #     plt.ylim([minmax[2]-0.05,minmax[3]+0.05*abs(minmax[3])])
+        # elif minmax[2]!=0.0 and minmax[3]==0.0:
+        #     plt.ylim([minmax[2]-0.05*abs(minmax[2]),minmax[3]+0.05])
+        # else:
+        #     plt.ylim([minmax[2]-0.05*abs(minmax[2]),minmax[3]+0.05*abs(minmax[3])])
+        # # plt.ylim([minmax[2]-0.05*abs(minmax[2]),minmax[3]+0.05*abs(minmax[3])])
         plt.grid(True)
         # plt.legend(loc='best')
         plt.savefig(self.fileName+'.png')
@@ -206,16 +227,37 @@ class jsonMOEA(object):
             r = index / gen_tot
             g = index / gen_tot
             b = index / gen_tot
+
             for iobj in obj:
                 x.append(iobj[0])
                 y.append(iobj[1])
-            plt.plot(x, y, '.', color=next(color), label=str(index))
+
+                # print '['+'\t'.join(map(str,iobj))+']'
+            plt.plot(x, y, 'o', color=next(color), label=str(index))
+
+        minmax = [min(x), max(x), min(y), max(y)]
 
         plt.title('moea.json')
         plt.xlabel('obj1')
-        # plt.xlim([0.7,1.1])
+        if minmax[0]==0.0 and minmax[1]==0.0:
+            plt.xlim([minmax[0]-0.05,minmax[1]+0.05])
+        elif minmax[0]==0.0 and minmax[1]!=0.0:
+            plt.xlim([minmax[0]-0.05,minmax[1]+0.05*abs(minmax[1])])
+        elif minmax[0]!=0.0 and minmax[1]==0.0:
+            plt.xlim([minmax[0]-0.05*abs(minmax[0]),minmax[1]+0.05])
+        else:
+            plt.xlim([minmax[0]-0.05*abs(minmax[0]),minmax[1]+0.05*abs(minmax[1])])
+        # plt.xlim([minmax[0]-0.05*abs(minmax[0]),minmax[1]+0.05*abs(minmax[1])])
         plt.ylabel('obj2')
-        # plt.ylim([6,9])
+        if minmax[2]==0.0 and minmax[3]==0.0:
+            plt.ylim([minmax[2]-0.05,minmax[3]+0.05])
+        elif minmax[2]==0.0 and minmax[3]!=0.0:
+            plt.ylim([minmax[2]-0.05,minmax[3]+0.05*abs(minmax[3])])
+        elif minmax[2]!=0.0 and minmax[3]==0.0:
+            plt.ylim([minmax[2]-0.05*abs(minmax[2]),minmax[3]+0.05])
+        else:
+            plt.ylim([minmax[2]-0.05*abs(minmax[2]),minmax[3]+0.05*abs(minmax[3])])
+        # plt.ylim([minmax[2]-0.05*abs(minmax[2]),minmax[3]+0.05*abs(minmax[3])])
         plt.grid(True)
         # plt.legend(loc='best')
         plt.show()

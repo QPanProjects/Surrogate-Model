@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/assets/css/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <style>
@@ -67,6 +67,7 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a href="/taihu">Taihu</a></li>
                 <li><a href="/taihu/index_waq.php">WAQ</a></li>
+                <li><a href="/taihu/index_grid.php">GRID</a></li>
                 <li><a href="/taihu/index_moea.php">MOEA</a></li>
                 <li><a href="/taihu/index_sm.php">Surrogate</a></li>
             </ul>
@@ -97,16 +98,30 @@
 
     <div class="btn-group btn-group-justified">
         <a class="btn btn-primary" href="/taihu/index_waq.php?iswaq=1&iewaq=2">WAQ</a>
+        <a class="btn btn-primary" href="/taihu/index_grid.php">GRID</a>
         <a class="btn btn-primary" href="/taihu/index_moea.php?ngen=2&ndim=82&npop=4&nobj=2&ncon=0&cxpb=0.9">MOEA</a>
         <a class="btn btn-primary" href="/taihu/index_sm.php?ngen=2&ndim=82&npop=4&nobj=2&ncon=0&cxpb=0.9">Surrogate</a>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <h3>Input</h3>
+        </div>
+        <div class="col-sm-12">
+            <div id="d3dInputList">
+                d3dInputList
+            </div>
+        </div>
     </div>
 
 <?php
     $rootDir = '/taihu';
     $resultDirM = '/taihu/result/moea';
-    $resultDirS = '/taihu/result/surrogate';
-    $dir1 = $rootDir.'/t00000001';
-    $dir2 = $rootDir.'/t00000002';
+    $resultDirS = '/taihu/result/sm';
+    $dirS1 = $rootDir.'/sm00000001';
+    $dirS2 = $rootDir.'/sm00000002';
+    $dirM1 = $rootDir.'/moea00000001';
+    $dirM2 = $rootDir.'/moea00000002';
 
 
     echo '<div class="row text-center">';
@@ -150,50 +165,6 @@
     echo '</div>';
 
     echo '<div class="row">';
-        echo '<div class="col-sm-6">';
-            echo '<div class="row text-center">';
-                echo '<div class="col-sm-12">';
-                    echo '<h4>t01</h4>';
-                echo '</div>';
-            echo '</div>';
-
-            echo '<div class="row">';
-                echo '<div class="col-sm-6">';
-                    echo '<a id="imgt01hisg13183" href="'.$dir1.'/his_GREENS_s0.png" target="_blank">';
-                        echo '<i class="fa fa-picture-o fa-3x fa-fw"></i>';
-                    echo '</a>';
-                echo '</div>';
-                echo '<div class="col-sm-6">';
-                    echo '<a id="imgt01mapg1" href="'.$dir1.'/map_GREENS_t0.png" target="_blank">';
-                        echo '<i class="fa fa-picture-o fa-3x fa-fw"></i>';
-                    echo '</a>';
-                echo '</div>';
-            echo '</div>';
-        echo '</div>';
-
-        echo '<div class="col-sm-6">';
-            echo '<div class="row text-center">';
-                echo '<div class="col-sm-12">';
-                    echo '<h4>t02</h4>';
-                echo '</div>';
-            echo '</div>';
-
-            echo '<div class="row">';
-                echo '<div class="col-sm-6">';
-                    echo '<a id="imgt02hisg13183" href="'.$dir2.'/his_GREENS_s0.png" target="_blank">';
-                        echo '<i class="fa fa-picture-o fa-3x fa-fw"></i>';
-                    echo '</a>';
-                echo '</div>';
-                echo '<div class="col-sm-6">';
-                    echo '<a id="imgt02mapg1" href="'.$dir2.'/map_GREENS_t0.png" target="_blank">';
-                        echo '<i class="fa fa-picture-o fa-3x fa-fw"></i>';
-                    echo '</a>';
-                echo '</div>';
-            echo '</div>';
-        echo '</div>';
-    echo '</div>';
-
-    echo '<div class="row">';
         echo '<div class="col-sm-12">';
             echo '<textarea rows="10" class="form-control noresize">';
                 echo file_get_contents('log.txt');
@@ -211,24 +182,83 @@
 
 <script>
 $( document ).ready(function() {
-    var dir1 = "<?php echo $dir1; ?>";
-    var dir2 = "<?php echo $dir2; ?>";
+    console.log( 'start' );
     var resultDirM = "<?php echo $resultDirM; ?>";
     var resultDirS = "<?php echo $resultDirS; ?>";
 
-    $('#imgt01hisg13183').html(
-        '<img class="img-responsive" src="'+dir1+'/his_GREENS_s0.png?'+serverTime.getTime()+'" alt="'+dir1+' his">'
-    );
-    $('#imgt01mapg1').html(
-        '<img class="img-responsive" src="'+dir1+'/map_GREENS_t0.png?'+serverTime.getTime()+'" alt="'+dir1+' map">'
-    );
+    $.ajax({
+        url: "/taihu/delblock/block_list.json",
+        method: "GET",
+        async: true,
+        timeout: 0,
+        dataType: "json",
+        beforeSend: function() {
+            $('div#d3dInputList').html(
+                '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i>'
+            );
+        },
+        success: function(result){
+            var htmlstring = '';
+            htmlstring +=
+                '<div class="dropdown">'
+                    +'<button class="btn btn-info btn-block dropdown-toggle" type="button" id="d3dstation" data-toggle="dropdown">'
+                        +result['station'][0]
+                    +'</button>'
+                    +'<ul class="dropdown-menu" style="max-height: 300px;overflow-y:scroll; " role="menu" aria-labelledby="d3dstation">';
 
-    $('#imgt02hisg13183').html(
-        '<img class="img-responsive" src="'+dir2+'/his_GREENS_s0.png?'+serverTime.getTime()+'" alt="'+dir2+' his">'
-    );
-    $('#imgt02mapg1').html(
-        '<img class="img-responsive" src="'+dir2+'/map_GREENS_t0.png?'+serverTime.getTime()+'" alt="'+dir2+' map">'
-    );
+            $.each( result['station'], function( key,value ) {
+                // htmlstring += '<li role="presentation"><a role="menuitem" tabindex="'+key+'" href="#">'+value+'</a></li>';
+                htmlstring +=
+                    '<li role="presentation">'
+                        +'<a role="menuitem" tabindex="-1">'
+                            +'<img style="width:50px; height:50px;" src="/taihu/delblock/'+value+'_Discharge.png?'+serverTime.getTime()+'" alt="Input">'
+                            +'<img style="width:50px; height:50px;" src="/taihu/delblock/'+value+'_NO3.png?'+serverTime.getTime()+'" alt="Input">'
+                            +'<img style="width:50px; height:50px;" src="/taihu/delblock/'+value+'_PO4.png?'+serverTime.getTime()+'" alt="Input">'
+                            +value
+                        +'</a>'
+                    +'</li>';
+            });
+            htmlstring +=
+                    '</ul>'
+                +'</div>';
+
+            htmlstring +=
+                '<div class="col-sm-4">'
+                    +'<a id="imgStationDischarge" href="/taihu/delblock/'+result['station'][0]+'_Discharge.png" target="_blank">'
+                    +'<img class="img-responsive" src="/taihu/delblock/'+result['station'][0]+'_Discharge.png?'+serverTime.getTime()+'" alt="Input">'
+                    +'</a>'
+                +'</div>'
+                +'<div class="col-sm-4">'
+                    +'<a id="imgStationNO3" href="/taihu/delblock/'+result['station'][0]+'_NO3.png" target="_blank">'
+                    +'<img class="img-responsive" src="/taihu/delblock/'+result['station'][0]+'_NO3.png?'+serverTime.getTime()+'" alt="Input">'
+                    +'</a>'
+                +'</div>'
+                +'<div class="col-sm-4">'
+                    +'<a id="imgStationPO4" href="/taihu/delblock/'+result['station'][0]+'_PO4.png" target="_blank">'
+                    +'<img class="img-responsive" src="/taihu/delblock/'+result['station'][0]+'_PO4.png?'+serverTime.getTime()+'" alt="Input">'
+                    +'</a>'
+                +'</div>';
+
+            $('div#d3dInputList').html( htmlstring );
+
+            $('ul.dropdown-menu li a').on('click', function(event) {
+                event.preventDefault();
+
+                var text = $(this).text();
+                $(this).parents('.dropdown').find('.dropdown-toggle').val(text).text(text);
+
+                $('#imgStationDischarge').attr('href','/taihu/delblock/'+text+'_Discharge.png');
+                $('#imgStationDischarge img').attr('src','/taihu/delblock/'+text+'_Discharge.png?'+serverTime.getTime());
+
+                $('#imgStationNO3').attr('href','/taihu/delblock/'+text+'_NO3.png');
+                $('#imgStationNO3 img').attr('src','/taihu/delblock/'+text+'_NO3.png?'+serverTime.getTime());
+
+                $('#imgStationPO4').attr('href','/taihu/delblock/'+text+'_PO4.png');
+                $('#imgStationPO4 img').attr('src','/taihu/delblock/'+text+'_PO4.png?'+serverTime.getTime());
+            });
+        }
+    });
+
 
     $('#imgjsonM').html(
         '<img class="img-responsive" src="'+resultDirM+'/taihu.json.png?'+serverTime.getTime()+'" alt="MOEA Result JSON">'
@@ -236,7 +266,6 @@ $( document ).ready(function() {
     $('#imgjsonS').html(
         '<img class="img-responsive" src="'+resultDirS+'/taihu.json.png?'+serverTime.getTime()+'" alt="Surrogate Model Result JSON">'
     );
-
 });
 </script>
 </body>

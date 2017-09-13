@@ -216,30 +216,30 @@
 
     #preloader {
         background: #ffffff;
-        bottom: 0;
-        height: 100%;
-        left: 0;
         position: fixed;
-        right: 0;
         top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
         width: 100%;
+        height: 100%;
         z-index: 999;
     }
     #load {
-        z-index: 9999;
         background-color: #FF4136;
         opacity: 0.75;
-        width: 10px;
-        height: 10px;
         position: absolute;
         top: 50%;
-        margin: -5px auto 0 auto;
-        left: 0;
         right: 0;
+        left: 0;
+        width: 10px;
+        height: 10px;
+        margin: -5px auto 0 auto;
         border-radius: 0px;
         border: 5px solid #FF4136;
         box-shadow: 10px 0px #39CCCC, 10px 0px #01FF70;
         animation: shadowSpin 1s ease-in-out infinite;
+        z-index: 9999;
     }
 
     /* ===========================
@@ -271,6 +271,7 @@
 
     .section {
         padding-top:50px;
+        width: 100%;
         height:400px;
         color: #000000;
         background-color: #eeeeee;

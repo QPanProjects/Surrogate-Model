@@ -24,12 +24,14 @@
 # License: MIT License
 # Create: 2016-12-02
 
+from .delft3d_waq import delft3dWAQ
 from .kriging import KrigingSurrogate, FloatKrigingSurrogate
 from .nearest_neighbor import NNeighborSurrogate
 from .neural_network import ANNSurrogate
 from .response_surface import RSurfaceSurrogate
 
 __all__ = [
+    'delft3dWAQ',
     'KrigingSurrogate', 'FloatKrigingSurrogate',
     'RSurfaceSurrogate',
     'NNeighborSurrogate',

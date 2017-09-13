@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Taihu DSS WAQ</title>
+    <title>Taihu DSS GRID</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -73,8 +73,8 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li><a href="/taihu">Taihu</a></li>
-                <li class="active"><a href="/taihu/index_waq.php">WAQ</a></li>
-                <li><a href="/taihu/index_grid.php">GRID</a></li>
+                <li><a href="/taihu/index_waq.php">WAQ</a></li>
+                <li class="active"><a href="/taihu/index_grid.php">GRID</a></li>
                 <li><a href="/taihu/index_moea.php">MOEA</a></li>
                 <li><a href="/taihu/index_sm.php">Surrogate</a></li>
             </ul>
@@ -89,7 +89,7 @@
 
 <div class="container-fluid">
     <div class="jumbotron">
-        <h1>Taihu Lake WAQ Loop</h1>
+        <h1>Taihu Lake GRID Loop</h1>
         <p>Quan Pan&nbsp;
             <a href="https://nl.linkedin.com/in/quanpan302" target="_blank">
                 <i class="fa fa-linkedin-square" aria-hidden="true"></i>
@@ -107,10 +107,11 @@
 <?php
     $ready2start = FALSE;
 
-    $icaseStart = 1;
-    $icaseEnd   = 2;
+    $icaseStart = 99999999;
+    $icaseEnd   = 99999999;
 
     $rootDir   = '/taihu';
+    $resultDir = '/taihu/result/grid';
 
     if( count($_GET) > 0 ) {
         if( $_GET['iswaq'] && $_GET['iewaq'] ) {
@@ -128,7 +129,7 @@
                 echo '</div>';
 
             } else {
-                $exe_py_cmd = 'python /var/www/html/taihu/run_waq.py'
+                $exe_py_cmd = 'python /var/www/html/taihu/run_grid.py'
                                .' -s '.$icaseStart
                                .' -e '.$icaseEnd
                                .' 2>&1';
@@ -163,7 +164,7 @@
                             <h4>Model</h4>
                         </div>
                     </div>
-                    <form action="index_waq.php" method="get" class="row">
+                    <form action="index_grid.php" method="get" class="row">
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="iswaq">Start</label>
                             <div class="col-sm-10">
@@ -267,6 +268,32 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row text-center">
+                        <div class="col-sm-12">
+                            <a id="imgjson" href="" target="_blank">
+                                <i class="fa fa-picture-o fa-3x fa-fw"></i>
+                            </a>
+                        </div>
+                        <div class="col-sm-12">
+                            <h4><a id="filejson" class="btn btn-info btn-block" href="" target="_blank">JSON</a></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden-xs col-sm-12">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Gen</th>
+                                <th>Obj</th>
+                                <th>Var</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
             <?php
             }
             ?>
@@ -315,7 +342,7 @@
                                 <span class="help-block">Time</span>
                             </div>
                         </div>
-                        <input type="hidden" name="pref" id="pref" value="waq">
+                        <input type="hidden" name="pref" id="pref" value="grid">
 
                         <div class="col-sm-12">
                             <button id="startimg" type="submit" class="btn btn-primary btn-block <?php if(!$ready2start){ echo 'disabled';} ?>">Plot</button>
@@ -358,7 +385,7 @@
                                 <span class="help-block">Time</span>
                             </div>
                         </div>
-                        <input type="hidden" name="pref" id="pref" value="waq">
+                        <input type="hidden" name="pref" id="pref" value="grid">
 
                         <div class="col-sm-12">
                             <button id="startimg" type="submit" class="btn btn-primary btn-block <?php if(!$ready2start){ echo 'disabled';} ?>">Plot</button>
@@ -390,6 +417,13 @@ $( document ).ready(function() {
 
     var logExe = "Welcome to Taihu DSS WAQ Loop";
     $textarea.text(logExe);
+
+    var resultDir = "<?php echo $resultDir; ?>";
+
+    $('#filejson').attr('href',resultDir+'/taihu.json');
+    $('#imgjson').attr('href',resultDir+'/taihu.json.png').html(
+        '<img class="img-responsive" src="'+resultDir+'/taihu.json.png?'+serverTime.getTime()+'" alt="Result JSON">'
+    );
 
     $("#imgt01 #startimg").click(function(){
         $.ajax({
@@ -502,7 +536,7 @@ $( document ).ready(function() {
 
     $("button#startsm").click(function(){
         $.ajax({
-            url: "run_waq.php",
+            url: "run_grid.php",
             method: "GET",
             async: false,
             timeout: 0,
@@ -522,6 +556,8 @@ $( document ).ready(function() {
                 $('#imgt02his').html( icon );
                 $('#imgt02map').html( icon );
                 $('#grapht02').html( icon );
+
+                $('#imgjson').html( icon );
             },
             success: function(result,status,xhr){
                 logExe  = "--php:Success:: Model " + xhr.status + " " + xhr.statusText+"\n\n";
@@ -536,6 +572,11 @@ $( document ).ready(function() {
                 $('#imgt02his').html( icon );
                 $('#imgt02map').html( icon );
                 $('#grapht02').html( icon );
+
+                $('#filejson').attr('href',resultDir+'/taihu.json');
+                $('#imgjson').attr('href',resultDir+'/taihu.json.png').html(
+                    '<img class="img-responsive" src="'+resultDir+'/taihu.json.png?'+serverTime.getTime()+'" alt="Result JSON">'
+                );
             },
             error: function(xhr,status,error) {
                 logExe  = "--php:Error:: Model " + xhr.status + " " + xhr.statusText+"\n\n";
@@ -550,6 +591,8 @@ $( document ).ready(function() {
                 $('#imgt02his').html( icon );
                 $('#imgt02map').html( icon );
                 $('#grapht02').html( icon );
+
+                $('#imgjson').html( icon );
             }
         });
     });

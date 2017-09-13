@@ -73,7 +73,7 @@
     </div>
 </nav>
 
-<div class="container">
+<div class="container-fluid">
     <div class="jumbotron">
         <h1>Water Supply Network</h1>
         <p>
@@ -85,26 +85,23 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-12">
-            <p id="gltimer" class="text-right"><i class="fa fa-clock-o" aria-hidden="true"></i></p>
+        <div class="col-sm-12 text-right">
+            <span id="gltimer"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="alert alert-info">About</div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-12">
-
 
 <?php
-    echo 'Author: Quan Pan'
+echo '<div class="row">';
+    echo '<div class="col-sm-12">';
+        echo 'Author: Quan Pan';
+    echo '</div>';
+echo '</div>';
+
+echo '<div class="row">';
+    $license = file_get_contents('LICENSE.txt');
+    echo '<div class="alert alert-info">'.str_replace("\n","&lt;br&gt;",$license).'</div>';
+echo '</div>';
 ?>
-        </div>
-    </div>
 </div>
 <footer class="container-fluid text-center">
     <span>Quan Pan&nbsp;</span>

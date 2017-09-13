@@ -74,6 +74,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="/taihu">Taihu</a></li>
                 <li><a href="/taihu/index_waq.php">WAQ</a></li>
+                <li><a href="/taihu/index_grid.php">GRID</a></li>
                 <li><a href="/taihu/index_moea.php">MOEA</a></li>
                 <li class="active"><a href="/taihu/index_sm.php">Surrogate</a></li>
             </ul>
@@ -114,9 +115,7 @@
     $_CXPB = 0.9;
 
     $rootDir   = '/taihu';
-    $resultDir = '/taihu/result/surrogate';
-    $dir1 = $rootDir.'/t00000001';
-    $dir2 = $rootDir.'/t00000002';
+    $resultDir = '/taihu/result/sm';
 
     if( count($_GET) > 5 ) {
         if( $_GET['ngen'] && $_GET['ndim'] && $_GET['npop'] && $_GET['nobj'] ) {
@@ -388,6 +387,7 @@
                                 <span class="help-block">Time</span>
                             </div>
                         </div>
+                        <input type="hidden" name="pref" id="pref" value="sm">
 
                         <div class="col-sm-12">
                             <button id="startimg" type="submit" class="btn btn-primary btn-block <?php if(!$ready2start){ echo 'disabled';} ?>">Plot</button>
@@ -430,6 +430,7 @@
                                 <span class="help-block">Time</span>
                             </div>
                         </div>
+                        <input type="hidden" name="pref" id="pref" value="sm">
 
                         <div class="col-sm-12">
                             <button id="startimg" type="submit" class="btn btn-primary btn-block <?php if(!$ready2start){ echo 'disabled';} ?>">Plot</button>
@@ -462,8 +463,6 @@ $( document ).ready(function() {
     var logExe = "Welcome to Taihu DSS Surrogate Model";
     $textarea.text(logExe);
 
-    var dir1 = "<?php echo $dir1; ?>";
-    var dir2 = "<?php echo $dir2; ?>";
     var resultDir = "<?php echo $resultDir; ?>";
 
     $('#filejson').attr('href',resultDir+'/taihu.json');
@@ -481,7 +480,8 @@ $( document ).ready(function() {
                 c: $("#imgt01 #c").val(),
                 v: $("#imgt01 #v").val(),
                 p: $("#imgt01 #p").val(),
-                t: $("#imgt01 #t").val()
+                t: $("#imgt01 #t").val(),
+                pref: $("#imgt01 #pref").val()
             },
             beforeSend: function() {
                 var icon = '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>';
@@ -503,14 +503,16 @@ $( document ).ready(function() {
 
                 if ( $("div#grapht01 + a#graphfull3d" ).length ) {
                     $( "div#grapht01 + a#graphfull3d" ).attr( 'href','/taihu/result_full3d.php?'+
-                         'c='+$("#imgt01 #c").val()+
-                        '&v='+$("#imgt01 #v").val()+
-                        '&t='+$("#imgt01 #t").val() );
-                } else {
-                    $( "div#grapht01" ).after( '<a id="graphfull3d" href="/taihu/result_full3d.php?'+
-                         'c='+$("#imgt01 #c").val()+
+                        'c='+$("#imgt01 #c").val()+
                         '&v='+$("#imgt01 #v").val()+
                         '&t='+$("#imgt01 #t").val()+
+                        '&pref='+$("#imgt01 #pref").val() );
+                } else {
+                    $( "div#grapht01" ).after( '<a id="graphfull3d" href="/taihu/result_full3d.php?'+
+                        'c='+$("#imgt01 #c").val()+
+                        '&v='+$("#imgt01 #v").val()+
+                        '&t='+$("#imgt01 #t").val()+
+                        '&pref='+$("#imgt01 #pref").val()+
                         '" class="btn btn-info btn-block" target="_blank">Full</a>' );
                 }
             },
@@ -532,7 +534,8 @@ $( document ).ready(function() {
                 c: $("#imgt02 #c").val(),
                 v: $("#imgt02 #v").val(),
                 p: $("#imgt02 #p").val(),
-                t: $("#imgt02 #t").val()
+                t: $("#imgt02 #t").val(),
+                pref: $("#imgt02 #pref").val()
             },
             beforeSend: function() {
                 var icon = '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>';
@@ -554,14 +557,16 @@ $( document ).ready(function() {
 
                 if ( $("div#grapht02 + a#graphfull3d" ).length ) {
                     $( "div#grapht02 + a#graphfull3d" ).attr( 'href','/taihu/result_full3d.php?'+
-                         'c='+$("#imgt02 #c").val()+
-                        '&v='+$("#imgt02 #v").val()+
-                        '&t='+$("#imgt02 #t").val() );
-                } else {
-                    $( "div#grapht02" ).after( '<a id="graphfull3d" href="/taihu/result_full3d.php?'+
-                         'c='+$("#imgt02 #c").val()+
+                        'c='+$("#imgt02 #c").val()+
                         '&v='+$("#imgt02 #v").val()+
                         '&t='+$("#imgt02 #t").val()+
+                        '&pref='+$("#imgt02 #pref").val() );
+                } else {
+                    $( "div#grapht02" ).after( '<a id="graphfull3d" href="/taihu/result_full3d.php?'+
+                        'c='+$("#imgt02 #c").val()+
+                        '&v='+$("#imgt02 #v").val()+
+                        '&t='+$("#imgt02 #t").val()+
+                        '&pref='+$("#imgt02 #pref").val()+
                         '" class="btn btn-info btn-block" target="_blank">Full</a>' );
                 }
             },
@@ -650,7 +655,7 @@ function drawVisualization(jsonFname,containerId) {
     var jsonMapContainer = document.getElementById(containerId);
 
     $.getJSON( jsonFname, function( jsonData ) {
-        jsonMapContainer.innerHtml = '';
+        jsonMapContainer.innerHTML = '';
 
         for (var i = 0; i < jsonData['x'].length; i += 1) {
             data.add({
