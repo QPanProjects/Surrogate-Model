@@ -24,25 +24,30 @@
 </head>
 <body>
 <?php
-    if( count($_GET) == 3 ) {
+    $resultdir = 'result';
+    $casename = '';
+
+    if( count($_GET) == 4 ) {
         if( $_GET['c'] && $_GET['v'] ) {
-            $casename = sprintf('t%08d', intval($_GET['c']));
+            // $casename = sprintf('%s%08d', $_GET['pref'], intval($_GET['c']));
+            $casename = sprintf($resultdir.'/%s%08d', $_GET['pref'], intval($_GET['c']));
             $varname  = $_GET['v'];
 
             if( $_GET['t'] >= 0){
                 $itime = intval($_GET['t']);
-
             }
+            if( $_GET['t'] == -9999){
+                $itime = intval($_GET['t']);
+            }
+
             // http://172.17.17.250/taihu/result_full3d.php?c=2&v=GREENS&t=4
             $jsonFile = '/taihu/'.$casename.'/map_'.$varname.'_t'.$itime.'.json';
         }
     }
 ?>
 <div class="container-fluid" style="height:5%;background-color:#D3D3D3;">
-    <div class="row text-center">
-        <div class="col-sm-12">
-            <a href="<?php echo $jsonFile; ?>" target="_blank"><?php echo $jsonFile; ?></a>
-        </div>
+    <div id="d3dmaptitle" class="row text-center">
+        d3dmaptitle
     </div>
 </div>
 <div class="container-fluid" style="height:95%;">
@@ -58,20 +63,22 @@ $( document ).ready(function() {
     var jsonFile = "<?php echo $jsonFile; ?>";
 
     //drawVisualization('df.json','graph');
-    drawVisualization(jsonFile, 'graph');
+    drawVisualization(jsonFile, 'graph', 'd3dmaptitle');
 });
 
-function drawVisualization(jsonFname,containerId) {
+function drawVisualization(jsonFname,containerId,titleId) {
     var data = null;
     var data = new vis.DataSet();
 
     var jsonMapContainer = document.getElementById(containerId);
+    var jsonMapTitle     = document.getElementById(titleId);
 
     $.ajax({
         url: jsonFname,
         dataType: "json",
         success: function(jsonData) {
-            jsonMapContainer.innerHtml = '';
+            jsonMapTitle.innerHTML     = '';
+            jsonMapContainer.innerHTML = '';
 
             for (var i = 0; i < jsonData['x'].length; i += 1) {
                 data.add({
@@ -96,6 +103,14 @@ function drawVisualization(jsonFname,containerId) {
                 zMin: jsonData['zMin'],
                 zMax: jsonData['zMax']
             };
+
+            jsonMapTitle.innerHTML +=
+                '<div class="col-sm-4">'
+                    +'itime = '+jsonData['itime']
+                +'</div>'
+                +'<div class="col-sm-8">'
+                    +'<a href="'+jsonFname+'" target="_blank">'+jsonFname+'</a>'
+                +'</div>'
             graph3d = new vis.Graph3d(jsonMapContainer, data, options);
         },
         error: function(xhr,status,error) {

@@ -52,6 +52,8 @@ import json
 
 sys.path.append("..")
 from surrogate.files.delft3d import Delft3D
+
+
 def main(argv):
     taihuDir = ''
     caseName = ''
@@ -80,7 +82,7 @@ def main(argv):
 
     print '--py:Start::['+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")+'] '+caseName
 
-    if taihuDir and caseName and varName and iseg>=0 and itime>=0:
+    if taihuDir and caseName and varName:
         readD3DWaq(taihuDir, caseName, varName, iseg, itime)
 
     print '--py:End::  ['+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")+'] '+caseName
@@ -95,8 +97,8 @@ def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
     dy = 500.0 # meter
     hour2sec = 24*3600
 
-    gridFname  = taihuDir+'/delcoupl/couplnef.txt'
-    mapFname   = taihuDir+'/'+caseName+'/taihu.map'
+    gridFname = taihuDir+'/delcoupl/couplnef.txt'
+    mapFname  = taihuDir+'/'+caseName+'/taihu.map'
 
     d3d = Delft3D(gridFname=gridFname, mapFname=mapFname)
     moname, varlist, maptime, nseg, nvar, ntime = d3d.initWaqMap()
@@ -108,6 +110,7 @@ def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
     if iseg>=nseg:
         print '--py:Error:: iseg='+str(iseg)+' > nseg='+str(nseg)
         sys.exit(1)
+
     if varName in varlist:
         ivar = varlist.index(varName)
     else:
@@ -115,13 +118,29 @@ def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
         for i in range(len(varlist)):
             print str(i)+'\t'+varlist[i]
         sys.exit(1)
+
     if itime>=ntime:
         print '--py:Error:: itime='+str(itime)+' > ntime='+str(ntime)
         for i in range(len(maptime)):
             print str(i)+'\t'+str(maptime[i])
         sys.exit(1)
+
+
     print '--py:Test:: Data size [nseg='+str(nseg)+',nvar='+str(nvar)+',ntime='+str(ntime)+']'
     print '--py:Test:: Data read [iseg='+str(iseg)+',ivar='+str(ivar)+',itime='+str(itime)+']'
+
+    objfunFname = taihuDir+'/'+caseName+'/taihu_objfun.txt'
+
+    strHisTitle = caseName+'/his_'+varlist[ivar]+'_s'+str(iseg)
+    strMapTitle = caseName+'/map_'+varlist[ivar]+'_t'+str(itime)
+    # strMapTitle = caseName+'/map_'+varlist[ivar]+'_t'+str(maptime[itime])
+    hisFigFname = taihuDir+'/'+strHisTitle+'.png'
+    mapFigFname = taihuDir+'/'+strMapTitle+'.png'
+    mapJsonFname= taihuDir+'/'+strMapTitle+'.json'
+
+    dataHis = []
+    dataMap = []
+    jsonData = {'legend': '', 'iseg': -9999, 'itime': -9999, 'x': [], 'y': [], 'z': [], 'zMin': z_min, 'zMax': z_max}
 
     # d3d = Delft3D(gridFname=gridFname, mapFname=mapFname)
     # moname, varlist, maptime, nseg, nvar, ntime = d3d.initWaqMap()
@@ -151,31 +170,79 @@ def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
     # # print dataVar[iseg][0][:]
     # dataHis = dataVar[iseg][0][:]
 
-    strHisTitle = caseName+'/his_'+varlist[ivar]+'_s'+str(iseg)
-    strMapTitle = caseName+'/map_'+varlist[ivar]+'_t'+str(itime)
-    # strMapTitle = caseName+'/map_'+varlist[ivar]+'_t'+str(maptime[itime])
-
-    objfunFname = taihuDir+'/'+caseName+'/taihu_objfun.txt'
-
-    hisFigFname = taihuDir+'/'+strHisTitle+'.png'
-    dataHis = []
-    mapFigFname = taihuDir+'/'+strMapTitle+'.png'
-    dataMap = []
-
-    mapJsonFname= taihuDir+'/'+strMapTitle+'.json'
-    jsonData = {'legend': varlist[ivar], 'x': [], 'y': [], 'z': [], 'zMin': z_min, 'zMax': z_max}
-
-
     nrow, ncol, gridX, gridY, gridIndex = d3d.getWaqGrid()
     maptime = [x/hour2sec for x in maptime]
 
-    dataSeg = d3d.getWaqMapDataAtSegment(iseg=iseg) # ok
+    if iseg==-9999 and itime==-9999:
+        # 20170601-update original code
+        print '--py:Test:: Old iseg='+str(iseg)+' itime='+str(itime)+' any time'
+
+        checkData = -999999.99
+        for jitime in range(ntime):
+            tempDataZ = d3d.getWaqMapDataAtVariableTime(ivar=ivar, itime=jitime) # ok
+            for i in range(nrow):
+                for j in range(ncol):
+                    if gridIndex[i][j]>0:
+                        if tempDataZ[gridIndex[i][j]][0] > checkData:
+                            checkData = tempDataZ[gridIndex[i][j]][0]
+                            jseg  = gridIndex[i][j]
+                            jtime = jitime
+        print '--py:Test:: New iseg='+str(jseg)+' itime='+str(jtime)
+
+    elif iseg==-9999 and itime>=0:
+        # 20170601-update original code
+        print '--py:Test:: Old iseg='+str(iseg)+' any seg'
+        jtime = itime
+
+        tempDataZ = d3d.getWaqMapDataAtVariableTime(ivar=ivar, itime=jtime) # ok
+        checkData = -999999.99
+        for i in range(nrow):
+            for j in range(ncol):
+                if gridIndex[i][j]>0:
+                    if tempDataZ[gridIndex[i][j]][0] > checkData:
+                        checkData = tempDataZ[gridIndex[i][j]][0]
+                        jseg = gridIndex[i][j]
+        print '--py:Test:: New iseg='+str(jseg)
+
+    elif iseg>=0 and itime==-9999:
+        # 20170601-update original code
+        print '--py:Test:: Old itime='+str(itime)+' any time'
+        jseg = iseg
+
+        tempDataSeg = d3d.getWaqMapDataAtSegment(iseg=jseg) # ok
+        tempDataHis = tempDataSeg[0][ivar][:]
+        tempDataHis = np.array(tempDataHis)
+        jtime = np.nanargmax(tempDataHis)
+        print '--py:Test:: New itime='+str(jtime)
+
+    elif iseg>=0 and itime>=0:
+        # 20170601-original code
+        print '--py:Test:: Old iseg='+str(iseg)+' itime='+str(itime)
+        jseg = iseg
+        jtime = itime
+        print '--py:Test:: New iseg='+str(jseg)+' itime='+str(jtime)
+
+    else:
+        print '--py:Error:: iseg='+str(iseg)+' itime='+str(itime)
+        sys.exit(1)
+
+
+    strHisTitle = caseName+'/his_'+varlist[ivar]+'_s'+str(jseg)
+    strMapTitle = caseName+'/map_'+varlist[ivar]+'_t'+str(jtime)
+
+    jsonData['legend'] = varlist[ivar]
+    jsonData['iseg']   = jseg
+    jsonData['itime']  = jtime
+
+
+    dataSeg = d3d.getWaqMapDataAtSegment(iseg=jseg) # ok
     dataHis = dataSeg[0][ivar][:]
     dataHis = np.array(dataHis)
 
-    dataZ = d3d.getWaqMapDataAtVariableTime(ivar=ivar, itime=itime) # ok
+    dataZ = d3d.getWaqMapDataAtVariableTime(ivar=ivar, itime=jtime) # ok
     for i in range(nrow):
         dataMap.append([dataZ[gridIndex[i][j]][0] if gridIndex[i][j]>0 else 0 for j in range(ncol)])
+    dataMap = np.array(dataMap)
 
     for i in range(nrow):
         for j in range(ncol):
@@ -183,7 +250,6 @@ def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
                 jsonData['x'].append(gridX[i][j])
                 jsonData['y'].append(gridY[i][j])
                 jsonData['z'].append(dataZ[gridIndex[i][j]][0])
-
     # import random
     # jsonDataDF = {'legend': varlist[ivar], 'x': [], 'y': [], 'z': [], 'zMin': 0.4, 'zMax': 1.0}
     # for i in range(0,nrow,5):
@@ -194,7 +260,6 @@ def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
     #             jsonDataDF['z'].append(random.uniform(0.5, 0.55))
     # saveJsonMap(taihuDir+'/df.json', jsonDataDF)
 
-    dataMap = np.array(dataMap)
     gridY = np.array(gridY)
     gridX = np.array(gridX)
     gridY = gridY*dy
@@ -204,41 +269,62 @@ def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
     gridY[gridX==0]   = np.NaN
     gridX[gridX==0]   = np.NaN
 
+    # gridIndex = np.array(gridIndex)
+    # dataMap[gridIndex==9969] = np.NaN
+
     dataMap = np.ma.masked_invalid(dataMap)
     gridY   = np.ma.masked_invalid(gridY)
     gridX   = np.ma.masked_invalid(gridX)
 
-
     # z_min, z_max = np.nanmin(z), np.nanmax(z)
-    if os.path.isfile(objfunFname):
-        if not os.path.isfile(hisFigFname):
-            savePlotHis(hisFigFname, maptime, varlist, ivar, dataHis, strHisTitle)
 
-        if not os.path.isfile(mapFigFname):
-            savePlotMap(mapFigFname, gridX, gridY, dataMap, z_min, z_max, strMapTitle)
+    # method-01
+    savePlotHis(hisFigFname, maptime, dataHis, varlist, ivar, strHisTitle)
+    savePlotMap(mapFigFname, gridX, gridY, dataMap, z_min, z_max, strMapTitle)
+    saveJsonMap(mapJsonFname, jsonData)
+    if not os.path.isfile(objfunFname):
+        saveObj(objfunFname, dataMap, dataHis, jseg, jtime)
 
-        # saveJsonMap(mapJsonFname, jsonData)
-        if not os.path.isfile(mapJsonFname):
-            saveJsonMap(mapJsonFname, jsonData)
-    else:
-        saveObj(objfunFname, dataMap, dataHis)
+    # # method-02
+    # if not os.path.isfile(hisFigFname):
+    #     savePlotHis(hisFigFname, maptime, dataHis, varlist, ivar, strHisTitle)
+    # if not os.path.isfile(mapFigFname):
+    #     savePlotMap(mapFigFname, gridX, gridY, dataMap, z_min, z_max, strMapTitle)
+    # if not os.path.isfile(mapJsonFname):
+    #     saveJsonMap(mapJsonFname, jsonData)
+    # if not os.path.isfile(objfunFname):
+    #     saveObj(objfunFname, dataMap, dataHis, jseg, jtime)
+
+    # # method-03
+    # if os.path.isfile(objfunFname):
+        # if not os.path.isfile(hisFigFname):
+        #     savePlotHis(hisFigFname, maptime, dataHis, varlist, ivar, strHisTitle)
+        #
+        # if not os.path.isfile(mapFigFname):
+        #     savePlotMap(mapFigFname, gridX, gridY, dataMap, z_min, z_max, strMapTitle)
+        #
+        # # saveJsonMap(mapJsonFname, jsonData)
+        # if not os.path.isfile(mapJsonFname):
+        #     saveJsonMap(mapJsonFname, jsonData)
+    # else:
+    #     saveObj(objfunFname, dataMap, dataHis, jseg, jtime)
 
 
-def saveObj(objfunFname, z, dataHis):
+def saveObj(objfunFname, dataMap, dataHis, iseg, itime):
     with open(objfunFname,'wt') as objfunFref:
-        obj1 = objfun1(dataMap=z)
-        obj2 = objfun2(dataHis=dataHis)
-        objfunFref.write('%.6f\t%.6f\n' % (obj1, obj2))
+        obj1 = objfunMean(data=dataMap)
+        obj2 = objfunMax(data=dataHis)
+        objfunFref.write('%.6f\t%.6f\t%i\t%i\n' % (obj1, obj2, iseg, itime))
 
-def objfun1(dataMap):
-    obj = np.nanmean(dataMap)
+def objfunMean(data):
+    obj = np.nanmean(data)
     return obj
 
-def objfun2(dataHis):
-    obj = np.nanmax(dataHis)
+def objfunMax(data):
+    obj = np.nanmax(data)
     return obj
 
-def savePlotHis(hisFigFname, x, varlist, ivar, z, strHisTitle):
+def savePlotHis(hisFigFname, x, z, varlist, ivar, strHisTitle):
     print '--py:Start:: Plot his.'
     plt.plot(x,z)
     plt.title(strHisTitle)
