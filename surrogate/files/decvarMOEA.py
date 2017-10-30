@@ -84,8 +84,8 @@ class decvarMOEA(object):
         """
         # # Method 1
         # self.fileName = self.varDir + '/' + "g%08d" % igen + self.fileExt
-        # print '--py:Test:: ' + 'decvarMOEA.writeHeader( Gen: '+str(igen)+' ) '+self.fileName
-        #
+        # print '--py:Test:: ' + 'decvarMOEA.writeHeader'
+
         # outFile = open(self.fileName, "wt")
         # outFile.write("{\n")
         # outFile.write("\"variable\":[\n")
@@ -100,6 +100,8 @@ class decvarMOEA(object):
         :return:
         """
         # # Method 1
+        # print '--py:Test:: ' + 'decvarMOEA.writeEnd'
+
         # outFile = open(self.fileName, "a")
         # outFile.write("]\n}\n")
         # outFile.close()
@@ -128,7 +130,7 @@ class decvarMOEA(object):
         # # Method 2
         self.icase += 1
         self.fileName = self.varDir + '/' + self.casePref+"%08d" % self.icase+self.fileExt
-        print '--py:Test:: ' + 'decvarMOEA.writeHeader( Pop: '+str(ipop)+' ) '+self.fileName
+        # print '--py:Test:: ' + 'decvarMOEA.writeDecVar( Pop: '+str(ipop)+' ) '+self.fileName
 
         outFile = open(self.fileName, "wt")
         outFile.write('\t'.join(map("{:.5f}".format, variable)))
