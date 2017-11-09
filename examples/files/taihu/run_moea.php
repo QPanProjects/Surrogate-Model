@@ -1,5 +1,7 @@
 <?php
-    echo '--php:Start::['.(new \DateTime())->format('Y-m-d H:i:s')."] run_moea.php\n";
+//    echo '--php:Start::['.(new \DateTime())->format('Y-m-d H:i:s')."] run_moea.php\n";
+    echo '--php:Start::['.(new \DateTime())->format('Y-m-d H:i:s')."] run_moea_ann.php\n";
+//    echo '--php:Start::['.(new \DateTime())->format('Y-m-d H:i:s')."] run_moea_d3d.php\n";
     $_Ngen = 0;
     $_Ndim = 0;
     $_Npop = 0;
@@ -27,7 +29,9 @@
             print_r($_GET);
 
         } else {
-            $exe_py_cmd = 'python /var/www/html/taihu/run_moea.py'
+//            $exe_py_cmd = 'python /var/www/html/taihu/run_moea.py'
+            $exe_py_cmd = 'python /var/www/html/taihu/run_moea_ann.py'
+//            $exe_py_cmd = 'python /var/www/html/taihu/run_moea_d3d.py'
                            .' -g '.$_Ngen
                            .' -d '.$_Ndim
                            .' -p '.$_Npop

@@ -1291,11 +1291,11 @@ if __name__ == "__main__":
 
     # methode02
     import cPickle as pickle
-    # pickle.dump(clf, open('d3d_ann_moea.pkl', 'wb'))
-    # # clf = pickle.load(open('/var/www/html/taihu/d3d_ann_moea.pkl', 'rb'))
+    # pickle.dump(clf, open('mlmodel/d3d_ann_moea.pkl', 'wb'))
+    # # clf = pickle.load(open('/var/www/html/taihu/mlmodel/d3d_ann_moea.pkl', 'rb'))
 
     # print '\ncPickle'
-    # clf = pickle.load(open('d3d_ann_moea.pkl', 'rb'))
+    # clf = pickle.load(open('mlmodel/d3d_ann_moea.pkl', 'rb'))
     # # for itst_ind in range(len(Xold_ind)):
     # for itst_ind in range(18,19):
     #     Xtst_ind[0] = Xold_ind[itst_ind]
