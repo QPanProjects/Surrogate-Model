@@ -130,6 +130,7 @@ def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
     print '--py:Test:: Data read [iseg='+str(iseg)+',ivar='+str(ivar)+',itime='+str(itime)+']'
 
     objfunFname = taihuDir+'/'+caseName+'/taihu_objfun.txt'
+    decvarFname = taihuDir+'/'+caseName+'/taihu_decvar.txt'
 
     strHisTitle = caseName+'/his_'+varlist[ivar]+'_s'+str(iseg)
     strMapTitle = caseName+'/map_'+varlist[ivar]+'_t'+str(itime)
@@ -283,7 +284,7 @@ def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
     savePlotMap(mapFigFname, gridX, gridY, dataMap, z_min, z_max, strMapTitle)
     saveJsonMap(mapJsonFname, jsonData)
     if not os.path.isfile(objfunFname):
-        saveObj(objfunFname, dataMap, dataHis, jseg, jtime)
+        saveObj(objfunFname, decvarFname, dataMap, dataHis, jseg, jtime)
 
     # # method-02
     # if not os.path.isfile(hisFigFname):
@@ -293,7 +294,7 @@ def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
     # if not os.path.isfile(mapJsonFname):
     #     saveJsonMap(mapJsonFname, jsonData)
     # if not os.path.isfile(objfunFname):
-    #     saveObj(objfunFname, dataMap, dataHis, jseg, jtime)
+    #     saveObj(objfunFname, decvarFname, dataMap, dataHis, jseg, jtime)
 
     # # method-03
     # if os.path.isfile(objfunFname):
@@ -307,21 +308,85 @@ def readD3DWaq(taihuDir, caseName, varName, iseg=0, itime=0):
         # if not os.path.isfile(mapJsonFname):
         #     saveJsonMap(mapJsonFname, jsonData)
     # else:
-    #     saveObj(objfunFname, dataMap, dataHis, jseg, jtime)
+    #     saveObj(objfunFname, decvarFname, dataMap, dataHis, jseg, jtime)
 
 
-def saveObj(objfunFname, dataMap, dataHis, iseg, itime):
+def saveObj(objfunFname, decvarFname, dataMap, dataHis, iseg, itime):
     with open(objfunFname,'wt') as objfunFref:
         obj1 = objfunMean(data=dataMap)
         obj2 = objfunMax(data=dataHis)
-        objfunFref.write('%.6f\t%.6f\t%i\t%i\n' % (obj1, obj2, iseg, itime))
+
+        # objfunFref.write('%.6f\t%.6f\t%i\t%i\n' % (obj1, obj2, iseg, itime))
+
+        obj3 = objfunCost(file=decvarFname)
+        objfunFref.write('%.6f\t%.6f\t%.6f\t%i\t%i\n' % (obj1, obj2, obj3, iseg, itime))
 
 def objfunMean(data):
+    #mg/L, g/m^3
     obj = np.nanmean(data)
     return obj
 
 def objfunMax(data):
+    #mg/L, g/m^3
     obj = np.nanmax(data)
+    return obj
+
+def objfunCost(file):
+    # cost = {
+    #     0:{'s':'','n':0,'p':0,'cn':0,'cp':0},
+    # }
+    # return euro
+
+    # priceTN, priceTP = 170.0, 1090.0 #euro/kg
+    with open(file,'r') as decvarFref:
+        data = [float(elt.strip()) for elt in decvarFref.readline().split('\t')]
+    cost = {
+        0:{'s':'Tai','n':0.0000,'p':0.0000,'cn':0.0000,'cp':0.0000},
+        1:{'s':'Wang','n':192116.7933,'p':24014.5992,'cn':32659854.8532,'cp':26175913.0809},
+        2:{'s':'1_1','n':361225.9411,'p':47068.8348,'cn':61408409.9904,'cp':51305029.8797},
+        3:{'s':'1_2','n':361225.9411,'p':47068.8348,'cn':61408409.9904,'cp':51305029.8797},
+        4:{'s':'1_3','n':361225.9411,'p':47068.8348,'cn':61408409.9904,'cp':51305029.8797},
+        5:{'s':'1_4','n':361225.9411,'p':47068.8348,'cn':61408409.9904,'cp':51305029.8797},
+        6:{'s':'1_5','n':361225.9411,'p':47068.8348,'cn':61408409.9904,'cp':51305029.8797},
+        7:{'s':'2_1','n':77342.7817,'p':9843.6268,'cn':13148272.8891,'cp':10729553.1705},
+        8:{'s':'2_2','n':77342.7817,'p':9843.6268,'cn':13148272.8891,'cp':10729553.1705},
+        9:{'s':'2_3','n':77342.7817,'p':9843.6268,'cn':13148272.8891,'cp':10729553.1705},
+        10:{'s':'2_4','n':77342.7817,'p':9843.6268,'cn':13148272.8891,'cp':10729553.1705},
+        11:{'s':'3_1','n':0.0000,'p':0.0000,'cn':0.0000,'cp':0.0000},
+        12:{'s':'3_2','n':0.0000,'p':0.0000,'cn':0.0000,'cp':0.0000},
+        13:{'s':'3_3','n':0.0000,'p':0.0000,'cn':0.0000,'cp':0.0000},
+        14:{'s':'3_4','n':0.0000,'p':0.0000,'cn':0.0000,'cp':0.0000},
+        15:{'s':'3_5','n':0.0000,'p':0.0000,'cn':0.0000,'cp':0.0000},
+        16:{'s':'4_1','n':18558.1152,'p':2783.7173,'cn':3154879.5840,'cp':3034251.8352},
+        17:{'s':'4_2','n':18558.1152,'p':2783.7173,'cn':3154879.5840,'cp':3034251.8352},
+        18:{'s':'4_3','n':18558.1152,'p':2783.7173,'cn':3154879.5840,'cp':3034251.8352},
+        19:{'s':'4_4','n':18558.1152,'p':2783.7173,'cn':3154879.5840,'cp':3034251.8352},
+        20:{'s':'4_5','n':18558.1152,'p':2783.7173,'cn':3154879.5840,'cp':3034251.8352},
+        21:{'s':'5_1','n':0.0000,'p':0.0000,'cn':0.0000,'cp':0.0000},
+        22:{'s':'5_2','n':0.0000,'p':0.0000,'cn':0.0000,'cp':0.0000},
+        23:{'s':'5_3','n':0.0000,'p':0.0000,'cn':0.0000,'cp':0.0000},
+        24:{'s':'5_4','n':0.0000,'p':0.0000,'cn':0.0000,'cp':0.0000},
+        25:{'s':'Jiapu','n':783286.8480,'p':31622.4000,'cn':133158764.1600,'cp':34468416.0000},
+        26:{'s':'xiaomeikou','n':783286.8480,'p':0.0000,'cn':133158764.1600,'cp':0.0000},
+        27:{'s':'daqian','n':783286.8480,'p':15811.2000,'cn':133158764.1600,'cp':17234208.0000},
+        28:{'s':'hulou','n':783286.8480,'p':0.0000,'cn':133158764.1600,'cp':0.0000},
+        29:{'s':'dapu_1','n':790560.0000,'p':0.0000,'cn':134395200.0000,'cp':0.0000},
+        30:{'s':'xiaowanli_1','n':1739232.0000,'p':31622.4000,'cn':295669440.0000,'cp':34468416.0000},
+        31:{'s':'tuoshan_1','n':1581120.0000,'p':15811.2000,'cn':268790400.0000,'cp':17234208.0000},
+        32:{'s':'zhushan_1','n':790560.0000,'p':94867.2000,'cn':134395200.0000,'cp':103405248.0000},
+        33:{'s':'manshan','n':790560.0000,'p':0.0000,'cn':134395200.0000,'cp':0.0000},
+        34:{'s':'dapu_2','n':758937.6000,'p':0.0000,'cn':129019392.0000,'cp':0.0000},
+        35:{'s':'xiaowanli_2','n':1739232.0000,'p':31622.4000,'cn':295669440.0000,'cp':34468416.0000},
+        36:{'s':'xiaowanli_3','n':1739232.0000,'p':31622.4000,'cn':295669440.0000,'cp':34468416.0000},
+        37:{'s':'zhushan_2','n':948672.0000,'p':94867.2000,'cn':161274240.0000,'cp':103405248.0000},
+        38:{'s':'shadungang1','n':758937.6000,'p':15811.2000,'cn':129019392.0000,'cp':17234208.0000},
+        39:{'s':'shadungang2','n':758937.6000,'p':15811.2000,'cn':129019392.0000,'cp':17234208.0000},
+        40:{'s':'shadungang3','n':758937.6000,'p':31622.4000,'cn':129019392.0000,'cp':34468416.0000}
+    }
+    costTN = sum([cost[i]['cn']*(1.0-data[i]) for i in cost])
+    costTP = sum([cost[i]['cp']*(1.0-data[i+41]) for i in cost])
+
+    obj = costTN + costTP
     return obj
 
 def savePlotHis(hisFigFname, x, z, varlist, ivar, strHisTitle):

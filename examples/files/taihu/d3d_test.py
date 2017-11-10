@@ -569,10 +569,46 @@ if __name__ == "__main__":
 
 
     # =====================================================
-    # grid01_02
+    # grid00_01_02
     # =====================================================
 
     indexAll,valueAll,variablesAll,objectivesAll = [],[],[],[]
+    # grid00
+    group,grids,index,value,variables,objectives = [],[],[],[],[],[]
+    group = [
+        0,1,2,2,2,2,2,3,3,3,3,0,0,0,0,0,4,4,4,4,4,0,0,0,0,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+        0,1,2,2,2,2,2,3,3,3,3,0,0,0,0,0,4,4,4,4,4,0,0,0,0,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5
+    ]
+    # grids = [
+    #     [1.0],
+    #     [0.0, 0.5, 1.0],
+    #     [0.0, 0.5, 1.0],
+    #     [0.0, 0.5, 1.0],
+    #     [0.0, 0.5, 1.0],
+    #     [0.0, 0.5, 1.0]
+    # ]
+    grids = [
+        [0.0],
+        [0.0],
+        [0.0],
+        [0.0],
+        [0.0],
+        [0.0]
+    ]
+    folder,fileName,pref,issm,iesm = 'grid00','taihu.json','grid',1,1
+    index,value,variables = meshgridMD(group,grids)
+    # writeJson(folder=folder,fileName=fileName,pref=pref,issm=issm,iesm=iesm)
+    objectives = plotJson(folder, fileName, issave=True)
+    printLog(folder, fileName, index,value,variables,objectives)
+    for irow in range(len(index)):
+        indexAll.append(index[irow])
+        valueAll.append(value[irow])
+        variablesAll.append(variables[irow])
+        objectivesAll.append(objectives[irow])
+
+        # readD3DWaq('delcoupl/couplnef.txt', folder+'/'+pref+"%08d" % (irow+1), 'GREENS', iseg=9969, itime=4)
+
+
     # grid01
     group,grids,index,value,variables,objectives = [],[],[],[],[],[]
     group = [
