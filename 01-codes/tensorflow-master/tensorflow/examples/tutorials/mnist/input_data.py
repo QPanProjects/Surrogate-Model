@@ -31,7 +31,7 @@ SOURCE_URL = 'http://yann.lecun.com/exdb/mnist/'
 
 
 def maybe_download(filename, work_directory):
-    """Download the data from Yann's website, unless it's already here."""
+    """Download the data from Yann's web, unless it's already here."""
     if not tf.gfile.Exists(work_directory):
         tf.gfile.MakeDirs(work_directory)
     filepath = os.path.join(work_directory, filename)

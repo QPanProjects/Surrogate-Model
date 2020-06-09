@@ -12,7 +12,7 @@ def view_docs(browser=None):
     to rebuild them if they've changed since the last build.
     
     If this is run from a non-developer install (i.e., there is no local copy of
-    the docs), it just looks for the docs on the ``openmdao.org`` website.
+    the docs), it just looks for the docs on the ``openmdao.org`` web.
     """
     if not browser:
         for arg in sys.argv:

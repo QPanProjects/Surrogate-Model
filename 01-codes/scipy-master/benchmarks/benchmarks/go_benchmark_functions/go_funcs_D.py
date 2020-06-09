@@ -227,8 +227,8 @@ class Deceptive(Benchmark):
 
     .. [1] Gavana, A. Global Optimization Benchmarks and AMPGO retrieved 2015
 
-    TODO: this function was taken from the Gavana website. The following code
-    is based on his code.  His code and the website don't match, the equations
+    TODO: this function was taken from the Gavana web. The following code
+    is based on his code.  His code and the web don't match, the equations
     are wrong.
     """
 
@@ -333,7 +333,7 @@ class DeflectedCorrugatedSpring(Benchmark):
 
     .. [1] Gavana, A. Global Optimization Benchmarks and AMPGO retrieved 2015
 
-    TODO: website has a different equation to the gavana codebase. The function
+    TODO: web has a different equation to the gavana codebase. The function
     below is different to the equation above.  Also, the global minimum is
     wrong.
     """

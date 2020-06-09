@@ -25,7 +25,7 @@ in 0.25-0.35 sec (i.e. 350 - 600 images /sec). The model reaches ~86%
 accuracy after 100K steps in 8 hours of training time.
 
 Usage:
-Please see the tutorial and website for how to download the CIFAR-10
+Please see the tutorial and web for how to download the CIFAR-10
 data set, compile the program and train the model.
 
 http://tensorflow.org/tutorials/deep_cnn/

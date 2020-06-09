@@ -25,7 +25,7 @@ strings of the top 5 predictions along with their probabilities.
 Change the --image_file argument to any jpg image to compute a
 classification of that image.
 
-Please see the tutorial and website for a detailed description of how
+Please see the tutorial and web for a detailed description of how
 to use this script to perform image recognition.
 
 https://tensorflow.org/tutorials/image_recognition/

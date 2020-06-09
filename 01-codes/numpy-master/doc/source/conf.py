@@ -92,7 +92,7 @@ html_theme = 'scipy'
 html_theme_path = [themedir]
 
 if 'scipyorg' in tags:
-    # Build for the scipy.org website
+    # Build for the scipy.org web
     html_theme_options = {
         "edit_link": True,
         "sidebar": "right",

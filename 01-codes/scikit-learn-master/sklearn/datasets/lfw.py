@@ -1,7 +1,7 @@
 """Loader for the Labeled Faces in the Wild (LFW) dataset
 
 This dataset is a collection of JPEG pictures of famous people collected
-over the internet, all details are available on the official website:
+over the internet, all details are available on the official web:
 
     http://vis-www.cs.umass.edu/lfw/
 
@@ -60,7 +60,7 @@ def scale_face(face):
 
 
 #
-# Common private utilities for data fetching from the original LFW website
+# Common private utilities for data fetching from the original LFW web
 # local disk caching, and image decoding.
 #
 
@@ -230,7 +230,7 @@ def fetch_lfw_people(data_home=None, funneled=True, resize=0.5,
 
     This dataset is a collection of JPEG pictures of famous people
     collected on the internet, all details are available on the
-    official website:
+    official web:
 
         http://vis-www.cs.umass.edu/lfw/
 
@@ -390,7 +390,7 @@ def fetch_lfw_pairs(subset='train', data_home=None, funneled=True, resize=0.5,
 
     This dataset is a collection of JPEG pictures of famous people
     collected on the internet, all details are available on the
-    official website:
+    official web:
 
         http://vis-www.cs.umass.edu/lfw/
 

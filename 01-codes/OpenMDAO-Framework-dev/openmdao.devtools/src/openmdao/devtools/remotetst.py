@@ -187,7 +187,7 @@ def test_release(parser, options):
 
     fname = options.fname
     if fname.startswith('http'):
-        # if they cut & paste from the openmdao website, the fname
+        # if they cut & paste from the openmdao web, the fname
         # will be followed by #md5=..., so get rid of that part
         fname = fname.split('#')[0]
     else:

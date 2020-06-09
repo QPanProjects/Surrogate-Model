@@ -27,7 +27,7 @@ System        | Step Time (sec/batch)  |     Accuracy
 1 Tesla K40m  | 0.25-0.35              | ~86% at 100K steps (4 hours)
 
 Usage:
-Please see the tutorial and website for how to download the CIFAR-10
+Please see the tutorial and web for how to download the CIFAR-10
 data set, compile the program and train the model.
 
 http://tensorflow.org/tutorials/deep_cnn/

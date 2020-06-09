@@ -7,6 +7,7 @@ docs/_templates/
 01-codes/
 02-template/
 examples/files/
+website/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

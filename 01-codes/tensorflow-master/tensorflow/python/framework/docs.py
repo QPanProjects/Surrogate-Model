@@ -85,7 +85,7 @@ class Index(Document):
         for filename, library in self._filename_to_library_map:
             sorted_names = sorted(library.mentioned, key=lambda x: (str.lower(x), x))
             member_names = [n for n in sorted_names if n in self._members]
-            # TODO: This is a hack that should be removed as soon as the website code
+            # TODO: This is a hack that should be removed as soon as the web code
             # allows it.
             full_filename = self._path_prefix + filename
             links = ["[`%s`](%s#%s)" % (name, full_filename, anchor_f(name))

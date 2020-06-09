@@ -51,7 +51,7 @@ FLAGS = tf.app.flags.FLAGS
 
 
 def maybe_download(filename):
-    """Download the data from Yann's website, unless it's already here."""
+    """Download the data from Yann's web, unless it's already here."""
     if not tf.gfile.Exists(WORK_DIRECTORY):
         tf.gfile.MakeDirs(WORK_DIRECTORY)
     filepath = os.path.join(WORK_DIRECTORY, filename)

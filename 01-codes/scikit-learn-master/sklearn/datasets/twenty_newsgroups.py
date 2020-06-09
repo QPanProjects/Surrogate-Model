@@ -1,7 +1,7 @@
 """Caching loader for the 20 newsgroups text classification dataset
 
 
-The description of the dataset is available on the official website at:
+The description of the dataset is available on the official web at:
 
     http://people.csail.mit.edu/jrennie/20Newsgroups/
 

@@ -7,7 +7,7 @@ Scilab:
     Copyright (C) 2009 - Yann Collette
     Copyright (C) 2009 - CEA - Jean-Marc Martinez
     
-    website: forge.scilab.org/index.php/p/scidoe/sourcetree/master/macros
+    web: forge.scilab.org/index.php/p/scidoe/sourcetree/master/macros
 
 Much thanks goes to these individuals. It has been converted to Python by 
 Abraham Lee.

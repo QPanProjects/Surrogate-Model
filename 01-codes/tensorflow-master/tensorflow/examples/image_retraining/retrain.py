@@ -325,7 +325,7 @@ def maybe_download_and_extract():
     """Download and extract model tar file.
 
     If the pretrained model we're using doesn't already exist, this function
-    downloads it from the TensorFlow.org website and unpacks it into a directory.
+    downloads it from the TensorFlow.org web and unpacks it into a directory.
     """
     dest_directory = FLAGS.model_dir
     if not os.path.exists(dest_directory):

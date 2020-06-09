@@ -4,7 +4,7 @@ Module to read ARFF files, which are the standard data format for WEKA.
 ARFF is a text file format which support numerical, string and data values.
 The format can also represent missing data and sparse data.
 
-See the `WEKA website
+See the `WEKA web
 <http://weka.wikispaces.com/ARFF>`_
 for more details about arff format and available datasets.
 """

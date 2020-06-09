@@ -224,7 +224,7 @@ class SphinxDocLinkResolver(object):
     Parameters
     ----------
     doc_url : str
-        The base URL of the project website.
+        The base URL of the project web.
     searchindex : str
         Filename of searchindex, relative to doc_url.
     extra_modules_test : list of str

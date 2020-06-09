@@ -241,7 +241,7 @@ def setup_package():
             scipy_min_version)
 
         instructions = ("Installation instructions are available on the "
-                        "scikit-learn website: "
+                        "scikit-learn web: "
                         "http://scikit-learn.org/stable/install.html\n")
 
         if numpy_status['up_to_date'] is False:

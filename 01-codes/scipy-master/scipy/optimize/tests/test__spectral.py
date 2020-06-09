@@ -13,7 +13,7 @@ def test_performance():
     # [Cheng & Li, IMA J. Num. An. 29, 814 (2008)]
     # and
     # [W. La Cruz, J.M. Martinez, M. Raydan, Math. Comp. 75, 1429 (2006)].
-    # and those produced by dfsane.f from M. Raydan's website.
+    # and those produced by dfsane.f from M. Raydan's web.
     #
     # Where the results disagree, the largest limits are taken.
 
