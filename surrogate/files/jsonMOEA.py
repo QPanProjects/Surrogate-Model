@@ -41,6 +41,7 @@ import matplotlib as mpl
 if os.environ.get('DISPLAY','') == '':
     # print('--py:Warning:: No display found. Using non-interactive Agg backend')
     mpl.use('Agg')
+from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 
 import numpy as np
@@ -153,57 +154,118 @@ class jsonMOEA(object):
         outFile.close()
 
     def savePlot(self):
+        """
+
+        :return:
+        """
         with open(self.fileName) as data_file:
             data = json.load(data_file)
 
         gen = data["generation"]
         gen_tot = len(gen)
+        obj_tot = len(gen[0]["objective"][0][0])
+        # print str(obj_tot)
+        if obj_tot==1:
+            self.plotObj1D(gen, gen_tot)
+        elif obj_tot==2:
+            self.plotObj2D(gen, gen_tot)
+        elif obj_tot>=3:
+            self.plotObj3D(gen, gen_tot)
 
+    def plotObj1D(self, gen, gen_tot):
+        """
+
+        :param gen:
+        :param gen_tot:
+        :return:
+        """
         color = iter(cm.gray(np.linspace(1, 0.1, gen_tot)))
         # color = iter(cm.rainbow(np.linspace(0,1,gen_tot)))
         for index, item in enumerate(gen):
             obj = item["objective"][0]
-            obj_tot = len(obj)
             x = []
             y = []
-            r = index / gen_tot
-            g = index / gen_tot
-            b = index / gen_tot
+            # r = index / gen_tot
+            # g = index / gen_tot
+            # b = index / gen_tot
+            for iobj in obj:
+                x.append(index)
+                y.append(iobj[0])
+                # print '['+'\t'.join(map(str,iobj))+']'
+            plt.plot(x, y, 'o', color=next(color), label=str(index))
+        plt.plot(x, y, '.', mec='red', mfc='red')
 
+        plt.title('moea.json')
+        plt.xlabel('index')
+        plt.ylabel('obj1')
+        plt.grid(True)
+        plt.savefig(self.fileName+'.png')
+        plt.clf()
+
+    def plotObj2D(self, gen, gen_tot):
+        """
+
+        :param gen:
+        :param gen_tot:
+        :return:
+        """
+        color = iter(cm.gray(np.linspace(1, 0.1, gen_tot)))
+        # color = iter(cm.rainbow(np.linspace(0,1,gen_tot)))
+        for index, item in enumerate(gen):
+            obj = item["objective"][0]
+            x = []
+            y = []
+            # r = index / gen_tot
+            # g = index / gen_tot
+            # b = index / gen_tot
             for iobj in obj:
                 x.append(iobj[0])
                 y.append(iobj[1])
-
                 # print '['+'\t'.join(map(str,iobj))+']'
             plt.plot(x, y, 'o', color=next(color), label=str(index))
-
-        # minmax = [min(x), max(x), min(y), max(y)]
+        plt.plot(x, y, '.', mec='red', mfc='red')
 
         plt.title('moea.json')
         plt.xlabel('obj1')
-        # if minmax[0]==0.0 and minmax[1]==0.0:
-        #     plt.xlim([minmax[0]-0.05,minmax[1]+0.05])
-        # elif minmax[0]==0.0 and minmax[1]!=0.0:
-        #     plt.xlim([minmax[0]-0.05,minmax[1]+0.05*abs(minmax[1])])
-        # elif minmax[0]!=0.0 and minmax[1]==0.0:
-        #     plt.xlim([minmax[0]-0.05*abs(minmax[0]),minmax[1]+0.05])
-        # else:
-        #     plt.xlim([minmax[0]-0.05*abs(minmax[0]),minmax[1]+0.05*abs(minmax[1])])
-        # # plt.xlim([minmax[0]-0.05*abs(minmax[0]),minmax[1]+0.05*abs(minmax[1])])
         plt.ylabel('obj2')
-        # if minmax[2]==0.0 and minmax[3]==0.0:
-        #     plt.ylim([minmax[2]-0.05,minmax[3]+0.05])
-        # elif minmax[2]==0.0 and minmax[3]!=0.0:
-        #     plt.ylim([minmax[2]-0.05,minmax[3]+0.05*abs(minmax[3])])
-        # elif minmax[2]!=0.0 and minmax[3]==0.0:
-        #     plt.ylim([minmax[2]-0.05*abs(minmax[2]),minmax[3]+0.05])
-        # else:
-        #     plt.ylim([minmax[2]-0.05*abs(minmax[2]),minmax[3]+0.05*abs(minmax[3])])
-        # # plt.ylim([minmax[2]-0.05*abs(minmax[2]),minmax[3]+0.05*abs(minmax[3])])
         plt.grid(True)
-        # plt.legend(loc='best')
         plt.savefig(self.fileName+'.png')
-        # plt.show()
+        plt.clf()
+
+    def plotObj3D(self, gen, gen_tot):
+        """
+
+        :param gen:
+        :param gen_tot:
+        :return:
+        """
+        color = iter(cm.gray(np.linspace(1, 0.1, gen_tot)))
+        # color = iter(cm.rainbow(np.linspace(0,1,gen_tot)))
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+        for index, item in enumerate(gen):
+            obj = item["objective"][0]
+            x = []
+            y = []
+            z = []
+            # r = index / gen_tot
+            # g = index / gen_tot
+            # b = index / gen_tot
+            for iobj in obj:
+                x.append(iobj[0])
+                y.append(iobj[1])
+                z.append(iobj[2])
+                # print '['+'\t'.join(map(str,iobj))+']'
+            ax.scatter(x, y, z, 'o', color=next(color), label=str(index))
+        ax.scatter(x, y, z, '.', c='red')
+
+        ax.set_title('moea.json')
+        ax.set_xlabel('obj1')
+        ax.set_ylabel('obj2')
+        ax.set_zlabel('obj3')
+        plt.grid(True)
+        plt.savefig(self.fileName+'.png')
         plt.clf()
 
     def plot_json(self):

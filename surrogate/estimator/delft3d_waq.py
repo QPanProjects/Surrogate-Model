@@ -44,10 +44,20 @@ Description, delft3d_waq
 import numpy as np
 
 
-def delft3dWAQ(variable):
+def delft3dWAQ(variable, numObj):
     """delft3d WAQ return zeros.
     """
-
-    f1 = 0.0
-    f2 = 0.0
-    return np.array([f1, f2]).tolist()
+    # estimator/delft3d_waq.py
+    # if _Nobj==1:
+    #     f1 = 0.0
+    #     return np.array([f1]).tolist()
+    # if _Nobj==2:
+    #     f1 = 0.0
+    #     f2 = 0.0
+    #     return np.array([f1, f2]).tolist()
+    # if _Nobj>=3:
+    #     f1 = 0.0
+    #     f2 = 0.0
+    #     return np.array([f1, f2]).tolist()
+    rtnarray = [f/10.0 for f in range(numObj)]
+    return np.array(rtnarray).tolist()

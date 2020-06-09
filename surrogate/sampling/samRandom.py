@@ -935,14 +935,14 @@ def samPareto(a=3.0, size=None):  # real signature unknown; restored from __doc_
     the distribution of wealth in an economy.  It has also found
     use in insurance, web page access statistics, oil field sizes,
     and many other problems, including the download frequency for
-    projects in Sourceforge [1]_.  It is one of the so-called
+    01-codes in Sourceforge [1]_.  It is one of the so-called
     "fat-tailed" distributions.
 
 
     References
     ----------
     .. [1] Francis Hunt and Paul Johnson, On the Pareto Distribution of
-           Sourceforge projects.
+           Sourceforge 01-codes.
     .. [2] Pareto, V. (1896). Course of Political Economy. Lausanne.
     .. [3] Reiss, R.D., Thomas, M.(2001), Statistical Analysis of Extreme
            Values, Birkhauser Verlag, Basel, pp 23-30.

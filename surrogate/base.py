@@ -71,7 +71,7 @@ class Individual(object):
             self.constraint = constraint
 
         # not yet decided
-        self.fitness = Fitness(estimator(variable), weights)
+        self.fitness = Fitness(estimator(variable,len(weights)), weights)
         # self.rank = None
         # self.distance = None
         # self.strategy = set()
